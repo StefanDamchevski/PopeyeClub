@@ -1,0 +1,41 @@
+﻿@model PopeyeClub.ViewModels.Auth.LoginViewModel
+
+@{
+    ViewData["Title"] = "Log In";
+}
+
+@section Styles{
+    <link href="~/css/form.css" rel="stylesheet" />
+}
+<div class="form-wrap">
+    <h2>Log In</h2>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email here" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Password" class="form-control" placeholder="Enter your password here" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Log In" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="go-to">
+    <span>Don`t have an account yet?</span>
+    <a asp-controller="User" asp-action="SignUp">Sign Up</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

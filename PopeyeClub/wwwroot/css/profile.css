@@ -1,0 +1,20 @@
+﻿.user-info-container {
+    display: flex;
+    padding: 2%;
+    width: 100%;
+}
+
+.user-image img {
+    border-radius: 100%;
+    width: 130px;
+    height: 130px;
+}
+
+.user-info {
+    padding: 2%;
+}
+
+.btn {
+    margin: 2%;
+    height: 30%;
+}

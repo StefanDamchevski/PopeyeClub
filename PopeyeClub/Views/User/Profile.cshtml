@@ -1,0 +1,28 @@
+﻿@model PopeyeClub.ViewModels.User.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@section Styles{
+    <link href="~/css/profile.css" rel="stylesheet" />
+}
+
+<div class="user-info-container">
+    <div class="user-image">
+        <img src="data:image/jpeg;base64,@Model.UserImage" />
+    </div>
+    <div class="user-info">
+        <p>@Model.UserName</p>
+        <p><b>@Model.Email</b></p>
+    </div>
+    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+    {
+        <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Edit Profile</a>
+        <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Change Password</a>
+    }
+    else
+    {
+        <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-primary btn-sm">Follow</a>
+    }
+</div>
