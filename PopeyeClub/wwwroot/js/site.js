@@ -2,11 +2,11 @@
     let input = document.getElementById("searchInput").value.toLowerCase();
 
     let userRows = document.getElementsByClassName("user-row");
-    console.log(input);
+
     for (let i = 0; i < userRows.length; i++) {
         let td = userRows[i].getElementsByTagName("td")[0];
         let textValue = td.innerText.toLowerCase();
-        debugger;
+
         if (textValue.indexOf(input) == -1 || input == "") {
             userRows[i].style.display = "none"
         }
