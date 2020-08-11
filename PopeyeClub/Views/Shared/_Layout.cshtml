@@ -28,7 +28,8 @@
                             ApplicationUser user = await userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                             <li class="nav-item" id="inputHolder">
-                                <input type="text" class="form-control" id="searchInput" name="userName" onkeyup="searchUsers()" placeholder="Enter Username" />
+                                <input type="text" class="form-control" id="searchInput" name="userName" onkeyup="searchUsers()" placeholder="Enter Username"/>
+                                <button type="button" data-toggle="modal" data-target="#listOfUsers" id="toggleBtn" style="display:none"></button>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light hvr-pulse-grow" asp-controller="Post" asp-action="Overview">
@@ -64,7 +65,7 @@
         <main role="main" class="pb-3">
             @if (User.Identity.IsAuthenticated)
             {
-                List<ApplicationUser> users = userManager.Users.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList();
+                List<ApplicationUser> users = userManager.Users.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value && x.IsDeleted.Equals(false)).ToList();
                 <partial name="_UserTable" for="@users" />
             }
             @RenderBody()

@@ -20,6 +20,11 @@ namespace PopeyeClub.Services
         {
             ApplicationUser user = await userService.GetByEmailAsync(email);
 
+            if (user.IsDeleted)
+            {
+                await userService.RemoveIsDeletedAsync(user);
+            }
+
             Response response = new Response();
 
             if (user != null)

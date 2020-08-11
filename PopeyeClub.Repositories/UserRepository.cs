@@ -49,5 +49,10 @@ namespace PopeyeClub.Repositories
         {
             return await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
+
+        public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
+        {
+            return await userManager.CheckPasswordAsync(user, password);
+        }
     }
 }

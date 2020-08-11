@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 
 namespace PopeyeClub.ViewModels.User
 {
@@ -15,7 +14,7 @@ namespace PopeyeClub.ViewModels.User
         [AllowNull]
         [Phone]
         public string Phone { get; set; }
-        [AllowNull]
-        public Image ProfilePicture { get; set; }
+        [Required]
+        public bool IsPrivate { get; set; }
     }
 }

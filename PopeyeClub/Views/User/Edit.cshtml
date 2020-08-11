@@ -13,27 +13,25 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-12">
-                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <form asp-action="Edit" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="UserId" type="hidden" />
                     <div class="form-group">
-                        <label asp-for="Username" class="control-label"></label>
-                        <input asp-for="Username" class="form-control" />
+                        <input asp-for="Username" class="form-control" placeholder="Enter your username" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email adress" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Phone" class="control-label"></label>
-                        <input asp-for="Phone" class="form-control" />
+                        <input asp-for="Phone" class="form-control" placeholder="Enter your phone number" />
                         <span asp-validation-for="Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="file" id="files" asp-for="ProfilePicture" name="profilePicture" class="form-control"/>
-                        <span asp-validation-for="ProfilePicture"></span>
+                        <label asp-for="IsPrivate" class="control-label"></label>
+                        <input asp-for="IsPrivate" class="form-control" placeholder="Enter your phone number" />
+                        <span asp-validation-for="IsPrivate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
@@ -46,7 +44,7 @@
 
 <div class="go-to">
     <span>Go back to </span>
-    <a asp-controller="User" asp-action="Profile" >Profile</a>
+    <a asp-controller="User" asp-action="Profile" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
 </div>
 
 @section Scripts {

@@ -18,3 +18,39 @@
     margin: 2%;
     height: 30%;
 }
+
+#changePictureMenu{
+    top:20%;
+}
+
+#checkPassword{
+    top:20%;
+}
+
+.modal-header {
+    display:block;
+}
+
+.modal-title{
+    text-align:center;
+}
+
+#inputPassword {
+    margin: 2% auto;
+    width: 50%;
+    text-align: center;
+}
+
+.form-group{
+    text-align:center;
+}
+
+.not-available{
+    text-align:center;
+    width:50%;
+    margin:2% auto;
+    border-radius:5px;
+    border:1px solid;
+    padding:2%;
+    background-color:#dbdbdb;
+}

@@ -15,7 +15,7 @@ namespace PopeyeClub.Helpers
             }
             MemoryStream stream = new MemoryStream();
             profilePicture.CopyTo(stream);
-            Image scaledImage = ImageResize.Scale(Image.FromStream(stream), 400, 100);
+            Image scaledImage = ImageResize.ScaleByWidth(Image.FromStream(stream), 400);
             return (byte[])(new ImageConverter()).ConvertTo(scaledImage, typeof(byte[]));
         }
     }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PopeyeClub.Data;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.User;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -14,10 +16,12 @@ namespace PopeyeClub.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly IConfiguration configuration;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IConfiguration configuration)
         {
             this.userService = userService;
+            this.configuration = configuration;
         }
 
         public IActionResult SignUp()
@@ -31,7 +35,7 @@ namespace PopeyeClub.Controllers
         {
             if (ModelState.IsValid)
             {
-                Response response = await userService.CreateAsync(model.Email, model.UserName, model.Password, profilePicture);
+                Response response = await userService.CreateAsync(model.Email, model.UserName, model.Password, profilePicture.ToByteArray());
 
                 if (response.Succeeded)
                 {
@@ -67,11 +71,11 @@ namespace PopeyeClub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProfileViewModel model, IFormFile profilePicture)
+        public async Task<IActionResult> Edit(EditProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Response response = await userService.UpdateAsync(model.UserId, model.Email, model.Phone, model.Username, profilePicture.ToByteArray());
+                Response response = await userService.UpdateAsync(model.UserId, model.Email, model.Phone, model.Username, model.IsPrivate);
 
                 if (response.Succeeded)
                 {
@@ -100,6 +104,7 @@ namespace PopeyeClub.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -116,6 +121,41 @@ namespace PopeyeClub.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfilePicture(IFormFile userImage)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await userService.UpdateProfilePictureAsync(userImage.ToByteArray(), userId);
+            return RedirectToAction(nameof(Profile), new { UserId = userId});
+        }
+
+        [Authorize]
+        public async Task<IActionResult> RemoveProfilePicture()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await userService.UpdateProfilePictureAsync(configuration["DefaultProfilePicture"].ToByteArray(), userId);
+            return RedirectToAction(nameof(Profile), new { UserId = userId });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SoftDelete(string userId, string password)
+        {
+            if (userId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                if (!String.IsNullOrEmpty(password))
+                {
+                    Response response = await userService.SoftDeleteAsync(userId, password);
+                    if (response.Succeeded)
+                    {
+                        return RedirectToAction("Logout", "Auth");
+                    }
+                }
+            }
+            return RedirectToAction(nameof(Profile), new { UserId = userId });
         }
     }
 }

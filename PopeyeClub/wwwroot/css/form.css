@@ -23,6 +23,7 @@ h2 {
 }
 
 .form-control {
+    margin: 0 auto;
     margin-top: 2%;
     text-align: center;
     font-size: smaller;

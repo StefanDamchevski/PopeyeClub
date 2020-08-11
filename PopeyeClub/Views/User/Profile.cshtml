@@ -8,21 +8,49 @@
     <link href="~/css/profile.css" rel="stylesheet" />
 }
 
-<div class="user-info-container">
-    <div class="user-image">
-        <img src="data:image/jpeg;base64,@Model.UserImage" />
+@if (Model.IsDeleted)
+{
+    <div class="not-available">
+        <p class="text-danger">This user is temporary unavailable!!</p>
     </div>
-    <div class="user-info">
-        <p>@Model.UserName</p>
-        <p><b>@Model.Email</b></p>
+}
+else
+{
+    <div class="user-info-container">
+        <div class="user-image">
+            <img src="data:image/jpeg;base64,@Model.UserImage" />
+        </div>
+        <div class="user-info">
+            <p>@Model.UserName</p>
+            <p><b>@Model.Email</b></p>
+        </div>
+        @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+        {
+            <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Edit Profile</a>
+            <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Change Password</a>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changePictureMenu">Change Profile Picture</button>
+            <partial name="./Partials/_ChangeProfilePictureMenu" for="@Model.UserImage"/>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#checkPassword">Temporary disable your account</button>
+            <partial name="./Partials/_PasswordCheck" for="@Model.UserId" />
+        }
+        else
+        {
+            <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-primary btn-sm">Follow</a>
+        }
     </div>
-    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
-    {
-        <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Edit Profile</a>
-        <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Change Password</a>
-    }
-    else
-    {
-        <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-primary btn-sm">Follow</a>
-    }
-</div>
+    <div class="user-posts">
+        @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate)
+        {
+            <div class="not-available">
+                <p>This profile is private. If you want to see what post this user shares follow them!!!</p>
+            </div>
+        }
+        else
+        {
+            <p>User is public</p>
+        }
+    </div>
+}
+@section Scripts{
+    <script src="~/js/profile.js"></script>
+ }

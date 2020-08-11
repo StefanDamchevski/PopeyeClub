@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace PopeyeClub.Services.Helpers
+namespace PopeyeClub.Helpers
 {
     public static class StringToByteArray
     {

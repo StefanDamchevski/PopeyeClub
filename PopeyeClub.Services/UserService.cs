@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services.Dto;
-using PopeyeClub.Services.Helpers;
 using PopeyeClub.Services.Interfaces;
 using System.Threading.Tasks;
 
@@ -13,12 +11,10 @@ namespace PopeyeClub.Services
     {
 
         private readonly IUserRepository userRepository;
-        private readonly IConfiguration configuration;
 
-        public UserService(IUserRepository userRepository, IConfiguration configuration)
+        public UserService(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
-            this.configuration = configuration;
         }
 
         public async Task<Response> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
@@ -47,7 +43,7 @@ namespace PopeyeClub.Services
             return response;
         }
 
-        public async Task<Response> CreateAsync(string email, string userName, string password, string picture)
+        public async Task<Response> CreateAsync(string email, string userName, string password, byte[] picture)
         {
             ApplicationUser dbUser = await userRepository.GetByUserName(userName);
 
@@ -58,7 +54,7 @@ namespace PopeyeClub.Services
                 ApplicationUser user = new ApplicationUser();
                 user.Email = email;
                 user.UserName = userName;
-                user.ProfilePicture = picture.ToByteArray();
+                user.ProfilePicture = picture;
 
                 await userRepository.CreateAsync(user, password);
 
@@ -83,7 +79,38 @@ namespace PopeyeClub.Services
             return await userRepository.GetByIdAsync(userId);
         }
 
-        public async Task<Response> UpdateAsync(string userId, string email, string phone, string username, byte[] image)
+        public async Task RemoveIsDeletedAsync(ApplicationUser user)
+        {
+            user.IsDeleted = false;
+            IdentityResult result = await userRepository.UpdateAsync(user);
+        }
+
+        public async Task<Response> SoftDeleteAsync(string userId, string password)
+        {
+            ApplicationUser user = await userRepository.GetByIdAsync(userId);
+            Response response = new Response();
+            if(user != null)
+            {
+                bool isPasswordValid = await userRepository.CheckPasswordAsync(user, password);
+                if (isPasswordValid)
+                {
+                    user.IsDeleted = true;
+                    IdentityResult result = await userRepository.UpdateAsync(user);
+                    response.Succeeded = true;
+                }
+                else
+                {
+                    response.Succeeded = false;
+                }
+            }
+            else
+            {
+                response.Succeeded = false;
+            }
+            return response;
+        }
+
+        public async Task<Response> UpdateAsync(string userId, string email, string phone, string username, bool isPrivate)
         {
             Response response = new Response();
 
@@ -102,20 +129,15 @@ namespace PopeyeClub.Services
             {
                 user.Email = email;
                 user.UserName = username;
+                user.IsPrivate = isPrivate;
+
                 if(phone != default)
                 {
                     user.PhoneNumber = phone;
                 }
-                if(image == null)
-                {
-                    user.ProfilePicture = configuration["DefaultProfilePicture"].ToByteArray();
-                }
-                else
-                {
-                    user.ProfilePicture = image;
-                }
 
                 IdentityResult result = await userRepository.UpdateAsync(user);
+
                 if (result.Succeeded)
                 {
                     response.Succeeded = true;
@@ -132,6 +154,17 @@ namespace PopeyeClub.Services
             }
 
             return response;
+        }
+
+        public async Task UpdateProfilePictureAsync(byte[] picture, string userId)
+        {
+            ApplicationUser user = await userRepository.GetByIdAsync(userId);
+
+            if(user != null)
+            {
+                user.ProfilePicture = picture;
+                IdentityResult result = await userRepository.UpdateAsync(user);
+            }
         }
     }
 }
