@@ -16,6 +16,13 @@ a {
     color: #0366d6;
 }
 
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index:1;
+}
+
 #logo {
     font-family: 'Finger Paint';
 }
@@ -81,10 +88,10 @@ body {
     margin-right: 210px;
 }
 
-.form-control{
-    margin-top:3%;
-    height:20px;
-    padding:15px;
+#searchInput {
+    margin-top: 3%;
+    height: 20px;
+    padding: 15px;
 }
 
 td img{
@@ -98,6 +105,7 @@ td img{
     width:35px;
     height:35px;
     border-radius:100%;
+    cursor:pointer;
 }
 
 #dropdownMenu{
@@ -131,7 +139,7 @@ td img{
         font-size: 16px;
     }
 
-    .form-control {
+    #searchInputl {
         width: 50%;
     }
 }

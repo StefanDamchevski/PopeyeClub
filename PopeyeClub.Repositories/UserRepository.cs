@@ -35,7 +35,7 @@ namespace PopeyeClub.Repositories
             return await userManager.FindByIdAsync(userId);
         }
 
-        public async Task<ApplicationUser> GetByUserName(string userName)
+        public async Task<ApplicationUser> GetByUserNameAsync(string userName)
         {
             return await userManager.FindByNameAsync(userName);
         }

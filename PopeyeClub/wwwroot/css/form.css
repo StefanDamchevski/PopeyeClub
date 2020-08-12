@@ -3,6 +3,7 @@
 h2 {
     margin: 2%;
     font-family: 'Finger Paint';
+    word-break: break-word;
 }
 
 .form-wrap {

@@ -1,0 +1,117 @@
+﻿.not-available {
+    text-align: center;
+    width: 50%;
+    margin: 2% auto;
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 2%;
+    background-color: #dbdbdb;
+}
+
+.row{
+    margin-top: 2%;
+}
+
+.card-header{
+    display: flex;
+    justify-content:space-between;
+}
+
+.card-header a{
+    padding: 2%;
+    text-decoration:none;
+}
+
+.post-user img{
+    width:50px;
+    height:50px;
+    border-radius:100%;
+}
+
+.post-actions i{
+    margin-top: 30%;
+    cursor:pointer;
+}
+
+.post-img{
+    width:750px;
+    height:500px;
+}
+
+.card-actions{
+    margin-top:2%;
+}
+
+    .card-actions a {
+        margin-left: 2%;
+        padding: 2%;
+        cursor:pointer;
+    }
+
+.likes-count-section {
+    margin-top: 2%
+}
+
+.view-comment-button {
+    margin: 2% 0;
+    
+}
+    .view-comment-button a {
+        cursor: pointer;
+    }
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-comment img {
+    width:25px; 
+    height: 25px;
+}
+
+.user-comment span {
+    margin-left: 2%;
+    word-break: break-word;
+}
+
+.comment-like {
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+    .comment-like a {
+        cursor: pointer;
+    }
+
+.created-days-ago {
+    margin-top: 2%;
+}
+
+#comment-form {
+    width: 90%;
+}
+
+#commentInput {
+    margin-top: 0;
+    width: 100%;
+    height: 38px
+}
+
+@media (max-width:1081px){
+    .post-img {
+        width: 623px;
+        height: 500px;
+    }
+}
+
+@media (max-width: 892px) {
+    .post-img {
+        width: 435px;
+        height: 500px;
+    }
+
+    #comment-form {
+        width: 80%;
+    }
+}

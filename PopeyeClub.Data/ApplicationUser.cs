@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PopeyeClub.Data
@@ -10,5 +11,6 @@ namespace PopeyeClub.Data
         public bool IsPrivate { get; set; }
         [Required]
         public bool IsDeleted { get; set; }
+        public List<Post> Posts { get; set; }
     }
 }

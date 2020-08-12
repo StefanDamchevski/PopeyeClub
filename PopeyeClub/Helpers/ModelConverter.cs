@@ -1,4 +1,5 @@
 ﻿using PopeyeClub.Data;
+using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
 using System;
 
@@ -6,7 +7,7 @@ namespace PopeyeClub.Helpers
 {
     public static class ModelConverter
     {
-        public static ProfileViewModel ToProfileViewModel(this ApplicationUser user)
+        internal static ProfileViewModel ToProfileViewModel(this ApplicationUser user)
         {
             return new ProfileViewModel
             {
@@ -18,7 +19,7 @@ namespace PopeyeClub.Helpers
                 IsDeleted = user.IsDeleted,
             };
         }
-        public static EditProfileViewModel ToEditViewModel(this ApplicationUser user)
+        internal static EditProfileViewModel ToEditViewModel(this ApplicationUser user)
         {
             return new EditProfileViewModel
             {
@@ -27,6 +28,18 @@ namespace PopeyeClub.Helpers
                 Username = user.UserName,
                 Phone = user.PhoneNumber,
                 IsPrivate = user.IsPrivate,
+            };
+        }
+
+        internal static OverviewViewModel ToOverviewViewModel(this Post post)
+        {
+            return new OverviewViewModel
+            {
+                UserId = post.UserId,
+                UserName = post.User.UserName,
+                ProfilePicture = Convert.ToBase64String(post.User.ProfilePicture),
+                PostImage = Convert.ToBase64String(post.PostImage),
+                DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
             };
         }
     }

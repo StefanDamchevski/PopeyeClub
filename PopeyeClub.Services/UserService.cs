@@ -45,16 +45,18 @@ namespace PopeyeClub.Services
 
         public async Task<Response> CreateAsync(string email, string userName, string password, byte[] picture)
         {
-            ApplicationUser dbUser = await userRepository.GetByUserName(userName);
+            ApplicationUser dbUser = await userRepository.GetByUserNameAsync(userName);
 
             Response response = new Response();
 
             if (dbUser == null)
             {
-                ApplicationUser user = new ApplicationUser();
-                user.Email = email;
-                user.UserName = userName;
-                user.ProfilePicture = picture;
+                ApplicationUser user = new ApplicationUser
+                {
+                    Email = email,
+                    UserName = userName,
+                    ProfilePicture = picture
+                };
 
                 await userRepository.CreateAsync(user, password);
 
@@ -82,7 +84,7 @@ namespace PopeyeClub.Services
         public async Task RemoveIsDeletedAsync(ApplicationUser user)
         {
             user.IsDeleted = false;
-            IdentityResult result = await userRepository.UpdateAsync(user);
+            _ = await userRepository.UpdateAsync(user);
         }
 
         public async Task<Response> SoftDeleteAsync(string userId, string password)
@@ -96,7 +98,10 @@ namespace PopeyeClub.Services
                 {
                     user.IsDeleted = true;
                     IdentityResult result = await userRepository.UpdateAsync(user);
-                    response.Succeeded = true;
+                    if (result.Succeeded)
+                    {
+                        response.Succeeded = true;
+                    }
                 }
                 else
                 {
@@ -163,7 +168,7 @@ namespace PopeyeClub.Services
             if(user != null)
             {
                 user.ProfilePicture = picture;
-                IdentityResult result = await userRepository.UpdateAsync(user);
+                _ = await userRepository.UpdateAsync(user);
             }
         }
     }

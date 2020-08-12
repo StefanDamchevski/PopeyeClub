@@ -43,6 +43,9 @@ namespace PopeyeClub
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
 
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IPostRepository, PostRepository>();
+
             services.AddControllersWithViews();
         }
 

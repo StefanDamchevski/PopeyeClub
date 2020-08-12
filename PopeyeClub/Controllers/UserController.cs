@@ -79,7 +79,7 @@ namespace PopeyeClub.Controllers
 
                 if (response.Succeeded)
                 {
-                    return RedirectToAction(nameof(Profile), new { UserId = model.UserId });
+                    return RedirectToAction(nameof(Profile), new { model.UserId });
                 }
                 else
                 {
@@ -94,8 +94,10 @@ namespace PopeyeClub.Controllers
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
             {
-                ChangePasswordViewModel model = new ChangePasswordViewModel();
-                model.UserId = userId;
+                ChangePasswordViewModel model = new ChangePasswordViewModel
+                {
+                    UserId = userId
+                };
                 return View(model);
             }
             else
