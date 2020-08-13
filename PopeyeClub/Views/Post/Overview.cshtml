@@ -62,7 +62,7 @@
                             </a>
                         </div>
                         <div class="likes-count-section">
-                            <span>Liked by <span>@post.PostLikes.Where(x => x.Status == true).Count()</span> people</span>
+                            <span>Liked by <span>@post.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> people</span>
                         </div>
                         <div class="comments-section">
                             <div class="view-comment-button">

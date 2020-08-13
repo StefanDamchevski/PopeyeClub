@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
+using PopeyeClub.Data.Migrations;
 using PopeyeClub.Repositories.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace PopeyeClub.Repositories
         {
             return await userManager.Users
                 .Include(x => x.Posts)
+                    .ThenInclude(x => x.PostLikes)
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
         }
 

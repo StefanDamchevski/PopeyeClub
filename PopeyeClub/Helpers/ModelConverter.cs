@@ -19,7 +19,7 @@ namespace PopeyeClub.Helpers
                 UserImage = Convert.ToBase64String(user.ProfilePicture),
                 IsPrivate = user.IsPrivate,
                 IsDeleted = user.IsDeleted,
-                Posts = user.Posts?.Select(x => x.ToUserPostViewModel()).ToList(),
+                Posts = user.Posts?.OrderByDescending(x => x.DateCreated).Select(x => x.ToUserPostViewModel()).ToList(),
             };
         }
         internal static EditProfileViewModel ToEditViewModel(this ApplicationUser user)
@@ -40,6 +40,7 @@ namespace PopeyeClub.Helpers
             {
                 PostId = post.Id,
                 PostImage = Convert.ToBase64String(post.PostImage),
+                PostLikesCount = post.PostLikes.Where(x => x.Status.Equals(true)).Count(),
             };
         }
 
