@@ -1,7 +1,9 @@
 ﻿using PopeyeClub.Data;
+using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
 using System;
+using System.Linq;
 
 namespace PopeyeClub.Helpers
 {
@@ -17,6 +19,7 @@ namespace PopeyeClub.Helpers
                 UserImage = Convert.ToBase64String(user.ProfilePicture),
                 IsPrivate = user.IsPrivate,
                 IsDeleted = user.IsDeleted,
+                Posts = user.Posts?.Select(x => x.ToUserPostViewModel()).ToList(),
             };
         }
         internal static EditProfileViewModel ToEditViewModel(this ApplicationUser user)
@@ -31,15 +34,37 @@ namespace PopeyeClub.Helpers
             };
         }
 
+        internal static UserPostsViewModel ToUserPostViewModel(this Post post)
+        {
+            return new UserPostsViewModel
+            {
+                PostId = post.Id,
+                PostImage = Convert.ToBase64String(post.PostImage),
+            };
+        }
+
         internal static OverviewViewModel ToOverviewViewModel(this Post post)
         {
             return new OverviewViewModel
             {
+                PostId = post.Id,
                 UserId = post.UserId,
                 UserName = post.User.UserName,
                 ProfilePicture = Convert.ToBase64String(post.User.ProfilePicture),
                 PostImage = Convert.ToBase64String(post.PostImage),
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
+                PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
+            };
+        }
+
+        internal static PostLikeViewModel ToPostLikeViewModel(this PostLike postLike)
+        {
+            return new PostLikeViewModel
+            {
+                Id = postLike.Id,
+                UserId = postLike.UserId,
+                PostId = postLike.PostId,
+                Status = postLike.Status,
             };
         }
     }

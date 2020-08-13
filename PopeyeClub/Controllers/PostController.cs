@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Interfaces;
+using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,22 @@ namespace PopeyeClub.Controllers
         public IActionResult Overview()
         {
             List<OverviewViewModel> models = postService.GetAll().Select(x => x.ToOverviewViewModel()).ToList();
+            foreach (var post in models)
+            {
+                PostLikeViewModel postLike = post.PostLikes?.FirstOrDefault(x => x.UserId.Equals(User.FindFirst(ClaimTypes.NameIdentifier).Value));
+                if(postLike == null)
+                {
+                    post.LikeStatus = Enums.PostLikeStatus.None;
+                }
+                else if(!postLike.Status)
+                {
+                    post.LikeStatus = Enums.PostLikeStatus.None;
+                }
+                else
+                {
+                    post.LikeStatus = Enums.PostLikeStatus.Liked;
+                }
+            }
             return View(models);
         }
 

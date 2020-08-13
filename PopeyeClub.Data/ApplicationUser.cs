@@ -12,5 +12,6 @@ namespace PopeyeClub.Data
         [Required]
         public bool IsDeleted { get; set; }
         public List<Post> Posts { get; set; }
+        public List<PostLike> PostLikes { get; set; }
     }
 }

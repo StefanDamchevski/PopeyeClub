@@ -1,4 +1,7 @@
-﻿namespace PopeyeClub.ViewModels.User
+﻿using PopeyeClub.ViewModels.Post;
+using System.Collections.Generic;
+
+namespace PopeyeClub.ViewModels.User
 {
     public class ProfileViewModel
     {
@@ -8,5 +11,6 @@
         public string Email { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
+        public List<UserPostsViewModel> Posts { get; set; }
     }
 }

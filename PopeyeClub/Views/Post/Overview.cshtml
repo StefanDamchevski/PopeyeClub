@@ -15,8 +15,9 @@
             <p>No posts to show</p>
         </div>
     }
+
     @foreach (var post in Model)
-    {
+    { 
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
@@ -32,9 +33,24 @@
                     <div class="card-body">
                         <img class="post-img" src="data:image/jpeg;base64,@post.PostImage" />
                         <div class="card-actions">
-                            <a class="hvr-pulse-grow">
-                                <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
-                            </a>
+                            @if (post.LikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
+                            {
+                                <button class="btn hvr-pulse-grow" onclick="addLike(event,@post.PostId)">
+                                    <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                                <button class="btn hvr-pulse-grow hide" onclick="removeLike(event, @post.PostId)">
+                                    <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn hvr-pulse-grow hide" onclick="addLike(event,@post.PostId)">
+                                    <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                                <button class="btn hvr-pulse-grow" onclick="removeLike(event, @post.PostId)">
+                                    <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                            }
                             <a class="hvr-pulse-grow">
                                 <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                             </a>
@@ -46,7 +62,7 @@
                             </a>
                         </div>
                         <div class="likes-count-section">
-                            <span>Liked by 12412421 people</span>
+                            <span>Liked by <span>@post.PostLikes.Count</span> people</span>
                         </div>
                         <div class="comments-section">
                             <div class="view-comment-button">
@@ -82,11 +98,11 @@
                         </div>
                         <div class="card-footer">
                             <form class="form-inline">
-                                <div class="form-group" id="comment-form">
-                                    <input type="text" class="form-control" onkeyup="enablePostBtn()" id="commentInput" />
+                                <div class="form-group comment-form">
+                                    <input type="text" class="comment-input" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" id="commentSubmit" value="Post" class="btn btn-outline-primary" />
+                                    <input type="submit" value="Post" class="comment-submit btn btn-outline-primary" />
                                 </div>
                             </form>
                         </div>
@@ -97,5 +113,6 @@
     }
 </div>
 @section Scripts{
+    <script src="~/lib/axios/axios.min.js"></script> 
     <script src="~/js/postOverview.js"></script>
 }

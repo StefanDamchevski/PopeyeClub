@@ -1,11 +1,11 @@
 ﻿let uploadBtn = document.getElementById('uploadBtn');
-let fileBtn = document.getElementById('fileBtn');
+let readFileBtn = document.getElementById('readFileBtn');
 let submitBtn = document.getElementById('submitBtn');
 
 uploadBtn.addEventListener('click', function () {
-    fileBtn.click();
+    readFileBtn.click();
 });
 
-fileBtn.addEventListener('change', function () {
+readFileBtn.addEventListener('change', function () {
     submitBtn.click();
 });

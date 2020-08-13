@@ -2,7 +2,6 @@
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.Auth;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace PopeyeClub.Controllers

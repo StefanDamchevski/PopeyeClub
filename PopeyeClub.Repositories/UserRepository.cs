@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using System.Linq;
@@ -32,7 +33,9 @@ namespace PopeyeClub.Repositories
 
         public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
-            return await userManager.FindByIdAsync(userId);
+            return await userManager.Users
+                .Include(x => x.Posts)
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
         }
 
         public async Task<ApplicationUser> GetByUserNameAsync(string userName)

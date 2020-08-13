@@ -54,3 +54,10 @@
     padding:2%;
     background-color:#dbdbdb;
 }
+
+h2 {
+    margin: 2%;
+    font-family: 'Finger Paint';
+    word-break: break-word;
+    text-align:center
+}

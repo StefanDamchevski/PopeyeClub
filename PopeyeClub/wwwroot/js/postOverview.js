@@ -1,17 +1,38 @@
-﻿function enablePostBtn() {
-    let commentSubmit = document.getElementById("commentSubmit");
-    let commentInput = document.getElementById("commentInput").value.trim();
+﻿function addLike(event, postId) {
+    let addLikeBtn = event.currentTarget;
+    let removeLikeBtn = event.currentTarget.parentNode.childNodes[3];
+    let count = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1].childNodes[1];
+    count.innerHTML = parseInt(count.innerHTML) + 1;
+    addLikeBtn.classList.add("hide");
+    removeLikeBtn.classList.remove("hide");
 
-    if (commentInput !== "") {
-        commentSubmit.disabled = false;
-    } else {
-        commentSubmit.disabled = true;
-    }
+    axios.post('/PostLike/AddPostLike/', {
+        postId: postId
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
-function disableCommentButton() {
-    let commentSubmit = document.getElementById("commentSubmit");
-    commentSubmit.disabled = true;
+function removeLike(event, postId) {
+    let addLikeBtn = event.currentTarget.parentNode.childNodes[1];
+    let removeLikeBtn = event.currentTarget;
+    let count = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1].childNodes[1];
+    count.innerHTML = parseInt(count.innerHTML) - 1;
+    addLikeBtn.classList.remove("hide");
+    removeLikeBtn.classList.add("hide");
+
+    axios.post('/PostLike/RemovePostLike/', {
+        postId: postId
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
-disableCommentButton();

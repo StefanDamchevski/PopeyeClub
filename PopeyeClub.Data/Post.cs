@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PopeyeClub.Data
@@ -13,5 +14,6 @@ namespace PopeyeClub.Data
         public byte[] PostImage { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
+        public List<PostLike> PostLikes { get; set; }
     }
 }
