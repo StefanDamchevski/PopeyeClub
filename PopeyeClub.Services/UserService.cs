@@ -49,7 +49,7 @@ namespace PopeyeClub.Services
 
             Response response = new Response();
 
-            if (dbUser == null)
+            if (dbUser is null)
             {
                 ApplicationUser user = new ApplicationUser
                 {

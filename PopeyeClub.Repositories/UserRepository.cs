@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
-using PopeyeClub.Data.Migrations;
 using PopeyeClub.Repositories.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;

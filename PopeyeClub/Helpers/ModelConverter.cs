@@ -1,4 +1,5 @@
 ﻿using PopeyeClub.Data;
+using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
@@ -22,6 +23,7 @@ namespace PopeyeClub.Helpers
                 Posts = user.Posts?.OrderByDescending(x => x.DateCreated).Select(x => x.ToUserPostViewModel()).ToList(),
             };
         }
+
         internal static EditProfileViewModel ToEditViewModel(this ApplicationUser user)
         {
             return new EditProfileViewModel
@@ -55,6 +57,8 @@ namespace PopeyeClub.Helpers
                 PostImage = Convert.ToBase64String(post.PostImage),
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
+                PostComments = post.PostComments?.OrderByDescending(x => x.DateCreated).Take(2).Select(x => x.ToCommentViewModel()).ToList(),
+                PostCommentsCount = post.PostComments.Count(),
             };
         }
 
@@ -66,6 +70,29 @@ namespace PopeyeClub.Helpers
                 UserId = postLike.UserId,
                 PostId = postLike.PostId,
                 Status = postLike.Status,
+            };
+        }
+
+        internal static CommentViewModel ToCommentViewModel(this PostComment comment)
+        {
+            return new CommentViewModel
+            {
+                Id = comment.Id,
+                Text = comment.Text,
+                UserImage = Convert.ToBase64String(comment.User.ProfilePicture),
+                UserName = comment.User.UserName,
+                CommentLikes = comment.CommentLikes?.Select(x => x.ToCommentLikeViewModel()).ToList(),
+            };
+        }
+
+        internal static CommentLikeViewModel ToCommentLikeViewModel(this CommentLike commentLike)
+        {
+            return new CommentLikeViewModel
+            {
+                Id = commentLike.Id,
+                UserId = commentLike.UserId,
+                CommentId = commentLike.CommentId,
+                Status = commentLike.Status,
             };
         }
     }

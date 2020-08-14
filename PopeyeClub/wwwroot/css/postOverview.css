@@ -61,6 +61,8 @@
     }
 
 .comment {
+    margin-top:1%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -68,16 +70,11 @@
 .user-comment img {
     width:25px; 
     height: 25px;
+    border-radius:100%;
 }
 
-.user-comment span {
-    margin-left: 2%;
+.comment-text {
     word-break: break-word;
-}
-
-.comment-like {
-    margin-top: 3%;
-    margin-left: 2%;
 }
 
     .comment-like a {

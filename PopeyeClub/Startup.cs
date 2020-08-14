@@ -49,6 +49,12 @@ namespace PopeyeClub
             services.AddTransient<IPostLikeService, PostLikeService>();
             services.AddTransient<IPostLikeRepository, PostLikeRepository>();
 
+            services.AddTransient<IPostCommentService, PostCommentService>();
+            services.AddTransient<IPostCommentRepository, PostCommentRepository>();
+
+            services.AddTransient<ICommentLikeService, CommentLikeService>();
+            services.AddTransient<ICommentLikeRepository, CommentLikeRepository>();
+
             services.AddControllersWithViews();
         }
 

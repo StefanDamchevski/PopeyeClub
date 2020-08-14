@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Interfaces;
+using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using System.Collections.Generic;
@@ -24,10 +25,12 @@ namespace PopeyeClub.Controllers
         public IActionResult Overview()
         {
             List<OverviewViewModel> models = postService.GetAll().Select(x => x.ToOverviewViewModel()).ToList();
-            foreach (var post in models)
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            foreach (OverviewViewModel post in models)
             {
-                PostLikeViewModel postLike = post.PostLikes?.FirstOrDefault(x => x.UserId.Equals(User.FindFirst(ClaimTypes.NameIdentifier).Value));
-                if(postLike == null)
+                PostLikeViewModel postLike = post.PostLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
+
+                if(postLike is null)
                 {
                     post.LikeStatus = Enums.PostLikeStatus.None;
                 }
@@ -38,6 +41,24 @@ namespace PopeyeClub.Controllers
                 else
                 {
                     post.LikeStatus = Enums.PostLikeStatus.Liked;
+                }
+
+                foreach (CommentViewModel comment in post.PostComments)
+                {
+                    CommentLikeViewModel commentLike = comment.CommentLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
+
+                    if (commentLike is null)
+                    {
+                        comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                    }
+                    else if (!commentLike.Status)
+                    {
+                        comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                    }
+                    else
+                    {
+                        comment.CommentLikeStatus = Enums.CommentLikeStatus.Liked;
+                    }
                 }
             }
             return View(models);

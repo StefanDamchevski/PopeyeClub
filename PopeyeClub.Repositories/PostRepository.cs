@@ -26,6 +26,8 @@ namespace PopeyeClub.Repositories
             return context.Posts
                 .Include(x => x.User)
                 .Include(x => x.PostLikes)
+                .Include(x => x.PostComments)
+                    .ThenInclude(x => x.CommentLikes)
                 .OrderByDescending(x => x.DateCreated)
                 .ToList();
         }

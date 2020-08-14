@@ -7,5 +7,11 @@
             None,
             Liked,
         }
+
+        public enum CommentLikeStatus
+        {
+            None,
+            Liked,
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace PopeyeClub.Services
 
         public void Create(int postId, string userId)
         {
-            PostLike dbLike = postLikeRepository.GetByUserIdAndPostId(postId, userId);
+            PostLike dbLike = postLikeRepository.Get(postId, userId);
 
             if(dbLike is null)
             {
@@ -37,7 +37,7 @@ namespace PopeyeClub.Services
 
         public void Update(int postId, string userId)
         {
-            PostLike dbLike = postLikeRepository.GetByUserIdAndPostId(postId, userId);
+            PostLike dbLike = postLikeRepository.Get(postId, userId);
             
             if(dbLike != null)
             {

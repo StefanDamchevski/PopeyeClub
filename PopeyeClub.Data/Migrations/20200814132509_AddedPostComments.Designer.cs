@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PopeyeClub.Data;
 
 namespace PopeyeClub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200814132509_AddedPostComments")]
+    partial class AddedPostComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,32 +226,6 @@ namespace PopeyeClub.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("PopeyeClub.Data.CommentLike", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CommentLikes");
-                });
-
             modelBuilder.Entity("PopeyeClub.Data.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -382,21 +358,6 @@ namespace PopeyeClub.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PopeyeClub.Data.CommentLike", b =>
-                {
-                    b.HasOne("PopeyeClub.Data.PostComment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PopeyeClub.Data.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PopeyeClub.Data.Post", b =>
                 {
                     b.HasOne("PopeyeClub.Data.ApplicationUser", "User")
@@ -409,7 +370,7 @@ namespace PopeyeClub.Data.Migrations
             modelBuilder.Entity("PopeyeClub.Data.PostComment", b =>
                 {
                     b.HasOne("PopeyeClub.Data.Post", "Post")
-                        .WithMany("PostComments")
+                        .WithMany()
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

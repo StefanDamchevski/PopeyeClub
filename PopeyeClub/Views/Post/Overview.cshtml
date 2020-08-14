@@ -16,7 +16,7 @@
         </div>
     }
 
-    @foreach (var post in Model)
+    @foreach (PopeyeClub.ViewModels.Post.OverviewViewModel post in Model)
     { 
         <div class="row">
             <div class="col-md-9">
@@ -66,40 +66,54 @@
                         </div>
                         <div class="comments-section">
                             <div class="view-comment-button">
-                                <a class="text-primary hvr-underline-from-center">View All 54234 Comments</a>
+                                <a class="text-primary hvr-underline-from-center">View All <span>@post.PostCommentsCount</span> Comments</a>
                             </div>
-                            <div class="comment">
-                                <div class="user-comment">
-                                    <img src="~/Images/icons8-male-user-96.png" />
-                                    <span>some comment</span>
+                            @if (post.PostComments.Count == 0)
+                            {
+                                <div class="not-available">
+                                    <p>No comments on this post</p>
                                 </div>
-                                <span class="comment-like">
-                                    <a class="hvr-grow">
-                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
-                                    </a>
-                                </span>
-                            </div>
-                            <hr />
-                            <div class="comment">
-                                <div class="user-comment">
-                                    <img src="~/Images/icons8-male-user-96.png" />
-                                    <span>some comment</span>
+                            }
+                            @for (int i = 0; i < post.PostComments.Count; i++)
+                            {
+                                <div class="comment">
+                                    <div class="user-comment">
+                                        <img src="data:image/jpeg;base64,@post.PostComments[i].UserImage" />
+                                        <span>@post.PostComments[i].UserName</span>
+                                    </div>
+                                    <div class="comment-text">@post.PostComments[i].Text</div>
+                                    <div class="comment-like">
+                                        @if (post.PostComments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
+                                        {
+                                            <button class="btn hvr-grow" onclick="addCommentLike(event,@post.PostComments[i].Id)">
+                                                <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                            </button>
+                                            <button class="btn hvr-grow hide" onclick="removeCommentLike(event,@post.PostComments[i].Id)">
+                                                <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn hvr-grow hide" onclick="addCommentLike(event,@post.PostComments[i].Id)">
+                                                <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                            </button>
+                                            <button class="btn hvr-grow" onclick="removeCommentLike(event,@post.PostComments[i].Id)">
+                                                <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                            </button>
+                                        }
+                                    </div>
                                 </div>
-                                <span class="comment-like">
-                                    <a class="hvr-grow">
-                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
-                                    </a>
-                                </span>
-                            </div>
-                            <hr />
+                                <hr />
+                            }
                         </div>
                         <div class="created-days-ago">
                             <p>@post.DaysAgo Days Ago</p>
                         </div>
                         <div class="card-footer">
-                            <form class="form-inline">
+                            <form asp-controller="PostComment" asp-action="Create" class="form-inline" method="post">
+                                <input type="hidden" name="postId" value="@post.PostId" />
                                 <div class="form-group comment-form">
-                                    <input type="text" class="comment-input" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required/>
+                                    <input type="text" name="comment" class="comment-input" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Post" class="comment-submit btn btn-outline-primary" />

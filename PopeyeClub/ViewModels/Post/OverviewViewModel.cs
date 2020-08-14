@@ -1,4 +1,5 @@
-﻿using PopeyeClub.ViewModels.Like;
+﻿using PopeyeClub.ViewModels.Comment;
+using PopeyeClub.ViewModels.Like;
 using System.Collections.Generic;
 
 namespace PopeyeClub.ViewModels.Post
@@ -12,6 +13,8 @@ namespace PopeyeClub.ViewModels.Post
         public string PostImage { get; set; }
         public int DaysAgo { get; set; }
         public List<PostLikeViewModel> PostLikes { get; set; }
+        public List<CommentViewModel> PostComments { get; set; }
         public Enums.PostLikeStatus LikeStatus { get; set; }
+        public int PostCommentsCount { get; set; }
     }
 }

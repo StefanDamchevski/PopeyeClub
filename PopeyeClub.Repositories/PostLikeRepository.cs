@@ -19,7 +19,7 @@ namespace PopeyeClub.Repositories
             context.SaveChanges();
         }
 
-        public PostLike GetByUserIdAndPostId(int postId, string userId)
+        public PostLike Get(int postId, string userId)
         {
             return context.PostLikes.FirstOrDefault(x => x.UserId.Equals(userId) && x.PostId.Equals(postId));
         }
