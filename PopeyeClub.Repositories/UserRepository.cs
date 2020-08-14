@@ -35,6 +35,8 @@ namespace PopeyeClub.Repositories
         {
             return await userManager.Users
                 .Include(x => x.Posts)
+                    .ThenInclude(x => x.PostComments)
+                .Include(x => x.Posts)
                     .ThenInclude(x => x.PostLikes)
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
         }

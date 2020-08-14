@@ -43,6 +43,7 @@ namespace PopeyeClub.Helpers
                 PostId = post.Id,
                 PostImage = Convert.ToBase64String(post.PostImage),
                 PostLikesCount = post.PostLikes.Where(x => x.Status.Equals(true)).Count(),
+                PostCommentCount = post.PostComments.Count(),
             };
         }
 
