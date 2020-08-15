@@ -26,6 +26,7 @@ else
         </div>
         @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
         {
+            //Fix Menu and make responisive desing on this page
             <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Edit Profile</a>
             <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Change Password</a>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changePictureMenu">Change Profile Picture</button>

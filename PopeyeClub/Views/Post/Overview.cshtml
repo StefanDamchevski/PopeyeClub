@@ -16,38 +16,38 @@
         </div>
     }
 
-    @foreach (PopeyeClub.ViewModels.Post.OverviewViewModel post in Model)
-    { 
+    @for (int i = 0; i < Model.Count; i++)
+    {
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
                         <div class="post-user">
-                            <img src="data:image/jpeg;base64,@post.ProfilePicture" />
+                            <img src="data:image/jpeg;base64,@Model[i].ProfilePicture" />
                         </div>
-                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@post.UserId" class="text-dark hvr-underline-from-center">@post.UserName</a>
+                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model[i].PostId" class="text-dark hvr-underline-from-center">@Model[i].UserName</a>
                         <div class="post-actions hvr-grow">
                             <i class="fas fa-ellipsis-h fa-2x hvr-icon-grow"></i>
                         </div>
                     </div>
                     <div class="card-body">
-                        <img class="post-img" src="data:image/jpeg;base64,@post.PostImage" />
+                        <img class="post-img" src="data:image/jpeg;base64,@Model[i].PostImage" />
                         <div class="card-actions">
-                            @if (post.LikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
+                            @if (Model[i].LikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
                             {
-                                <button class="btn hvr-pulse-grow" onclick="addLike(event,@post.PostId)">
+                                <button class="btn hvr-pulse-grow" onclick="addLike(event,@Model[i].PostId)">
                                     <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
-                                <button class="btn hvr-pulse-grow hide" onclick="removeLike(event, @post.PostId)">
+                                <button class="btn hvr-pulse-grow hide" onclick="removeLike(event, @Model[i].PostId)">
                                     <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
                             }
                             else
                             {
-                                <button class="btn hvr-pulse-grow hide" onclick="addLike(event,@post.PostId)">
+                                <button class="btn hvr-pulse-grow hide" onclick="addLike(event,@Model[i].PostId)">
                                     <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
-                                <button class="btn hvr-pulse-grow" onclick="removeLike(event, @post.PostId)">
+                                <button class="btn hvr-pulse-grow" onclick="removeLike(event, @Model[i].PostId)">
                                     <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
                             }
@@ -62,42 +62,42 @@
                             </a>
                         </div>
                         <div class="likes-count-section">
-                            <span>Liked by <span>@post.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> people</span>
+                            <span>Liked by <span>@Model[i].PostLikes.Where(x => x.Status.Equals(true)).Count()</span> people</span>
                         </div>
-                        <div class="comments-section">
+                        <div class="comments-section" id="commentSection-@i">
                             <div class="view-comment-button">
-                                <a class="text-primary hvr-underline-from-center">View All <span>@post.PostCommentsCount</span> Comments</a>
+                                <a class="text-primary hvr-underline-from-center">View All <span>@Model[i].PostCommentsCount</span> Comments</a>
                             </div>
-                            @if (post.PostComments.Count == 0)
+                            @if (Model[i].PostComments.Count == 0)
                             {
                                 <div class="not-available">
                                     <p>No comments on this post</p>
                                 </div>
                             }
-                            @for (int i = 0; i < post.PostComments.Count; i++)
+                            @for (int y = 0; y < Model[i].PostComments.Count; y++)
                             {
                                 <div class="comment">
                                     <div class="user-comment">
-                                        <img src="data:image/jpeg;base64,@post.PostComments[i].UserImage" />
-                                        <span>@post.PostComments[i].UserName</span>
+                                        <img src="data:image/jpeg;base64,@Model[i].PostComments[y].UserImage" />
+                                        <span>@Model[i].PostComments[y].UserName</span>
                                     </div>
-                                    <div class="comment-text">@post.PostComments[i].Text</div>
+                                    <div class="comment-text">@Model[i].PostComments[y].Text</div>
                                     <div class="comment-like">
-                                        @if (post.PostComments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
+                                        @if (Model[i].PostComments[y].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
                                         {
-                                            <button class="btn hvr-grow" onclick="addCommentLike(event,@post.PostComments[i].Id)">
+                                            <button class="btn hvr-grow" onclick="addCommentLike(event,@Model[i].PostComments[y].Id)">
                                                 <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
                                             </button>
-                                            <button class="btn hvr-grow hide" onclick="removeCommentLike(event,@post.PostComments[i].Id)">
+                                            <button class="btn hvr-grow hide" onclick="removeCommentLike(event,@Model[i].PostComments[y].Id)">
                                                 <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
                                             </button>
                                         }
                                         else
                                         {
-                                            <button class="btn hvr-grow hide" onclick="addCommentLike(event,@post.PostComments[i].Id)">
+                                            <button class="btn hvr-grow hide" onclick="addCommentLike(event,@Model[i].PostComments[y].Id)">
                                                 <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
                                             </button>
-                                            <button class="btn hvr-grow" onclick="removeCommentLike(event,@post.PostComments[i].Id)">
+                                            <button class="btn hvr-grow" onclick="removeCommentLike(event,@Model[i].PostComments[y].Id)">
                                                 <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
                                             </button>
                                         }
@@ -107,13 +107,13 @@
                             }
                         </div>
                         <div class="created-days-ago">
-                            <p>@post.DaysAgo Days Ago</p>
+                            <p>@Model[i].DaysAgo Days Ago</p>
                         </div>
                         <div class="card-footer">
-                            <form asp-controller="PostComment" asp-action="Create" class="form-inline" method="post">
-                                <input type="hidden" name="postId" value="@post.PostId" />
+                            <form  class="form-inline" method="post" onsubmit="addComment(event, @i)">
+                                <input type="hidden" name="postId" value="@Model[i].PostId" />
                                 <div class="form-group comment-form">
-                                    <input type="text" name="comment" class="comment-input" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required/>
+                                    <input type="text" name="comment" class="comment-input" id="commentInput-@i" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Post" class="comment-submit btn btn-outline-primary" />

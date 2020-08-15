@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PopeyeClub.Data;
 using PopeyeClub.Services.Interfaces;
+using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace PopeyeClub.Controllers
@@ -9,10 +13,12 @@ namespace PopeyeClub.Controllers
     public class PostCommentController : Controller
     {
         private readonly IPostCommentService postCommentService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PostCommentController(IPostCommentService postCommentService)
+        public PostCommentController(IPostCommentService postCommentService, UserManager<ApplicationUser> userManager)
         {
             this.postCommentService = postCommentService;
+            this.userManager = userManager;
         }
 
         [HttpPost]
@@ -20,15 +26,23 @@ namespace PopeyeClub.Controllers
         {
             if (string.IsNullOrEmpty(comment) || postId == default)
             {
-                return RedirectToAction("Overview", "Post");
+                return BadRequest();
             }
             else
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 postCommentService.Create(postId, comment, userId);
-                return RedirectToAction("Overview", "Post");
+                ApplicationUser user = userManager.Users.FirstOrDefault(x => x.Id.Equals(userId));
+                PostComment postComment = postCommentService.Get(postId, userId, comment);
+                return Ok(new
+                {
+                    PostId = postId,
+                    Comment = comment,
+                    Username = user.UserName,
+                    UserImage = Convert.ToBase64String(user.ProfilePicture),
+                    CommentId = postComment.Id,
+                });
             }
-
         }
     }
 }
