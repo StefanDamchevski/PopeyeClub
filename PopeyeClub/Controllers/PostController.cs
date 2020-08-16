@@ -25,7 +25,9 @@ namespace PopeyeClub.Controllers
         public IActionResult Overview()
         {
             List<OverviewViewModel> models = postService.GetAll().Select(x => x.ToOverviewViewModel()).ToList();
+
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             foreach (OverviewViewModel post in models)
             {
                 PostLikeViewModel postLike = post.PostLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
@@ -70,6 +72,47 @@ namespace PopeyeClub.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             postService.Create(userId, postImage.ToByteArray());    
             return RedirectToAction(nameof(Overview));
+        }
+
+        public IActionResult Details(int postId)
+        {
+            PostDetailsViewModel model = postService.GetById(postId).ToPostDetailsViewModel();
+
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            PostLikeViewModel postLike = model.PostLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
+
+            if (postLike is null)
+            {
+                model.PostLikeStatus = Enums.PostLikeStatus.None;
+            }
+            else if (!postLike.Status)
+            {
+                model.PostLikeStatus = Enums.PostLikeStatus.None;
+            }
+            else
+            {
+                model.PostLikeStatus = Enums.PostLikeStatus.Liked;
+            }
+
+            foreach (CommentViewModel comment in model.Comments)
+            {
+                CommentLikeViewModel commentLike = comment.CommentLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
+
+                if (commentLike is null)
+                {
+                    comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                }
+                else if (!commentLike.Status)
+                {
+                    comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                }
+                else
+                {
+                    comment.CommentLikeStatus = Enums.CommentLikeStatus.Liked;
+                }
+            }
+            return View(model);
         }
     }
 }

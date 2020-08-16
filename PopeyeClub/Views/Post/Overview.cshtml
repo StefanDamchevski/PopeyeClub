@@ -25,9 +25,12 @@
                         <div class="post-user">
                             <img src="data:image/jpeg;base64,@Model[i].ProfilePicture" />
                         </div>
-                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model[i].PostId" class="text-dark hvr-underline-from-center">@Model[i].UserName</a>
-                        <div class="post-actions hvr-grow">
+                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model[i].UserId" class="text-dark hvr-underline-from-center">@Model[i].UserName</a>
+                        <button class="btn post-actions hvr-grow" type="button" data-toggle="modal" data-target="#postActionModal-@i">
                             <i class="fas fa-ellipsis-h fa-2x hvr-icon-grow"></i>
+                        </button>
+                        <div class="modal fade modal-align" id="postActionModal-@i" tabindex="-1" role="dialog" aria-labelledby="postActionModal-@i-Label" aria-hidden="true">
+                            <partial name="./Partials/_PostActionsModal" for="@Model[i].PostId"/>
                         </div>
                     </div>
                     <div class="card-body">
@@ -51,13 +54,10 @@
                                     <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
                             }
-                            <a class="hvr-pulse-grow">
+                            <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model[i].PostId" class="btn hvr-pulse-grow">
                                 <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                             </a>
-                            <a class="hvr-pulse-grow">
-                                <i class="far fa-share-square fa-2x hvr-icon-pulse-grow"></i>
-                            </a>
-                            <a class="hvr-pulse-grow">
+                            <a class="btn hvr-pulse-grow">
                                 <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                             </a>
                         </div>
@@ -126,6 +126,7 @@
         </div>
     }
 </div>
+
 @section Scripts{
     <script src="~/lib/axios/axios.min.js"></script> 
     <script src="~/js/postOverview.js"></script>

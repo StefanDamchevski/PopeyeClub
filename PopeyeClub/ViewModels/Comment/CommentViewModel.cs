@@ -1,5 +1,6 @@
 ﻿using PopeyeClub.ViewModels.Like;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PopeyeClub.ViewModels.Comment
 {

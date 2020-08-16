@@ -3,9 +3,8 @@
     width: 50%;
     margin: 2% auto;
     border-radius: 5px;
-    border: 1px solid;
+    border: 1px solid #dbdbdb;
     padding: 2%;
-    background-color: #dbdbdb;
 }
 
 .row{
@@ -29,8 +28,15 @@
 }
 
 .post-actions i{
-    margin-top: 30%;
     cursor:pointer;
+}
+
+.modal-align{
+    top:20%;
+}
+
+.modal-content .btn{
+    margin:2%;
 }
 
 .post-img{

@@ -7,5 +7,6 @@ namespace PopeyeClub.Repositories.Interfaces
     {
         List<Post> GetAll();
         void Create(Post post);
+        Post GetById(int postId);
     }
 }

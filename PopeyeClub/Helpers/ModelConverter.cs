@@ -4,7 +4,9 @@ using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Helpers
 {
@@ -94,6 +96,21 @@ namespace PopeyeClub.Helpers
                 UserId = commentLike.UserId,
                 CommentId = commentLike.CommentId,
                 Status = commentLike.Status,
+            };
+        }
+
+        internal static PostDetailsViewModel ToPostDetailsViewModel(this Post post)
+        {
+            return new PostDetailsViewModel
+            {
+                PostId = post.Id,
+                UserId = post.UserId,
+                UserImage = Convert.ToBase64String(post.User.ProfilePicture),
+                PostImage = Convert.ToBase64String(post.PostImage),
+                CreatedBy = post.User.UserName,
+                DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
+                Comments = post.PostComments?.OrderByDescending(x => x.DateCreated).Select(x => x.ToCommentViewModel()).ToList(),
+                PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
             };
         }
     }

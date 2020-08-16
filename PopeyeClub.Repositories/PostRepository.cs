@@ -31,5 +31,17 @@ namespace PopeyeClub.Repositories
                 .OrderByDescending(x => x.DateCreated)
                 .ToList();
         }
+
+        public Post GetById(int postId)
+        {
+            return context.Posts
+                .Include(x => x.User)
+                .Include(x => x.PostLikes)
+                .Include(x => x.PostComments)
+                    .ThenInclude(x => x.User)
+                 .Include(x => x.PostComments)
+                    .ThenInclude(x => x.CommentLikes)
+                .FirstOrDefault(x => x.Id.Equals(postId));
+        }
     }
 }

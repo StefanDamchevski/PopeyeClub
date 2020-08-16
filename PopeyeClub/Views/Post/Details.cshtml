@@ -1,0 +1,120 @@
+﻿@model PopeyeClub.ViewModels.Post.PostDetailsViewModel
+
+@{
+    ViewData["Title"] = "Post-Details";
+}
+
+@section Styles{ 
+    <link href="~/css/postDetails.css" rel="stylesheet" />
+}
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+            <div class="post-image">
+                <img src="data:image/jpeg;base64,@Model.PostImage" />
+            </div>
+        </div>
+            <div class="col-md-4">
+                <div class="user">
+                    <img src="data:image/jpeg;base64,@Model.UserImage"/>
+                    <div class="user-name">@Model.CreatedBy</div>
+                    <button class="btn post-actions hvr-grow" type="button" data-toggle="modal" data-target="#postActionModal">
+                        <i class="fas fa-ellipsis-h fa-2x hvr-icon-grow"></i>
+                    </button>
+                    <div class="modal fade modal-align" id="postActionModal" tabindex="-1" role="dialog" aria-labelledby="postActionModalLabel" aria-hidden="true">
+                        <partial name="./Partials/_PostActionsModal" for="@Model.PostId" />
+                    </div>
+                </div>
+                <div class="comment-section" id="commentSection">
+                    @if (Model.Comments.Count == 0)
+                    {
+                        <div class="not-available">
+                            <p>No comments on this post</p>
+                        </div>
+                    }
+
+                    @for (int i = 0; i < Model.Comments.Count; i++)
+                    {
+                        <div class="comment">
+                            <div class="user-comment">
+                                <img src="data:image/jpeg;base64,@Model.Comments[i].UserImage" />
+                                <span>@Model.Comments[i].UserName</span>
+                            </div>
+                            <div class="comment-text">@Model.Comments[i].Text</div>
+                            <div class="comment-like">
+                                @if (@Model.Comments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
+                                {
+                                    <button class="btn hvr-grow" id="addCommentLikeBtn-@i" onclick="addCommentLike(event,@Model.Comments[i].Id,@i)">
+                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    </button>
+                                    <button class="btn hvr-grow hide" id="removeCommentLikeBtn-@i" onclick="removeCommentLike(event,@Model.Comments[i].Id,@i)">
+                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn hvr-grow hide" id="addCommentLikeBtn-@i" onclick="addCommentLike(event,@Model.Comments[i].Id, @i)">
+                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    </button>
+                                    <button class="btn hvr-grow" id="removeCommentLikeBtn-@i"  onclick="removeCommentLike(event,@Model.Comments[i].Id, @i)">
+                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                    }
+                </div>
+                <div class="card-actions">
+                    @if (Model.PostLikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
+                    {
+                        //fix ids in PostOverview in order to use one script
+                        <button class="btn hvr-pulse-grow" id="addPostLikeBtn" onclick="addLike(event,@Model.PostId)">
+                            <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                        <button class="btn hvr-pulse-grow hide" id="removePostLikeBtn" onclick="removeLike(event,@Model.PostId)">
+                            <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn" onclick="addLike(event,@Model.PostId)">
+                            <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                        <button class="btn hvr-pulse-grow" id="removePostLikeBtn"  onclick="removeLike(event,@Model.PostId)">
+                            <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                    }
+                    <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model.PostId" class="btn hvr-pulse-grow">
+                        <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
+                    </a>
+                    <a class="btn hvr-pulse-grow">
+                        <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                    </a>
+                </div>
+                <div class="likes-count-section">
+                    <span>Liked by <span>@Model.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> People</span>
+                </div>
+                <div class="created-days-ago">
+                    <p>Created @Model.DaysAgo days ago</p>
+                </div>
+                <div class="add-comment-section">
+                    <form class="form-inline" method="post" onsubmit="addComment(event,@Model.Comments.Count)">
+                        <input type="hidden" name="postId" value="@Model.PostId"/>
+                        <div class="form-group comment-form">
+                            <input type="text" name="comment" class="comment-input" id="commentInput" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Post" id="comment-submit" class="comment-submit btn btn-outline-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/axios/axios.min.js"></script>
+    <script src="~/js/postDetails.js"></script>
+}

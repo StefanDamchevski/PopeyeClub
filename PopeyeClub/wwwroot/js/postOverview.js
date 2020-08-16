@@ -116,7 +116,6 @@ function addComment(event, i) {
 
     axios.post('/PostComment/Create/', data)
         .then(function (response) {
-            debugger;
             let commentSection = document.getElementById("commentSection-" + i);
 
             let comment = document.createElement("div");

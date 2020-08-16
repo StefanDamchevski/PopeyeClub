@@ -36,7 +36,6 @@ namespace PopeyeClub.Controllers
                 PostComment postComment = postCommentService.Get(postId, userId, comment);
                 return Ok(new
                 {
-                    PostId = postId,
                     Comment = comment,
                     Username = user.UserName,
                     UserImage = Convert.ToBase64String(user.ProfilePicture),
