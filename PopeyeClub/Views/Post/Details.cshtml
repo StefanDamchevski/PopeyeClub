@@ -45,20 +45,20 @@
                             <div class="comment-like">
                                 @if (@Model.Comments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
                                 {
-                                    <button class="btn hvr-grow" id="addCommentLikeBtn-@i" onclick="addCommentLike(event,@Model.Comments[i].Id,@i)">
-                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    <button class="btn hvr-grow" id="addCommentLikeBtn-@i" onclick="addCommentLike(@Model.Comments[i].Id,@i)">
+                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
-                                    <button class="btn hvr-grow hide" id="removeCommentLikeBtn-@i" onclick="removeCommentLike(event,@Model.Comments[i].Id,@i)">
-                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    <button class="btn hvr-grow hide" id="removeCommentLikeBtn-@i" onclick="removeCommentLike(@Model.Comments[i].Id,@i)">
+                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
                                 }
                                 else
                                 {
-                                    <button class="btn hvr-grow hide" id="addCommentLikeBtn-@i" onclick="addCommentLike(event,@Model.Comments[i].Id, @i)">
-                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    <button class="btn hvr-grow hide" id="addCommentLikeBtn-@i" onclick="addCommentLike(@Model.Comments[i].Id, @i)">
+                                        <i class="far fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
-                                    <button class="btn hvr-grow" id="removeCommentLikeBtn-@i"  onclick="removeCommentLike(event,@Model.Comments[i].Id, @i)">
-                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow"></i>
+                                    <button class="btn hvr-grow" id="removeCommentLikeBtn-@i"  onclick="removeCommentLike(@Model.Comments[i].Id, @i)">
+                                        <i class="fas fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
                                 }
                             </div>
@@ -69,20 +69,19 @@
                 <div class="card-actions">
                     @if (Model.PostLikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
                     {
-                        //fix ids in PostOverview in order to use one script
-                        <button class="btn hvr-pulse-grow" id="addPostLikeBtn" onclick="addLike(event,@Model.PostId)">
+                        <button class="btn hvr-pulse-grow" id="addPostLikeBtn" onclick="addLike(@Model.PostId)">
                             <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
-                        <button class="btn hvr-pulse-grow hide" id="removePostLikeBtn" onclick="removeLike(event,@Model.PostId)">
+                        <button class="btn hvr-pulse-grow hide" id="removePostLikeBtn" onclick="removeLike(@Model.PostId)">
                             <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
                     }
                     else
                     {
-                        <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn" onclick="addLike(event,@Model.PostId)">
+                        <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn" onclick="addLike(@Model.PostId)">
                             <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
-                        <button class="btn hvr-pulse-grow" id="removePostLikeBtn"  onclick="removeLike(event,@Model.PostId)">
+                        <button class="btn hvr-pulse-grow" id="removePostLikeBtn"  onclick="removeLike(@Model.PostId)">
                             <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
                     }
@@ -94,13 +93,13 @@
                     </a>
                 </div>
                 <div class="likes-count-section">
-                    <span>Liked by <span>@Model.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> People</span>
+                    <span>Liked by <span id="likesCount">@Model.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> People</span>
                 </div>
                 <div class="created-days-ago">
                     <p>Created @Model.DaysAgo days ago</p>
                 </div>
                 <div class="add-comment-section">
-                    <form class="form-inline" method="post" onsubmit="addComment(event,@Model.Comments.Count)">
+                    <form class="form-inline" method="post" onsubmit="addComment(event,@Model.Comments.Count, @Model.PostId.ToString())">
                         <input type="hidden" name="postId" value="@Model.PostId"/>
                         <div class="form-group comment-form">
                             <input type="text" name="comment" class="comment-input" id="commentInput" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required />
@@ -117,4 +116,20 @@
 @section Scripts{
     <script src="~/lib/axios/axios.min.js"></script>
     <script src="~/js/postDetails.js"></script>
+    <script>
+        window.onload = function addToLocalStorage() {
+
+            localStorage.clear();
+
+            let storageData = [];
+
+            for (let i = 0; i < @Model.Comments.Count; i++) {
+                if (storageData.indexOf(i) == -1) {
+                    storageData.push(i);
+                }
+            }
+
+            localStorage.setItem(@Model.PostId.ToString(), JSON.stringify(storageData));
+        }
+    </script>
 }

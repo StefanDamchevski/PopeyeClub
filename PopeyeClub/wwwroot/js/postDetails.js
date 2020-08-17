@@ -1,4 +1,5 @@
-﻿function updateScroll() {
+﻿
+function updateScroll() {
     var element = document.getElementById("commentSection");
     element.scrollTop = element.scrollHeight;
 }
@@ -20,11 +21,24 @@ function enablePostBtn(event) {
     }
 }
 
-function addComment(event, count) {
-
+function addComment(event, count, postId) {
+   
     event.preventDefault();
     let data = new FormData(event.target);
-    console.log(count);
+
+    let storageData = JSON.parse(localStorage.getItem(postId));
+
+    let lastId = storageData.length - 1;
+    console.log(lastId)
+
+    if (lastId >= count) {
+        count = lastId + 1;
+    }
+
+    storageData.push(count)
+
+    localStorage.setItem(postId, JSON.stringify(storageData));
+
     axios.post('/PostComment/Create/', data)
         .then(function (response) {
             let commentSection = document.getElementById("commentSection");
@@ -58,7 +72,7 @@ function addComment(event, count) {
             addLikeBtn.classList.add("btn");
             addLikeBtn.classList.add("hvr-grow");
             addLikeBtn.id = "addCommentLikeBtn-" + count;
-            addLikeBtn.setAttribute('onclick', `addCommentLike(event, ${response.data.commentId},${count})`);
+            addLikeBtn.setAttribute('onclick', `addCommentLike(${response.data.commentId},${count})`);
             commentLike.appendChild(addLikeBtn);
 
             let addLikeIcon = document.createElement("i");
@@ -66,6 +80,7 @@ function addComment(event, count) {
             addLikeIcon.classList.add("fa-thumbs-up");
             addLikeIcon.classList.add("fa-2x");
             addLikeIcon.classList.add("hvr-icon-grow");
+            addLikeIcon.style.fontSize = "1em";
             addLikeBtn.appendChild(addLikeIcon);
 
 
@@ -74,7 +89,7 @@ function addComment(event, count) {
             removeLikeBtn.classList.add("hvr-grow");
             removeLikeBtn.classList.add("hide");
             removeLikeBtn.id = "removeCommentLikeBtn-" + count;
-            removeLikeBtn.setAttribute('onclick', `removeCommentLike(event, ${response.data.commentId}, ${count})`);
+            removeLikeBtn.setAttribute('onclick', `removeCommentLike(${response.data.commentId}, ${count})`);
             commentLike.appendChild(removeLikeBtn);
 
 
@@ -83,6 +98,7 @@ function addComment(event, count) {
             removeLikeIcon.classList.add("fa-thumbs-up");
             removeLikeIcon.classList.add("fa-2x");
             removeLikeIcon.classList.add("hvr-icon-grow");
+            removeLikeIcon.style.fontSize = "1em";
             removeLikeBtn.appendChild(removeLikeIcon);
 
             let hr = document.createElement("hr");
@@ -94,4 +110,71 @@ function addComment(event, count) {
         .catch(function (error) {
             console.log(error)
         });
+}
+
+function addCommentLike(commentId, i) {
+
+    if (commentId != 0) {
+        axios.post('/CommentLike/AddCommentLike/', {
+            commentId: commentId
+        })
+            .then(function (response) {
+                document.getElementById("addCommentLikeBtn-" + i).classList.add('hide');
+                document.getElementById("removeCommentLikeBtn-" + i).classList.remove('hide');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+function removeCommentLike(commentId, i) {
+
+    if (commentId != 0) {
+        axios.post('/CommentLike/RemoveCommentLike/', {
+            commentId: commentId
+        })
+            .then(function (response) {
+                document.getElementById("addCommentLikeBtn-" + i).classList.remove('hide');
+                document.getElementById("removeCommentLikeBtn-" + i).classList.add('hide');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+function addLike(postId) {
+
+    if (postId != 0) {
+        axios.post('/PostLike/AddPostLike/', {
+            postId: postId
+        })
+            .then(function (response) {
+                document.getElementById("addPostLikeBtn").classList.add('hide');
+                document.getElementById("removePostLikeBtn").classList.remove('hide');
+                let count = document.getElementById("likesCount");
+                count.innerHTML = parseInt(count.innerHTML) + 1;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+function removeLike(postId) {
+    if (postId != 0) {
+        axios.post('/PostLike/RemovePostLike/', {
+            postId: postId
+        })
+            .then(function (response) {
+                document.getElementById("addPostLikeBtn").classList.remove('hide');
+                document.getElementById("removePostLikeBtn").classList.add('hide');
+                let count = document.getElementById("likesCount");
+                count.innerHTML = parseInt(count.innerHTML) - 1;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }

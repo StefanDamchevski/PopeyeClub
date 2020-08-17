@@ -1,18 +1,15 @@
 ﻿
-function addLike(event, postId) {
+function addLike(postId,i) {
     if (postId != 0) {
-        let addLikeBtn = event.currentTarget;
-        let removeLikeBtn = event.currentTarget.parentNode.childNodes[3];
-        let count = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1].childNodes[1];
-        count.innerHTML = parseInt(count.innerHTML) + 1;
-        addLikeBtn.classList.add("hide");
-        removeLikeBtn.classList.remove("hide");
 
         axios.post('/PostLike/AddPostLike/', {
             postId: postId
         })
             .then(function (response) {
-                console.log(response);
+                document.getElementById("addPostLikeBtn-" + i).classList.add('hide');
+                document.getElementById("removePostLikeBtn-" + i).classList.remove('hide')
+                let count = document.getElementById('likesCount' + i);
+                count.innerHTML = parseInt(count.innerHTML) + 1;
             })
             .catch(function (error) {
                 console.log(error);
@@ -20,20 +17,17 @@ function addLike(event, postId) {
     }
 }
 
-function removeLike(event, postId) {
+function removeLike(postId, i) {
     if (postId != 0) {
-        let addLikeBtn = event.currentTarget.parentNode.childNodes[1];
-        let removeLikeBtn = event.currentTarget;
-        let count = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1].childNodes[1];
-        count.innerHTML = parseInt(count.innerHTML) - 1;
-        addLikeBtn.classList.remove("hide");
-        removeLikeBtn.classList.add("hide");
 
         axios.post('/PostLike/RemovePostLike/', {
             postId: postId
         })
             .then(function (response) {
-                console.log(response);
+                document.getElementById("addPostLikeBtn-" + i).classList.remove('hide');
+                document.getElementById("removePostLikeBtn-" + i).classList.add('hide')
+                let count = document.getElementById('likesCount' + i);
+                count.innerHTML = parseInt(count.innerHTML) - 1;
             })
             .catch(function (error) {
                 console.log(error);
@@ -52,35 +46,27 @@ function disableButtons() {
 
 disableButtons();
 
-function enablePostBtn(event) {
+function enablePostBtn(i) {
 
-    let target = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1];
+    let commentInput = document.getElementById("commentInput-" + i).value.trim();
 
-    if (event.currentTarget.value.trim() != "") {
-        target.disabled = false;
+    if (commentInput != "") {
+        document.getElementById("commentSubmit-" + i).disabled = false;
     } else {
-        target.disabled = true;
+        document.getElementById("commentSubmit-" + i).disabled = true;
     }
 }
 
-function addCommentLike(event, commentId) {
+function addCommentLike(commentId, i, y) {
 
     if (commentId != 0) {
-        let addCommentLikeBtn = event.currentTarget;
-        let removeCommentLikeBtn = event.currentTarget.parentNode.childNodes[3];
-
-        if (event.currentTarget.parentNode.childNodes[3] == undefined) {
-            removeCommentLikeBtn = event.currentTarget.parentNode.childNodes[1];
-        }
-
-        addCommentLikeBtn.classList.add("hide");
-        removeCommentLikeBtn.classList.remove("hide");
 
         axios.post('/CommentLike/AddCommentLike/', {
             commentId: commentId
         })
             .then(function (response) {
-                console.log(response);
+                document.getElementById("addCommentLikeBtn-" + i + "-" + y).classList.add('hide');
+                document.getElementById("removeCommentLikeBtn-" + i + "-" + y).classList.remove('hide');
             })
             .catch(function (error) {
                 console.log(error);
@@ -88,20 +74,16 @@ function addCommentLike(event, commentId) {
     }
 }
 
-function removeCommentLike(event, commentId) {
+function removeCommentLike(commentId, i, y) {
 
     if (commentId != 0) {
-        let addCommentLikeBtn = event.currentTarget.parentNode.childNodes[1];
-        let removeCommentLikeBtn = event.currentTarget;
-
-        addCommentLikeBtn.classList.remove("hide");
-        removeCommentLikeBtn.classList.add("hide");
 
         axios.post('/CommentLike/RemoveCommentLike/', {
             commentId: commentId
         })
             .then(function (response) {
-                console.log(response);
+                document.getElementById("addCommentLikeBtn-" + i + "-" + y).classList.remove('hide');
+                document.getElementById("removeCommentLikeBtn-" + i + "-" + y).classList.add('hide');
             })
             .catch(function (error) {
                 console.log(error);
@@ -109,10 +91,23 @@ function removeCommentLike(event, commentId) {
     }
 }
 
-function addComment(event, i) {
+function addComment(event, i, count, storageKey) {
 
     event.preventDefault();
+
     let data = new FormData(event.target);
+
+    let storageData = JSON.parse(localStorage.getItem(storageKey));
+
+    let lastCommentId = storageData[i].length - 1;
+
+    if (lastCommentId >= count) {
+        count = lastCommentId + 1;
+    }
+
+    storageData[i].push(count);
+
+    localStorage.setItem(storageKey, JSON.stringify(storageData));
 
     axios.post('/PostComment/Create/', data)
         .then(function (response) {
@@ -146,7 +141,8 @@ function addComment(event, i) {
             let addLikeBtn = document.createElement("button");
             addLikeBtn.classList.add("btn");
             addLikeBtn.classList.add("hvr-grow");
-            addLikeBtn.setAttribute('onclick', `addCommentLike(event, ${response.data.commentId})`);
+            addLikeBtn.id = "addCommentLikeBtn-" + i + "-" + count;
+            addLikeBtn.setAttribute('onclick', `addCommentLike(${response.data.commentId},${i}, ${count})`);
             commentLike.appendChild(addLikeBtn);
 
             let addLikeIcon = document.createElement("i");
@@ -154,6 +150,7 @@ function addComment(event, i) {
             addLikeIcon.classList.add("fa-thumbs-up");
             addLikeIcon.classList.add("fa-2x");
             addLikeIcon.classList.add("hvr-icon-grow");
+            addLikeIcon.style.fontSize = "1em";
             addLikeBtn.appendChild(addLikeIcon);
 
 
@@ -161,7 +158,8 @@ function addComment(event, i) {
             removeLikeBtn.classList.add("btn");
             removeLikeBtn.classList.add("hvr-grow");
             removeLikeBtn.classList.add("hide");
-            removeLikeBtn.setAttribute('onclick', `removeCommentLike(event, ${response.data.commentId})`);
+            removeLikeBtn.id = "removeCommentLikeBtn-" + i + "-" + count;
+            removeLikeBtn.setAttribute('onclick', `removeCommentLike(${response.data.commentId},${i}, ${count})`);
             commentLike.appendChild(removeLikeBtn);
 
 
@@ -170,6 +168,7 @@ function addComment(event, i) {
             removeLikeIcon.classList.add("fa-thumbs-up");
             removeLikeIcon.classList.add("fa-2x");
             removeLikeIcon.classList.add("hvr-icon-grow");
+            removeLikeIcon.style.fontSize = "1em";
             removeLikeBtn.appendChild(removeLikeIcon);
 
             let hr = document.createElement("hr");
