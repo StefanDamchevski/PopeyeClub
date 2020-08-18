@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.Web.CodeGeneration;
 using PopeyeClub.Data;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Dto;
@@ -71,7 +70,10 @@ namespace PopeyeClub.Controllers
 
             ProfileViewModel model = user.ToProfileViewModel();
 
-            model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
+            if(User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            {
+                model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
+            }
 
             return View(model);
         }

@@ -90,19 +90,19 @@
                     </a>
                     @if (Model.PostSaveStatus == PopeyeClub.ViewModels.Like.Enums.PostSaveStatus.None)
                     {
-                        <button class="btn hvr-pulse-grow" id="savePostButton" onclick="addToSaved(@Model.PostId)" style="cursor:pointer">
+                        <button class="btn hvr-pulse-grow" id="savePostButton" onclick="addToSaved(@Model.PostId)">
                             <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                         </button>
-                        <button class="btn hvr-pulse-grow hide" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)" style="cursor:pointer">
+                        <button class="btn hvr-pulse-grow hide" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)">
                             <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                         </button>
                     }
                     else
                     {
-                        <button class="btn hvr-pulse-grow hide" id="savePostButton" onclick="addToSaved(@Model.PostId)" style="cursor:pointer">
+                        <button class="btn hvr-pulse-grow pointer hide" id="savePostButton" onclick="addToSaved(@Model.PostId)">
                             <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                         </button>
-                        <button class="btn hvr-pulse-grow" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)" style="cursor:pointer">
+                        <button class="btn hvr-pulse-grow pointer" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)">
                             <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                         </button>
                     }
@@ -127,9 +127,9 @@
             </div>
     </div>
 </div>
-<hr style="margin-top:5%;" />
-<div style="text-align:center">
-    <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.UserId" class="text-dark hvr-underline-from-center" style="cursor:pointer; margin-top:2%;">More Posts from @Model.CreatedBy</a>
+<hr class="splitter"/>
+<div class="see-more pointer">
+    <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.UserId" class="text-dark hvr-underline-from-center to-profile">More Posts from @Model.CreatedBy</a>
 </div>
     <div class="container">
         <div class="row">
@@ -141,19 +141,19 @@
             }
             @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel post in Model.UserPosts)
             {
-                <div class="col-md-4" style="border:none; margin-top:2%">
+                <div class="col-md-4 other-posts">
                     <div class="card">
-                        <div class="card-body" style="padding:0;">
-                            <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId" style="cursor:pointer">
-                                <img src="data:image/jpeg;base64,@post.PostImage" width="338" height="200"/>
+                        <div class="card-body">
+                            <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId" class="pointer">
+                                <img class="other-posts-image" src="data:image/jpeg;base64,@post.PostImage"/>
                             </a>
                         </div>
-                        <div class="likes-comments-count" style="display:flex; justify-content:space-around; padding:2%">
-                            <div class="like-counts hvr-pulse-grow" style="cursor:pointer">
+                        <div class="likes-comments-count">
+                            <div class="like-counts hvr-pulse-grow pointer">
                                 <i class="far fa-heart fa-2x"></i>
                                 <span>@post.PostLikesCount</span>
                             </div>
-                            <div class="comments-count hvr-pulse-grow" style="cursor:pointer">
+                            <div class="comments-count hvr-pulse-grow pointer">
                                 <i class="far fa-comment-alt fa-2x"></i>
                                 <span>@post.PostCommentCount</span>
                             </div>

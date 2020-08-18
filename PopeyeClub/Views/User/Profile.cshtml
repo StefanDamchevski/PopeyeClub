@@ -16,29 +16,41 @@
 }
 else
 {
-    <div class="user-info-container">
-        <div class="user-image">
-            <img src="data:image/jpeg;base64,@Model.UserImage" />
-        </div>
-        <div class="user-info">
-            <p>@Model.UserName</p>
-            <p><b>@Model.Email</b></p>
-        </div>
-        @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
-        {
-            //Fix Menu and make responisive desing on this page
-            <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Edit Profile</a>
-            <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-primary btn-sm">Change Password</a>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changePictureMenu">Change Profile Picture</button>
-            <partial name="./Partials/_ChangeProfilePictureMenu" for="@Model.UserImage"/>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#checkPassword">Temporary disable your account</button>
-            <partial name="./Partials/_PasswordCheck" for="@Model.UserId" />
-        }
-        else
-        {
-            <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-primary btn-sm">Follow</a>
-        }
+<div class="user-info-container">
+    <div class="user-image">
+        <img src="data:image/jpeg;base64,@Model.UserImage" />
     </div>
+    <div class="user-info">
+        <p>@Model.UserName</p>
+        <p><b>@Model.Email</b></p>
+    </div>
+    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+    {
+        <button type="button" class="btn btn-outline-secondary hvr-pulse-grow" data-toggle="modal" data-target="#accountSettingModal">
+            <i class="fas fa-cog fa-2x"></i>
+        </button>
+        <div id="accountSettingModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancel" aria-hidden="true"></button>
+                    <a asp-controller="User" asp-action="Edit" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-outline-primary">Edit Profile</a>
+                    <a asp-controller="User" asp-action="ChangePassword" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-outline-primary">Change Password</a>
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#changePictureMenu" id="changeProfilePicBtn">Change Profile Picture</button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#checkPassword" id="disableAccountBtn">Temporary disable your account</button>
+                    <button type="button" class="btn btn-outline-primary" id="closeMenu" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <partial name="./Partials/_ChangeProfilePictureMenu" for="@Model.UserImage" />
+        <partial name="./Partials/_PasswordCheck" for="@Model.UserId" />
+    }
+    else
+    {
+        <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-outline-secondary hvr-pulse-grow">
+            <i class="fas fa-user-friends fa-2x"></i>
+        </a>
+    }
+</div>
     <div class="user-posts">
         @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate)
         {
@@ -58,62 +70,63 @@ else
                     </div>
                 }
                 @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel post in Model.Posts)
-                {
-                    //Fix Menu and make responisive desing on this page
-                    <div class="col-md-4" id="post" style="margin-top:2%">
+                { 
+                    <div class="col-md-4 post">
                         <div class="card">
-                            <div class="card-body" style="padding:0">
+                            <div class="card-body">
                                 <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId">
-                                    <img src="data:image/jpeg;base64,@post.PostImage" width="350" height="200" />
+                                    <img class="post-img" src="data:image/jpeg;base64,@post.PostImage"/>
                                 </a>
-                                <div class="post-actions" style="display:flex; justify-content:space-around;padding:1%">
-                                    <a class="hvr-pulse-grow">
+                                <div class="post-actions">
+                                    <div class="hvr-pulse-grow">
                                         <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                         <span class="likes-count">@post.PostLikesCount</span>
-                                    </a>
-                                    <a class="hvr-pulse-grow">
+                                    </div>
+                                    <div class="hvr-pulse-grow">
                                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                                         <span class="comments-count">@post.PostCommentCount</span>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-
-            <h2>Saved</h2>
-            <hr />
-            <div class="row">
-                @if (Model.SavedPosts.Count == 0)
-                {
-                    <div class="not-available">
-                        <p>No Saved Posts to show</p>
-                    </div>
-                }
-                @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel savedPost in Model.SavedPosts)
-                {
-                    <div class="col-md-4" id="post" style="margin-top:2%">
-                        <div class="card">
-                            <div class="card-body" style="padding:0">
-                                <a asp-controller="Post" asp-action="Details" asp-route-postId="@savedPost.PostId">
-                                    <img src="data:image/jpeg;base64,@savedPost.PostImage" width="350" height="200" />
-                                </a>
-                                <div class="post-actions" style="display:flex; justify-content:space-around;padding:1%">
-                                    <a class="hvr-pulse-grow">
-                                        <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
-                                        <span class="likes-count">@savedPost.PostLikesCount</span>
+            @if(User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+            {
+                <h2>Saved</h2>
+                <hr />
+                <div class="row">
+                    @if (Model.SavedPosts.Count == 0)
+                    {
+                        <div class="not-available">
+                            <p>No Saved Posts to show</p>
+                        </div>
+                    }
+                    @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel savedPost in Model.SavedPosts)
+                    {
+                        <div class="col-md-4 post">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a asp-controller="Post" asp-action="Details" asp-route-postId="@savedPost.PostId">
+                                        <img class="post-img" src="data:image/jpeg;base64,@savedPost.PostImage"/>
                                     </a>
-                                    <a class="hvr-pulse-grow">
-                                        <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
-                                        <span class="comments-count">@savedPost.PostCommentCount</span>
-                                    </a>
+                                    <div class="post-actions">
+                                        <div class="hvr-pulse-grow">
+                                            <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                            <span class="likes-count">@savedPost.PostLikesCount</span>
+                                        </div>
+                                        <div class="hvr-pulse-grow">
+                                            <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
+                                            <span class="comments-count">@savedPost.PostCommentCount</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         }
     </div>
 }

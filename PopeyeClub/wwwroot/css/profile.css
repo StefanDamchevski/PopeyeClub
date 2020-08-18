@@ -19,8 +19,12 @@
     height: 30%;
 }
 
-#changePictureMenu{
+#accountSettingModal{
     top:20%;
+}
+
+#changePictureMenu {
+    top: 20%;
 }
 
 #checkPassword{
@@ -60,4 +64,23 @@ h2 {
     font-family: 'Finger Paint';
     word-break: break-word;
     text-align:center
+}
+
+.post{
+    margin-top:2%;
+}
+
+.card-body{
+    padding:0;
+}
+
+.post-img {
+    width: 100%; 
+    height:200px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 1%
 }
