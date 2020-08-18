@@ -9,6 +9,7 @@ using PopeyeClub.ViewModels.Post;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Controllers
 {
@@ -43,6 +44,21 @@ namespace PopeyeClub.Controllers
                 else
                 {
                     post.LikeStatus = Enums.PostLikeStatus.Liked;
+                }
+
+                UserPostSaveViewModel postSave = post.UserPostSaves?.FirstOrDefault(x => x.UserId.Equals(userId));
+
+                if(postSave is null)
+                {
+                    post.PostSaveStatus = Enums.PostSaveStatus.None;
+                }
+                else if (!postSave.Status)
+                {
+                    post.PostSaveStatus = Enums.PostSaveStatus.None;
+                }
+                else
+                {
+                    post.PostSaveStatus = Enums.PostSaveStatus.Saved;
                 }
 
                 foreach (CommentViewModel comment in post.PostComments)
@@ -117,6 +133,21 @@ namespace PopeyeClub.Controllers
                 .OrderByDescending(x => x.DateCreated)
                 .Select(x => x.ToUserPostViewModel())
                 .ToList();
+
+            UserPostSaveViewModel postSave = model.UserPostSaves?.FirstOrDefault(x => x.PostId.Equals(postId) && x.UserId.Equals(userId));
+
+            if(postSave is null)
+            {
+                model.PostSaveStatus = Enums.PostSaveStatus.None;
+            }
+            else if (!postSave.Status)
+            {
+                model.PostSaveStatus = Enums.PostSaveStatus.None;
+            }
+            else
+            {
+                model.PostSaveStatus = Enums.PostSaveStatus.Saved;
+            }
 
             return View(model);
         }

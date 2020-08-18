@@ -16,5 +16,6 @@ namespace PopeyeClub.Data
         public DateTime DateCreated { get; set; }
         public List<PostLike> PostLikes { get; set; }
         public List<PostComment> PostComments { get; set; }
+        public List<UserPostSave> UserPostSaves { get; set; }
     }
 }

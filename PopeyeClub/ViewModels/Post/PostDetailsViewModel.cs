@@ -16,6 +16,7 @@ namespace PopeyeClub.ViewModels.Post
         public List<CommentViewModel> Comments { get; set; }
         public Enums.PostLikeStatus PostLikeStatus { get; set; }
         public List<UserPostsViewModel> UserPosts { get; set; }
-
+        public List<UserPostSaveViewModel> UserPostSaves { get; set; }
+        public Enums.PostSaveStatus PostSaveStatus { get; set; }
     }
 }

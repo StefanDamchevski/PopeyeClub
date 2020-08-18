@@ -61,6 +61,7 @@ namespace PopeyeClub.Helpers
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
                 PostComments = post.PostComments?.OrderByDescending(x => x.DateCreated).Take(2).Select(x => x.ToCommentViewModel()).ToList(),
+                UserPostSaves = post.UserPostSaves?.Select(x => x.ToPostSaveViewModel()).ToList(),
                 PostCommentsCount = post.PostComments.Count(),
             };
         }
@@ -111,6 +112,18 @@ namespace PopeyeClub.Helpers
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
                 Comments = post.PostComments?.OrderByDescending(x => x.DateCreated).Select(x => x.ToCommentViewModel()).ToList(),
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
+                UserPostSaves = post.UserPostSaves?.Select(x => x.ToPostSaveViewModel()).ToList(),
+            };
+        }
+
+        internal static UserPostSaveViewModel ToPostSaveViewModel(this UserPostSave postSave)
+        {
+            return new UserPostSaveViewModel
+            {
+                Id = postSave.Id,
+                PostId = postSave.PostId,
+                UserId = postSave.UserId,
+                Status = postSave.IsSaved,
             };
         }
     }

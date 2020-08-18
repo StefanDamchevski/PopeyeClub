@@ -10,5 +10,6 @@ namespace PopeyeClub.Data
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
+        public DbSet<UserPostSave> UserPostSaves { get; set; }
     }
 }

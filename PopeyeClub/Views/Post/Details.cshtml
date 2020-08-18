@@ -81,16 +81,31 @@
                         <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn" onclick="addLike(@Model.PostId)">
                             <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
-                        <button class="btn hvr-pulse-grow" id="removePostLikeBtn"  onclick="removeLike(@Model.PostId)">
+                        <button class="btn hvr-pulse-grow" id="removePostLikeBtn" onclick="removeLike(@Model.PostId)">
                             <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                         </button>
                     }
                     <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model.PostId" class="btn hvr-pulse-grow">
                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                     </a>
-                    <a class="btn hvr-pulse-grow" style="cursor:pointer">
-                        <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
-                    </a>
+                    @if (Model.PostSaveStatus == PopeyeClub.ViewModels.Like.Enums.PostSaveStatus.None)
+                    {
+                        <button class="btn hvr-pulse-grow" id="savePostButton" onclick="addToSaved(@Model.PostId)" style="cursor:pointer">
+                            <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                        <button class="btn hvr-pulse-grow hide" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)" style="cursor:pointer">
+                            <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn hvr-pulse-grow hide" id="savePostButton" onclick="addToSaved(@Model.PostId)" style="cursor:pointer">
+                            <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                        <button class="btn hvr-pulse-grow" id="unSavePostButton" onclick="removeFromSaved(@Model.PostId)" style="cursor:pointer">
+                            <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                        </button>
+                    }
                 </div>
                 <div class="likes-count-section">
                     <span>Liked by <span id="likesCount">@Model.PostLikes.Where(x => x.Status.Equals(true)).Count()</span> People</span>

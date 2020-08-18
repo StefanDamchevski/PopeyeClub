@@ -57,9 +57,24 @@
                             <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model[i].PostId" class="btn hvr-pulse-grow">
                                 <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                             </a>
-                            <a class="btn hvr-pulse-grow">
-                                <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
-                            </a>
+                            @if (Model[i].PostSaveStatus == PopeyeClub.ViewModels.Like.Enums.PostSaveStatus.None)
+                            {
+                                <button class="btn hvr-pulse-grow" id="savePostButton-@i" onclick="addToSaved(@Model[i].PostId,@i)" style="cursor:pointer">
+                                    <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                                <button class="btn hvr-pulse-grow hide" id="unSavePostButton-@i" onclick="removeFromSaved(@Model[i].PostId, @i)" style="cursor:pointer">
+                                    <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn hvr-pulse-grow hide" id="savePostButton-@i" onclick="addToSaved(@Model[i].PostId,@i)" style="cursor:pointer">
+                                    <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                                <button class="btn hvr-pulse-grow" id="unSavePostButton-@i" onclick="removeFromSaved(@Model[i].PostId, @i)" style="cursor:pointer">
+                                    <i class="fas fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
+                                </button>
+                            }
                         </div>
                         <div class="likes-count-section">
                             <span>Liked by <span id="likesCount-@i">@Model[i].PostLikes.Where(x => x.Status.Equals(true)).Count()</span> people</span>

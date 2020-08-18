@@ -13,5 +13,11 @@
             None,
             Liked,
         }
+
+        public enum PostSaveStatus
+        {
+            None,
+            Saved,
+        }
     }
 }

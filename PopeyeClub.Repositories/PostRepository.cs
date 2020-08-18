@@ -28,6 +28,7 @@ namespace PopeyeClub.Repositories
                 .Include(x => x.PostLikes)
                 .Include(x => x.PostComments)
                     .ThenInclude(x => x.CommentLikes)
+                .Include(x => x.UserPostSaves)
                 .OrderByDescending(x => x.DateCreated)
                 .ToList();
         }
@@ -41,6 +42,7 @@ namespace PopeyeClub.Repositories
                     .ThenInclude(x => x.User)
                  .Include(x => x.PostComments)
                     .ThenInclude(x => x.CommentLikes)
+                .Include(x => x.UserPostSaves)
                 .FirstOrDefault(x => x.Id.Equals(postId));
         }
 

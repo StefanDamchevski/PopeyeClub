@@ -14,5 +14,6 @@ namespace PopeyeClub.Data
         public List<Post> Posts { get; set; }
         public List<PostLike> PostLikes { get; set; }
         public List<PostComment> PostComments { get; set; }
+        public List<UserPostSave> UserPostSaves { get; set; }
     }
 }

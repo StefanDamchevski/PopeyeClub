@@ -180,3 +180,35 @@ function removeLike(postId) {
             });
     }
 }
+
+function addToSaved(postId) {
+    if (postId != 0) {
+
+        axios.post('/PostSave/AddToSaved/', {
+            postId: postId
+        })
+            .then(function (response) {
+                document.getElementById("savePostButton").classList.add('hide');
+                document.getElementById("unSavePostButton").classList.remove('hide');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+function removeFromSaved(postId) {
+    if (postId != 0) {
+
+        axios.post('/PostSave/RemoveFromSaved/', {
+            postId: postId
+        })
+            .then(function (response) {
+                document.getElementById("savePostButton").classList.remove('hide');
+                document.getElementById("unSavePostButton").classList.add('hide');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
