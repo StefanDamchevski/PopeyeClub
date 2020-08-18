@@ -38,6 +38,10 @@
     margin-top:5%;
 }
 
+    .user-name:hover {
+        text-decoration: none;
+    }
+
 hr {
     color: #dbdbdb;
 }

@@ -1,23 +1,23 @@
 ﻿
 function updateScroll() {
-    var element = document.getElementById("commentSection");
+    let element = document.getElementById("commentSection");
     element.scrollTop = element.scrollHeight;
 }
 
 function disableButtons() {
-    document.getElementById("comment-submit").disabled = true;
+    document.getElementById("commentSubmit").disabled = true;
 }
 
 disableButtons();
 
 function enablePostBtn(event) {
 
-    let target = event.currentTarget.parentNode.parentNode.childNodes[5].childNodes[1];
+    let commentInput = document.getElementById("commentInput").value.trim(); 
 
-    if (event.currentTarget.value.trim() != "") {
-        target.disabled = false;
+    if (commentInput != "") {
+        document.getElementById("commentSubmit").disabled = false;
     } else {
-        target.disabled = true;
+        document.getElementById("commentSubmit").disabled = true;
     }
 }
 
@@ -106,6 +106,7 @@ function addComment(event, count, postId) {
 
             document.getElementById("commentInput").value = "";
             updateScroll();
+            disableButtons();
         })
         .catch(function (error) {
             console.log(error)
@@ -163,6 +164,7 @@ function addLike(postId) {
 }
 
 function removeLike(postId) {
+
     if (postId != 0) {
         axios.post('/PostLike/RemovePostLike/', {
             postId: postId

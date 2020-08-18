@@ -112,6 +112,12 @@ namespace PopeyeClub.Controllers
                     comment.CommentLikeStatus = Enums.CommentLikeStatus.Liked;
                 }
             }
+
+            model.UserPosts = postService.GetOtherPosts(postId, model.UserId)
+                .OrderByDescending(x => x.DateCreated)
+                .Select(x => x.ToUserPostViewModel())
+                .ToList();
+
             return View(model);
         }
     }

@@ -36,5 +36,10 @@ namespace PopeyeClub.Services
         {
             return postRepository.GetById(postId); ;
         }
+
+        public List<Post> GetOtherPosts(int postId,string userId)
+        {
+            return postRepository.GetOtherPosts(postId,userId);
+        }
     }
 }

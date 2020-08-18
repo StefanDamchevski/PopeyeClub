@@ -175,6 +175,7 @@ function addComment(event, i, count, storageKey) {
             commentSection.appendChild(hr);
 
             document.getElementById("commentInput-" + i).value = "";
+            disableButtons();
         })
         .catch(function (error) {
             console.log(error)

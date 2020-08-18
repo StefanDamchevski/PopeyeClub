@@ -43,5 +43,14 @@ namespace PopeyeClub.Repositories
                     .ThenInclude(x => x.CommentLikes)
                 .FirstOrDefault(x => x.Id.Equals(postId));
         }
+
+        public List<Post> GetOtherPosts(int postId, string userId)
+        {
+            return context.Posts
+                .Include(x => x.PostLikes)
+                .Include(x => x.PostComments)
+                .Where(x => x.UserId.Equals(userId) && x.Id != postId)
+                .ToList();
+        }
     }
 }

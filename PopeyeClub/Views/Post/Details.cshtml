@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <div class="user">
                     <img src="data:image/jpeg;base64,@Model.UserImage"/>
-                    <div class="user-name">@Model.CreatedBy</div>
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.UserId" class="text-dark hvr-underline-from-center user-name">@Model.CreatedBy</a>
                     <button class="btn post-actions hvr-grow" type="button" data-toggle="modal" data-target="#postActionModal">
                         <i class="fas fa-ellipsis-h fa-2x hvr-icon-grow"></i>
                     </button>
@@ -88,7 +88,7 @@
                     <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model.PostId" class="btn hvr-pulse-grow">
                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                     </a>
-                    <a class="btn hvr-pulse-grow">
+                    <a class="btn hvr-pulse-grow" style="cursor:pointer">
                         <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
                     </a>
                 </div>
@@ -105,13 +105,49 @@
                             <input type="text" name="comment" class="comment-input" id="commentInput" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Post" id="comment-submit" class="comment-submit btn btn-outline-primary" />
+                            <input type="submit" value="Post" id="commentSubmit" class="comment-submit btn btn-outline-primary" />
                         </div>
                     </form>
                 </div>
             </div>
     </div>
 </div>
+<hr style="margin-top:5%;" />
+<div style="text-align:center">
+    <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.UserId" class="text-dark hvr-underline-from-center" style="cursor:pointer; margin-top:2%;">More Posts from @Model.CreatedBy</a>
+</div>
+    <div class="container">
+        <div class="row">
+            @if(Model.UserPosts.Count == 0)
+            {
+                <div class="not-available">
+                    <p>No other posts</p>
+                </div>
+            }
+            @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel post in Model.UserPosts)
+            {
+                <div class="col-md-4" style="border:none; margin-top:2%">
+                    <div class="card">
+                        <div class="card-body" style="padding:0;">
+                            <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId" style="cursor:pointer">
+                                <img src="data:image/jpeg;base64,@post.PostImage" width="338" height="200"/>
+                            </a>
+                        </div>
+                        <div class="likes-comments-count" style="display:flex; justify-content:space-around; padding:2%">
+                            <div class="like-counts hvr-pulse-grow" style="cursor:pointer">
+                                <i class="far fa-heart fa-2x"></i>
+                                <span>@post.PostLikesCount</span>
+                            </div>
+                            <div class="comments-count hvr-pulse-grow" style="cursor:pointer">
+                                <i class="far fa-comment-alt fa-2x"></i>
+                                <span>@post.PostCommentCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
 @section Scripts{
     <script src="~/lib/axios/axios.min.js"></script>
