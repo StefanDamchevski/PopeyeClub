@@ -12,5 +12,6 @@ namespace PopeyeClub.ViewModels.User
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
         public List<UserPostsViewModel> Posts { get; set; }
+        public List<UserPostsViewModel> SavedPosts { get; set; }
     }
 }

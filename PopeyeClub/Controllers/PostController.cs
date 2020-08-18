@@ -9,7 +9,6 @@ using PopeyeClub.ViewModels.Post;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Controllers
 {
@@ -130,9 +129,9 @@ namespace PopeyeClub.Controllers
             }
 
             model.UserPosts = postService.GetOtherPosts(postId, model.UserId)
-                .OrderByDescending(x => x.DateCreated)
-                .Select(x => x.ToUserPostViewModel())
-                .ToList();
+                        .OrderByDescending(x => x.DateCreated)
+                        .Select(x => x.ToUserPostViewModel())
+                        .ToList();
 
             UserPostSaveViewModel postSave = model.UserPostSaves?.FirstOrDefault(x => x.PostId.Equals(postId) && x.UserId.Equals(userId));
 

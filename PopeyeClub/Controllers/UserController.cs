@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using PopeyeClub.Data;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.User;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,11 +20,13 @@ namespace PopeyeClub.Controllers
     {
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
+        private readonly IPostService postService;
 
-        public UserController(IUserService userService, IConfiguration configuration)
+        public UserController(IUserService userService, IConfiguration configuration, IPostService postService)
         {
             this.userService = userService;
             this.configuration = configuration;
+            this.postService = postService;
         }
 
         public IActionResult SignUp()
@@ -53,7 +58,22 @@ namespace PopeyeClub.Controllers
         public async Task<IActionResult> Profile(string userId)
         {
             ApplicationUser user = await userService.GetByIdAsync(userId);
-            return View(user.ToProfileViewModel());
+
+            List<int> postIds = new List<int>();
+
+            foreach (UserPostSave postSave in user.UserPostSaves)
+            {
+                if (postSave.IsSaved)
+                {
+                    postIds.Add(postSave.PostId);
+                }
+            }
+
+            ProfileViewModel model = user.ToProfileViewModel();
+
+            model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
+
+            return View(model);
         }
 
         [Authorize]

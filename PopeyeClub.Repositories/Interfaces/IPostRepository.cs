@@ -9,5 +9,6 @@ namespace PopeyeClub.Repositories.Interfaces
         void Create(Post post);
         Post GetById(int postId);
         List<Post> GetOtherPosts(int postId, string userId);
+        List<Post> GetByIds(List<int> postIds);
     }
 }

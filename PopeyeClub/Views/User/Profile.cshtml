@@ -51,7 +51,7 @@ else
             <h2>Posts</h2>
             <hr />
             <div class="row">
-                @if(Model.Posts.Count == 0)
+                @if (Model.Posts.Count == 0)
                 {
                     <div class="not-available">
                         <p>No Posts to show</p>
@@ -74,6 +74,39 @@ else
                                     <a class="hvr-pulse-grow">
                                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                                         <span class="comments-count">@post.PostCommentCount</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <h2>Saved</h2>
+            <hr />
+            <div class="row">
+                @if (Model.SavedPosts.Count == 0)
+                {
+                    <div class="not-available">
+                        <p>No Saved Posts to show</p>
+                    </div>
+                }
+                @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel savedPost in Model.SavedPosts)
+                {
+                    <div class="col-md-4" id="post" style="margin-top:2%">
+                        <div class="card">
+                            <div class="card-body" style="padding:0">
+                                <a asp-controller="Post" asp-action="Details" asp-route-postId="@savedPost.PostId">
+                                    <img src="data:image/jpeg;base64,@savedPost.PostImage" width="350" height="200" />
+                                </a>
+                                <div class="post-actions" style="display:flex; justify-content:space-around;padding:1%">
+                                    <a class="hvr-pulse-grow">
+                                        <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                        <span class="likes-count">@savedPost.PostLikesCount</span>
+                                    </a>
+                                    <a class="hvr-pulse-grow">
+                                        <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
+                                        <span class="comments-count">@savedPost.PostCommentCount</span>
                                     </a>
                                 </div>
                             </div>

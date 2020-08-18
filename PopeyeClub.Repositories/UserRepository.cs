@@ -38,6 +38,7 @@ namespace PopeyeClub.Repositories
                     .ThenInclude(x => x.PostComments)
                 .Include(x => x.Posts)
                     .ThenInclude(x => x.PostLikes)
+                .Include(x => x.UserPostSaves)
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
         }
 
