@@ -7,6 +7,7 @@
     padding: 2%;
 }
 
+
 .row{
     margin-top: 2%;
 }
@@ -39,13 +40,17 @@
     margin:2%;
 }
 
+.card-body{
+    padding:0;
+}
+
 .post-img{
     width:100%;
     height:500px;
 }
 
 .card-actions{
-    margin-top:2%;
+    padding:2%;
 }
 
     .card-actions a {
@@ -54,11 +59,11 @@
     }
 
 .likes-count-section {
-    margin-top: 2%
+    padding:1%;
 }
 
 .view-comment-button {
-    margin: 2% 0;
+    padding: 1%;
     
 }
     .view-comment-button a {
@@ -66,7 +71,7 @@
     }
 
 .comment {
-    margin-top:1%;
+    padding:1%;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -87,7 +92,7 @@
     }
 
 .created-days-ago {
-    margin-top: 2%;
+    padding:1%;
 }
 
 .comment-form {
@@ -113,6 +118,13 @@
 
 .hide{
     display:none;
+}
+
+@media (max-width: 1081px) {
+
+    .comment-form {
+        width: 80%;
+    }
 }
 
 @media (max-width: 892px) {
