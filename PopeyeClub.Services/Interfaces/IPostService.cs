@@ -1,5 +1,5 @@
-﻿using PopeyeClub.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PopeyeClub.Data;
 
 namespace PopeyeClub.Services.Interfaces
 {

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using PopeyeClub.Data;
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
-using System.Threading.Tasks;
 
 namespace PopeyeClub.Services
 {

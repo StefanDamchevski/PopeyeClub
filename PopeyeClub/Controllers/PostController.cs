@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Helpers;
@@ -6,9 +9,6 @@ using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace PopeyeClub.Controllers
 {

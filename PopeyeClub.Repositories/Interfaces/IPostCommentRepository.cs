@@ -6,5 +6,6 @@ namespace PopeyeClub.Repositories.Interfaces
     {
         void Create(PostComment postComment);
         PostComment Get(int postId, string userId, string comment);
+        void Delete(int commentId);
     }
 }

@@ -1,0 +1,11 @@
+﻿
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+                {
+                    <a class="btn btn-outline-danger" asp-controller="PostComment" asp-action="Delete" asp-route-commentId="@Model.Id" asp-route-postId="@Model.PostId">Delete</a>
+                }
+                <a class="btn btn-outline-danger" asp-controller="Admin" asp-action="RecieveReport" asp-route-commentId="@Model.Id" asp-route-userId="@Model.UserId">Report Comment</a>
+                <button class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>

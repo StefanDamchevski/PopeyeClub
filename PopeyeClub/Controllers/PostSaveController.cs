@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.Post;
-using System.Security.Claims;
 
 namespace PopeyeClub.Controllers
 {

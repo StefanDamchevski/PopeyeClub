@@ -39,9 +39,13 @@
                         <div class="comment">
                             <div class="user-comment">
                                 <img src="data:image/jpeg;base64,@Model.Comments[i].UserImage" />
-                                <span>@Model.Comments[i].UserName</span>
+                                <span>@Model.Comments[i].UserName :</span>
+                                <span class="comment-text">@Model.Comments[i].Text</span>
+                                <div class="comment-info">
+                                    <span class="comment-likes-count"><span id="commentLikes-@i">@Model.Comments[i].CommentLikesCount</span> Likes</span>
+                                    <span class="date-created">@Model.Comments[i].DaysAgo Days Ago</span>
+                                </div>
                             </div>
-                            <div class="comment-text">@Model.Comments[i].Text</div>
                             <div class="comment-like">
                                 @if (@Model.Comments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
                                 {
@@ -57,10 +61,16 @@
                                     <button class="btn hvr-grow hide" id="addCommentLikeBtn-@i" onclick="addCommentLike(@Model.Comments[i].Id, @i)">
                                         <i class="far fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
-                                    <button class="btn hvr-grow" id="removeCommentLikeBtn-@i"  onclick="removeCommentLike(@Model.Comments[i].Id, @i)">
+                                    <button class="btn hvr-grow" id="removeCommentLikeBtn-@i" onclick="removeCommentLike(@Model.Comments[i].Id, @i)">
                                         <i class="fas fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
                                     </button>
                                 }
+                                <button class="btn hvr-grow" type="button" data-toggle="modal" data-target="#commentActionsModal-@i">
+                                    <i class="fas fa-ellipsis-h" style="font-size:1em"></i>
+                                </button>
+                                <div class="modal fade modal-align" id="commentActionsModal-@i" tabindex="-1" role="dialog" aria-labelledby="commentActionsModalLabel" aria-hidden="true">
+                                    <partial name="./Partials/_CommentActionsModal" for="@Model.Comments[i]" />
+                                </div>
                             </div>
                         </div>
                         <hr />

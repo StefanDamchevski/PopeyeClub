@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PopeyeClub.Repositories
 {

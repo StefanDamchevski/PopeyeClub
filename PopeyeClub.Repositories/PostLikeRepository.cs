@@ -1,6 +1,6 @@
-﻿using PopeyeClub.Data;
+﻿using System.Linq;
+using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
-using System.Linq;
 
 namespace PopeyeClub.Repositories
 {

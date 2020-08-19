@@ -81,7 +81,7 @@
                         </div>
                         <div class="comments-section" id="commentSection-@i">
                             <div class="view-comment-button">
-                                <a class="text-primary hvr-underline-from-center">View All <span>@Model[i].PostCommentsCount</span> Comments</a>
+                                <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model[i].PostId" class="text-primary hvr-underline-from-center">View All <span>@Model[i].PostCommentsCount</span> Comments</a>
                             </div>
                             @if (Model[i].PostComments.Count == 0)
                             {

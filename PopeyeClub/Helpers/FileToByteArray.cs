@@ -1,7 +1,7 @@
-﻿using LazZiya.ImageResize;
-using Microsoft.AspNetCore.Http;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using LazZiya.ImageResize;
 
 namespace PopeyeClub.Helpers
 {

@@ -4,6 +4,8 @@ function updateScroll() {
     element.scrollTop = element.scrollHeight;
 }
 
+updateScroll();
+
 function disableButtons() {
     document.getElementById("commentSubmit").disabled = true;
 }
@@ -29,7 +31,6 @@ function addComment(event, count, postId) {
     let storageData = JSON.parse(localStorage.getItem(postId));
 
     let lastId = storageData.length - 1;
-    console.log(lastId)
 
     if (lastId >= count) {
         count = lastId + 1;
@@ -56,13 +57,33 @@ function addComment(event, count, postId) {
             userComment.appendChild(userImg);
 
             let name = document.createElement("span");
-            name.innerHTML = response.data.username;
+            name.innerHTML = response.data.username + " : ";
             userComment.appendChild(name);
 
-            let commentText = document.createElement("div");
+            let commentText = document.createElement("span");
             commentText.innerHTML = response.data.comment;
             commentText.classList.add("comment-text");
-            comment.appendChild(commentText);
+            userComment.appendChild(commentText);
+
+            let commentInfo = document.createElement("div");
+            commentInfo.classList.add("comment-info");
+            userComment.appendChild(commentInfo);
+
+            let commentLikesCount = document.createElement("span");
+            commentLikesCount.classList.add("comment-likes-count");
+            commentLikesCount.innerText = "Likes ";
+            commentInfo.appendChild(commentLikesCount);
+
+            let commentLikesNum = document.createElement("span");
+            commentLikesNum.id = "commentLikes-" + count;
+            commentLikesNum.innerHTML = 0;
+            commentLikesCount.appendChild(commentLikesNum);
+
+
+            let dateCreated = document.createElement("span");
+            dateCreated.classList.add("date-created");
+            dateCreated.innerHTML = "Created " + 0 + " Days Ago";
+            commentInfo.appendChild(dateCreated);
 
             let commentLike = document.createElement("div");
             commentLike.classList.add("comment-like");
@@ -101,6 +122,61 @@ function addComment(event, count, postId) {
             removeLikeIcon.style.fontSize = "1em";
             removeLikeBtn.appendChild(removeLikeIcon);
 
+            let modalBtn = document.createElement("button");
+            modalBtn.classList.add("btn");
+            modalBtn.classList.add("hvr-grow");
+            modalBtn.setAttribute('type', 'button');
+            modalBtn.setAttribute('data-toggle', 'modal');
+            modalBtn.setAttribute('data-target', '#commentActionsModal-' + count);
+            commentLike.appendChild(modalBtn);
+
+            let actionsIcon = document.createElement('i');
+            actionsIcon.classList.add('fas');
+            actionsIcon.classList.add('fa-ellipsis-h');
+            actionsIcon.style.fontSize = '1em';
+            modalBtn.appendChild(actionsIcon);
+
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+            modal.classList.add('fade');
+            modal.classList.add('modal-align');
+            modal.id = 'commentActionsModal-' + count;
+            modal.setAttribute('tabindex', '-1');
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-labelledby', 'commentActionsModalLabel');
+            modal.setAttribute('aria-hidden', 'true');
+            commentLike.appendChild(modal);
+
+            let modalDialog = document.createElement('div');
+            modalDialog.classList.add('modal-dialog');
+            modal.setAttribute('role', 'document');
+            modal.appendChild(modalDialog);
+
+            let modalContent = document.createElement('div');
+            modalContent.classList.add('modal-content')
+            modalDialog.appendChild(modalContent);
+
+            let deleteCommentBtn = document.createElement('a');
+            deleteCommentBtn.classList.add('btn');
+            deleteCommentBtn.classList.add('btn-outline-danger');
+            deleteCommentBtn.href = `/PostComment/Delete?commentId=${response.data.commentId}&postId=${response.data.postId}`;
+            deleteCommentBtn.innerHTML = "Delete";
+            modalContent.appendChild(deleteCommentBtn);
+
+            let reportCommentBtn = document.createElement('a');
+            reportCommentBtn.classList.add('btn');
+            reportCommentBtn.classList.add('btn-outline-danger');
+            reportCommentBtn.href = `/Admin/RecieveReport?commentId=${response.data.commentId}&userId=${response.data.userId}`;
+            reportCommentBtn.innerHTML = "Report Comment";
+            modalContent.appendChild(reportCommentBtn);
+
+            let closeModalBtn = document.createElement('button');
+            closeModalBtn.classList.add('btn');
+            closeModalBtn.classList.add('btn-outline-primary');
+            closeModalBtn.setAttribute('data-dismiss', 'modal');
+            closeModalBtn.innerHTML = "Close";
+            modalContent.appendChild(closeModalBtn);
+
             let hr = document.createElement("hr");
             commentSection.appendChild(hr);
 
@@ -122,6 +198,8 @@ function addCommentLike(commentId, i) {
             .then(function (response) {
                 document.getElementById("addCommentLikeBtn-" + i).classList.add('hide');
                 document.getElementById("removeCommentLikeBtn-" + i).classList.remove('hide');
+                let count = document.getElementById("commentLikes-" + i);
+                count.innerHTML = parseInt(count.innerHTML) + 1;
             })
             .catch(function (error) {
                 console.log(error);
@@ -138,6 +216,8 @@ function removeCommentLike(commentId, i) {
             .then(function (response) {
                 document.getElementById("addCommentLikeBtn-" + i).classList.remove('hide');
                 document.getElementById("removeCommentLikeBtn-" + i).classList.add('hide');
+                let count = document.getElementById("commentLikes-" + i);
+                count.innerHTML = parseInt(count.innerHTML) - 1;
             })
             .catch(function (error) {
                 console.log(error);

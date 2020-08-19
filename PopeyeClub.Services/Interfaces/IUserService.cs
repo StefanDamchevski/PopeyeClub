@@ -1,6 +1,6 @@
-﻿using PopeyeClub.Data;
+﻿using System.Threading.Tasks;
+using PopeyeClub.Data;
 using PopeyeClub.Services.Dto;
-using System.Threading.Tasks;
 
 namespace PopeyeClub.Services.Interfaces
 {

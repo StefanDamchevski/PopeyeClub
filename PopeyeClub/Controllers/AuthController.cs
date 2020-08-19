@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.Auth;
-using System.Threading.Tasks;
 
 namespace PopeyeClub.Controllers
 {

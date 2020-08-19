@@ -46,10 +46,14 @@ hr {
     color: #dbdbdb;
 }
 
+p{
+    margin-bottom:0;
+}
+
 .comment-section {
     overflow: auto;
     font-size: small;
-    max-height: 15vh;
+    max-height: 33vh;
 }
 
 .comment {
@@ -66,8 +70,11 @@ hr {
 }
 
 .comment-text {
-    margin-top: 1%;
-    word-break: break-word
+    word-break: break-word;
+}
+
+.comment-likes-count{
+    margin-right: 1%;
 }
 
 .add-comment-section {

@@ -7,7 +7,6 @@
     padding: 2%;
 }
 
-
 .row{
     margin-top: 2%;
 }
@@ -17,9 +16,9 @@
     justify-content:space-between;
 }
 
-.card-header a{
+.card-header a {
     padding: 2%;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .post-user img{
@@ -69,6 +68,10 @@
     .view-comment-button a {
         cursor: pointer;
     }
+
+        .view-comment-button a:hover {
+            text-decoration: none;
+        }
 
 .comment {
     padding:1%;

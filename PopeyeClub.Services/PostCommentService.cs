@@ -1,7 +1,7 @@
-﻿using PopeyeClub.Data;
+﻿using System;
+using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services.Interfaces;
-using System;
 
 namespace PopeyeClub.Services
 {
@@ -25,6 +25,11 @@ namespace PopeyeClub.Services
             };
 
             postCommentRepostiory.Create(postComment);
+        }
+
+        public void Delete(int commentId)
+        {
+            postCommentRepostiory.Delete(commentId);
         }
 
         public PostComment Get(int postId, string userId, string comment)

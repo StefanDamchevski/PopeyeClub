@@ -1,6 +1,6 @@
-﻿using PopeyeClub.ViewModels.Comment;
+﻿using System.Collections.Generic;
+using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
-using System.Collections.Generic;
 
 namespace PopeyeClub.ViewModels.Post
 {

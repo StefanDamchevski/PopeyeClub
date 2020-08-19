@@ -1,8 +1,8 @@
-﻿using PopeyeClub.Data;
+﻿using System;
+using System.Collections.Generic;
+using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services.Interfaces;
-using System;
-using System.Collections.Generic;
 
 namespace PopeyeClub.Services
 {

@@ -1,12 +1,10 @@
-﻿using PopeyeClub.Data;
+﻿using System;
+using System.Linq;
+using PopeyeClub.Data;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Helpers
 {
@@ -55,12 +53,12 @@ namespace PopeyeClub.Helpers
             {
                 PostId = post.Id,
                 UserId = post.UserId,
-                UserName = post.User.UserName,
-                ProfilePicture = Convert.ToBase64String(post.User.ProfilePicture),
+                UserName = post.User?.UserName,
+                ProfilePicture = Convert.ToBase64String(post.User?.ProfilePicture),
                 PostImage = Convert.ToBase64String(post.PostImage),
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
-                PostComments = post.PostComments?.OrderByDescending(x => x.DateCreated).Take(2).Select(x => x.ToCommentViewModel()).ToList(),
+                PostComments = post.PostComments?.OrderBy(x => x.DateCreated).Take(2).Select(x => x.ToCommentViewModel()).ToList(),
                 UserPostSaves = post.UserPostSaves?.Select(x => x.ToPostSaveViewModel()).ToList(),
                 PostCommentsCount = post.PostComments.Count(),
             };
@@ -83,9 +81,13 @@ namespace PopeyeClub.Helpers
             {
                 Id = comment.Id,
                 Text = comment.Text,
-                UserImage = Convert.ToBase64String(comment.User.ProfilePicture),
-                UserName = comment.User.UserName,
+                UserImage = Convert.ToBase64String(comment.User?.ProfilePicture),
+                UserName = comment.User?.UserName,
+                UserId = comment.UserId,
+                PostId = comment.PostId,
                 CommentLikes = comment.CommentLikes?.Select(x => x.ToCommentLikeViewModel()).ToList(),
+                DaysAgo = DateTime.Now.Subtract(comment.DateCreated).Days,
+                CommentLikesCount = comment.CommentLikes.Where(x => x.Status.Equals(true)).Count(),
             };
         }
 
@@ -106,11 +108,11 @@ namespace PopeyeClub.Helpers
             {
                 PostId = post.Id,
                 UserId = post.UserId,
-                UserImage = Convert.ToBase64String(post.User.ProfilePicture),
+                UserImage = Convert.ToBase64String(post.User?.ProfilePicture),
                 PostImage = Convert.ToBase64String(post.PostImage),
-                CreatedBy = post.User.UserName,
+                CreatedBy = post.User?.UserName,
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
-                Comments = post.PostComments?.OrderByDescending(x => x.DateCreated).Select(x => x.ToCommentViewModel()).ToList(),
+                Comments = post.PostComments?.OrderBy(x => x.DateCreated).Select(x => x.ToCommentViewModel()).ToList(),
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
                 UserPostSaves = post.UserPostSaves?.Select(x => x.ToPostSaveViewModel()).ToList(),
             };

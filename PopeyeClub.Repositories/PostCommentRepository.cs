@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Repositories
 {
@@ -18,6 +16,17 @@ namespace PopeyeClub.Repositories
         public void Create(PostComment postComment)
         {
             context.PostComments.Add(postComment);
+            context.SaveChanges();
+        }
+
+        public void Delete(int commentId)
+        {
+            PostComment postComment = new PostComment
+            {
+                Id = commentId,
+            };
+
+            context.PostComments.Remove(postComment);
             context.SaveChanges();
         }
 

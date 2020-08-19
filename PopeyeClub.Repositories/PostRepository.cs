@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PopeyeClub.Repositories
 {
@@ -29,7 +29,6 @@ namespace PopeyeClub.Repositories
                 .Include(x => x.PostComments)
                     .ThenInclude(x => x.CommentLikes)
                 .Include(x => x.UserPostSaves)
-                .OrderByDescending(x => x.DateCreated)
                 .ToList();
         }
 
