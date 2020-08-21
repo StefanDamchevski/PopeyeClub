@@ -61,8 +61,15 @@ else
     else
     {
         <div class="post-type">
-            <h2 class="hvr-fade" onclick="switchDisplay('postSavesRow', 'postsRow')">Posts</h2>
-            <h2 class="hvr-fade" onclick="switchDisplay('postsRow', 'postSavesRow')">Saved</h2>
+            @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId)
+            {
+                <h2 class="hvr-fade">Posts</h2>
+            }
+            else
+            {
+                <h2 class="hvr-fade" onclick="switchDisplay('postSavesRow', 'postsRow')">Posts</h2>
+                <h2 class="hvr-fade" onclick="switchDisplay('postsRow', 'postSavesRow')">Saved</h2>
+            }
         </div>
         <hr />
         <div class="row" id="postsRow">
@@ -132,5 +139,13 @@ else
 </div>
 }
 @section Scripts{
-    <script src="~/js/profile.js"></script>
+
+    @if(User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+    {
+        <script src="~/js/yourProfile.js"></script>
+    }
+    else
+    {
+        <script src="~/js/otherProfile.js"></script>
+    }
  }

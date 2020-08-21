@@ -60,7 +60,7 @@ namespace PopeyeClub.Controllers
 
             ProfileViewModel model = user.ToProfileViewModel();
 
-            if(User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            if(User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(userId))
             {
                 List<int> postIds = new List<int>();
 
@@ -81,7 +81,7 @@ namespace PopeyeClub.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string userId)
         {
-            if (User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            if (User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(userId))
             {
                 ApplicationUser user = await userService.GetByIdAsync(userId);
                 return View(user.ToEditViewModel());
@@ -114,7 +114,7 @@ namespace PopeyeClub.Controllers
         [Authorize]
         public IActionResult ChangePassword(string userId)
         {
-            if (User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
+            if (User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(userId))
             {
                 ChangePasswordViewModel model = new ChangePasswordViewModel
                 {
@@ -168,7 +168,7 @@ namespace PopeyeClub.Controllers
         [Authorize]
         public async Task<IActionResult> SoftDelete(string userId, string password)
         {
-            if (userId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            if (User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(userId))
             {
                 if (!String.IsNullOrEmpty(password))
                 {
