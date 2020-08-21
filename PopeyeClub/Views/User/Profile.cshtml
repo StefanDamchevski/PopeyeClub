@@ -51,40 +51,75 @@ else
         </a>
     }
 </div>
-    <div class="user-posts">
-        @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate)
+<div class="user-posts">
+    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate)
+    {
+        <div class="not-available">
+            <p>This profile is private. If you want to see what this user posts follow them!!!</p>
+        </div>
+    }
+    else
+    {
+        <div class="post-type">
+            <h2 class="hvr-fade" onclick="switchDisplay('postSavesRow', 'postsRow')">Posts</h2>
+            <h2 class="hvr-fade" onclick="switchDisplay('postsRow', 'postSavesRow')">Saved</h2>
+        </div>
+        <hr />
+        <div class="row" id="postsRow">
+            @if (Model.Posts.Count == 0)
+            {
+                <div class="not-available">
+                    <p>No Posts to show</p>
+                </div>
+            }
+            @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel post in Model.Posts)
+            {
+                <div class="col-md-4 post">
+                    <div class="card">
+                        <div class="card-body">
+                            <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId">
+                                <img class="post-img" src="data:image/jpeg;base64,@post.PostImage" />
+                            </a>
+                            <div class="post-actions">
+                                <div class="hvr-pulse-grow">
+                                    <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
+                                    <span class="likes-count">@post.PostLikesCount</span>
+                                </div>
+                                <div class="hvr-pulse-grow">
+                                    <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
+                                    <span class="comments-count">@post.PostCommentCount</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
         {
-            <div class="not-available">
-                <p>This profile is private. If you want to see what this user posts follow them!!!</p>
-            </div>
-        }
-        else
-        {
-            <h2>Posts</h2>
-            <hr />
-            <div class="row">
-                @if (Model.Posts.Count == 0)
+            <div class="row hide" id="postSavesRow">
+                @if (Model.SavedPosts.Count == 0)
                 {
                     <div class="not-available">
-                        <p>No Posts to show</p>
+                        <p>No Saved Posts to show</p>
                     </div>
                 }
-                @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel post in Model.Posts)
-                { 
+                @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel savedPost in Model.SavedPosts)
+                {
                     <div class="col-md-4 post">
                         <div class="card">
                             <div class="card-body">
-                                <a asp-controller="Post" asp-action="Details" asp-route-postId="@post.PostId">
-                                    <img class="post-img" src="data:image/jpeg;base64,@post.PostImage"/>
+                                <a asp-controller="Post" asp-action="Details" asp-route-postId="@savedPost.PostId">
+                                    <img class="post-img" src="data:image/jpeg;base64,@savedPost.PostImage" />
                                 </a>
                                 <div class="post-actions">
                                     <div class="hvr-pulse-grow">
                                         <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
-                                        <span class="likes-count">@post.PostLikesCount</span>
+                                        <span class="likes-count">@savedPost.PostLikesCount</span>
                                     </div>
                                     <div class="hvr-pulse-grow">
                                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
-                                        <span class="comments-count">@post.PostCommentCount</span>
+                                        <span class="comments-count">@savedPost.PostCommentCount</span>
                                     </div>
                                 </div>
                             </div>
@@ -92,43 +127,9 @@ else
                     </div>
                 }
             </div>
-            @if(User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
-            {
-                <h2>Saved</h2>
-                <hr />
-                <div class="row">
-                    @if (Model.SavedPosts.Count == 0)
-                    {
-                        <div class="not-available">
-                            <p>No Saved Posts to show</p>
-                        </div>
-                    }
-                    @foreach (PopeyeClub.ViewModels.Post.UserPostsViewModel savedPost in Model.SavedPosts)
-                    {
-                        <div class="col-md-4 post">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a asp-controller="Post" asp-action="Details" asp-route-postId="@savedPost.PostId">
-                                        <img class="post-img" src="data:image/jpeg;base64,@savedPost.PostImage"/>
-                                    </a>
-                                    <div class="post-actions">
-                                        <div class="hvr-pulse-grow">
-                                            <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
-                                            <span class="likes-count">@savedPost.PostLikesCount</span>
-                                        </div>
-                                        <div class="hvr-pulse-grow">
-                                            <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
-                                            <span class="comments-count">@savedPost.PostCommentCount</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
         }
-    </div>
+    }
+</div>
 }
 @section Scripts{
     <script src="~/js/profile.js"></script>

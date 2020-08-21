@@ -1,4 +1,24 @@
-﻿
+﻿window.addEventListener('load', function () {
+    document.getElementById('storageBtn-0').click();
+});
+
+
+function addToLocalStorage(commentsCount, storageKey) {
+
+    localStorage.clear();
+
+    let storageData = [];
+
+    for (let i = 0; i < commentsCount; i++) {
+        if (storageData.indexOf(i) == -1) {
+            storageData.push(i);
+        }
+    }
+
+    localStorage.setItem(storageKey, JSON.stringify(storageData));
+}
+
+
 function updateScroll() {
     let element = document.getElementById("commentSection");
     element.scrollTop = element.scrollHeight;
@@ -23,12 +43,12 @@ function enablePostBtn(event) {
     }
 }
 
-function addComment(event, count, postId) {
+function addComment(event, count, storagekey) {
    
     event.preventDefault();
     let data = new FormData(event.target);
 
-    let storageData = JSON.parse(localStorage.getItem(postId));
+    let storageData = JSON.parse(localStorage.getItem(storagekey));
 
     let lastId = storageData.length - 1;
 
@@ -38,7 +58,7 @@ function addComment(event, count, postId) {
 
     storageData.push(count)
 
-    localStorage.setItem(postId, JSON.stringify(storageData));
+    localStorage.setItem(storagekey, JSON.stringify(storageData));
 
     axios.post('/PostComment/Create/', data)
         .then(function (response) {

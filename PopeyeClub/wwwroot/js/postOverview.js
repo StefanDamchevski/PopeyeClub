@@ -1,4 +1,30 @@
-﻿
+﻿window.addEventListener('load', function () {
+    document.getElementById('storageBtn-0').click();
+});
+
+
+function addToLocalStorage(postsCount, postCommentsCount) {
+
+    localStorage.clear();
+
+    let storageData = [];
+
+    for (let i = 0; i < postsCount; i++) {
+
+        let indexArray = [];
+
+        for (let y = 0; y < postCommentsCount; y++) {
+            indexArray.push(y);
+        }
+
+        storageData.push(indexArray);
+
+    }
+    localStorage.setItem("CommentIds", JSON.stringify(storageData));
+}
+
+
+
 function addLike(postId,i) {
     if (postId != 0) {
 

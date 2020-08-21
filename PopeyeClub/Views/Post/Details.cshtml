@@ -36,6 +36,7 @@
 
                     @for (int i = 0; i < Model.Comments.Count; i++)
                     {
+                        <button class="hide" id="storageBtn-@i" onclick="addToLocalStorage(@Model.Comments.Count, 'CommentIds')"></button>
                         <div class="comment">
                             <div class="user-comment">
                                 <img src="data:image/jpeg;base64,@Model.Comments[i].UserImage" />
@@ -124,7 +125,7 @@
                     <p>Created @Model.DaysAgo days ago</p>
                 </div>
                 <div class="add-comment-section">
-                    <form class="form-inline" method="post" onsubmit="addComment(event,@Model.Comments.Count, @Model.PostId.ToString())">
+                    <form class="form-inline" method="post" onsubmit="addComment(event,@Model.Comments.Count, 'CommentIds')">
                         <input type="hidden" name="postId" value="@Model.PostId"/>
                         <div class="form-group comment-form">
                             <input type="text" name="comment" class="comment-input" id="commentInput" onkeyup="enablePostBtn(event)" placeholder="Write a comment..." required />
@@ -177,20 +178,4 @@
 @section Scripts{
     <script src="~/lib/axios/axios.min.js"></script>
     <script src="~/js/postDetails.js"></script>
-    <script>
-        window.onload = function addToLocalStorage() {
-
-            localStorage.clear();
-
-            let storageData = [];
-
-            for (let i = 0; i < @Model.Comments.Count; i++) {
-                if (storageData.indexOf(i) == -1) {
-                    storageData.push(i);
-                }
-            }
-
-            localStorage.setItem(@Model.PostId.ToString(), JSON.stringify(storageData));
-        }
-    </script>
 }

@@ -22,3 +22,14 @@ changeProfilePicBtn.addEventListener('click', function () {
 disableAccountBtn.addEventListener('click', function () {
     cancelBtn.click();
 });
+
+function switchDisplay(hideElement, showElement) {
+    let hide = document.getElementById(hideElement);
+    let show = document.getElementById(showElement);
+    if (hide.classList.contains('hide')) {
+        return;
+    } else {
+        hide.classList.add('hide');
+        show.classList.remove('hide');
+    }
+}

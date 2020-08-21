@@ -58,20 +58,20 @@ namespace PopeyeClub.Controllers
         {
             ApplicationUser user = await userService.GetByIdAsync(userId);
 
-            List<int> postIds = new List<int>();
-
-            foreach (UserPostSave postSave in user.UserPostSaves)
-            {
-                if (postSave.IsSaved)
-                {
-                    postIds.Add(postSave.PostId);
-                }
-            }
-
             ProfileViewModel model = user.ToProfileViewModel();
 
             if(User.FindFirst(ClaimTypes.NameIdentifier).Value == userId)
             {
+                List<int> postIds = new List<int>();
+
+                foreach (UserPostSave postSave in user.UserPostSaves)
+                {
+                    if (postSave.IsSaved)
+                    {
+                        postIds.Add(postSave.PostId);
+                    }
+                }
+
                 model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
             }
 

@@ -63,7 +63,8 @@ h2 {
     margin: 2%;
     font-family: 'Finger Paint';
     word-break: break-word;
-    text-align:center
+    text-align:center;
+    cursor:pointer;
 }
 
 .post{
@@ -83,4 +84,13 @@ h2 {
     display: flex;
     justify-content: space-around;
     padding: 1%
+}
+
+.post-type {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hide{
+    display:none;
 }
