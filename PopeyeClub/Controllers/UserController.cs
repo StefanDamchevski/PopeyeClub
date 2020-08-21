@@ -54,9 +54,9 @@ namespace PopeyeClub.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Profile(string userId)
+        public IActionResult Profile(string userId)
         {
-            ApplicationUser user = await userService.GetByIdAsync(userId);
+            ApplicationUser user = userService.GetById(userId);
 
             ProfileViewModel model = user.ToProfileViewModel();
 

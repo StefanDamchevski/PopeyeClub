@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
@@ -74,6 +75,11 @@ namespace PopeyeClub.Services
         public async Task<ApplicationUser> GetByEmailAsync(string email)
         {
             return await userRepository.GetByEmailAsync(email);
+        }
+
+        public ApplicationUser GetById(string userId)
+        {
+            return userRepository.GetById(userId);
         }
 
         public async Task<ApplicationUser> GetByIdAsync(string userId)

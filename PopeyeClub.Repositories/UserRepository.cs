@@ -31,15 +31,15 @@ namespace PopeyeClub.Repositories
             return await userManager.FindByEmailAsync(email);
         }
 
-        public async Task<ApplicationUser> GetByIdAsync(string userId)
+        public ApplicationUser GetById(string userId)
         {
-            return await userManager.Users
+            return userManager.Users
                 .Include(x => x.Posts)
                     .ThenInclude(x => x.PostComments)
                 .Include(x => x.Posts)
                     .ThenInclude(x => x.PostLikes)
                 .Include(x => x.UserPostSaves)
-                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+                .FirstOrDefault(x => x.Id.Equals(userId));
         }
 
         public async Task<ApplicationUser> GetByUserNameAsync(string userName)
@@ -60,6 +60,11 @@ namespace PopeyeClub.Repositories
         public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
         {
             return await userManager.CheckPasswordAsync(user, password);
+        }
+
+        public async Task<ApplicationUser> GetByIdAsync(string userId)
+        {
+            return await userManager.FindByIdAsync(userId);
         }
     }
 }
