@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using PopeyeClub.Data;
 
@@ -15,5 +16,6 @@ namespace PopeyeClub.Repositories.Interfaces
         Task CreateAsync(ApplicationUser user, string password);
         ApplicationUser GetById(string userId);
         bool CheckForUsername(string username, string userId);
+        List<ApplicationUser> GetAll(string userId);
     }
 }

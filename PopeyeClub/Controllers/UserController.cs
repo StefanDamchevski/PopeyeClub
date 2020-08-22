@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -74,7 +74,7 @@ namespace PopeyeClub.Controllers
 
                 model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
             }
-
+            
             return View(model);
         }
 

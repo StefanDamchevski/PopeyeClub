@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,11 @@ namespace PopeyeClub.Repositories
         public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
             return await userManager.FindByIdAsync(userId);
+        }
+
+        public List<ApplicationUser> GetAll(string userId)
+        {
+            return userManager.Users.Where(x => x.Id != userId && x.IsDeleted.Equals(false)).ToList();
         }
     }
 }

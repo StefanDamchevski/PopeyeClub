@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using PopeyeClub.Data;
+using PopeyeClub.ViewModels.Chat;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
@@ -126,6 +127,16 @@ namespace PopeyeClub.Helpers
                 PostId = postSave.PostId,
                 UserId = postSave.UserId,
                 Status = postSave.IsSaved,
+            };
+        }
+
+        internal static UserViewModel ToUserViewModel(this ApplicationUser user)
+        {
+            return new UserViewModel
+            {
+                UserId = user.Id,
+                UserImage = Convert.ToBase64String(user.ProfilePicture),
+                UserName = user.UserName,
             };
         }
     }

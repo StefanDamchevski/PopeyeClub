@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PopeyeClub.Data;
 using PopeyeClub.Services.Dto;
 
@@ -11,6 +12,7 @@ namespace PopeyeClub.Services.Interfaces
         Task<Response> UpdateAsync(string userId, string email, string phone, string username, bool isPrivate);
         Task<Response> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
         Task<Response> SoftDeleteAsync(string userId, string password);
+        List<ApplicationUser> GetAll(string userId);
         Task UpdateProfilePictureAsync(byte[] picture, string userId);
         Task RemoveIsDeletedAsync(ApplicationUser user);
         ApplicationUser GetById(string userId);

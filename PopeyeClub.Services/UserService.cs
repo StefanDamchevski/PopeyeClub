@@ -1,10 +1,10 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services.Dto;
 using PopeyeClub.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PopeyeClub.Services
 {
@@ -70,6 +70,11 @@ namespace PopeyeClub.Services
             }
 
             return response;
+        }
+
+        public List<ApplicationUser> GetAll(string userId)
+        {
+            return userRepository.GetAll(userId);
         }
 
         public async Task<ApplicationUser> GetByEmailAsync(string email)
