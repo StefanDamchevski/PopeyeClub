@@ -7,38 +7,49 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <h2>Direct</h2>
-            <hr style="color:#dbdbdb"/>
+            <div class="list-header">
+                <h2>Direct</h2>
+                <button class="btn hvr-pulse-grow" type="button" data-toggle="modal" data-target="#createRoomModal">
+                    <i class="far fa-edit" style="font-size:1.4em;"></i>
+                </button>
+                <partial name="./Partials/_CreateRoomPartial"/>
+            </div>
+            <hr />
             <div class="list-of-users">
-               @for (int i = 0; i < Model.Count; i++)
-               {
-                <div class="user">
-                    <button class="btn" id="joinRoomBtn-@i" onclick="joinRoom(@Model[i].UserId, @i)">
-                        <img src="data:image/jpeg;base64,@Model[i].UserImage" class="user-image" />
-                        <span class="user-name">@Model[i].UserName</span>
-                    </button>
-                </div>
-               }
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="user">
+                        <button class="btn" id="joinRoomBtn-@i" onclick="joinRoom(@Model[i].UserId)">
+                            <img src="data:image/jpeg;base64,@Model[i].UserImage" class="user-image" />
+                            <span class="user-name">@Model[i].UserName</span>
+                        </button>
+                    </div>
+                }
             </div>
         </div>
-        <div class="col-md-9" style="display:flex; flex-direction: column; justify-content:space-between">
-            <div class="chat-user" style="padding:2%; text-align:center;">
-                <img src="~/Images/popeye-the-sailor-man.jpg" style="width:35px; height:35px; border-radius:100%;" />
+        <div class="col-md-9">
+            <div class="chat-user">
+                <img src="~/Images/popeye-the-sailor-man.jpg" class="chat-user-image" />
                 <span class="user-name">@User.Identity.Name</span>
-                <hr style="color:#dbdbdb"/>
+                <hr />
             </div>
-            <div class="chat-messages">
+            <div class="chat-messages" id="chatMessages">
                 <div class="message">
-
+                    <div class="user-info">
+                        <img src="~/Images/popeye-the-sailor-man.jpg" class="chat-user-image" />
+                        <span>@User.Identity.Name</span>
+                    </div>
+                    <span class="message-text">Agi</span>
+                    <span>@DateTime.Now.ToString("dd/MM/yyyy hh:mm")</span>
                 </div>
             </div>
-            <div class="send-message-form" style="border:1px solid #dbdbdb; border-radius:5px; padding:2%; width:100%;align-self:flex-end; margin-bottom:2%;">
+            <div class="send-message-form">
                 <form method="post" class="form-inline">
                     <input type="hidden" name="userId" value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" />
-                    <div class="form-group" style="width:90%">
-                        <input type="text" name="message" class="form-control" id="chatMessageInput" onkeyup="enableBtn()" style="width:100%;"/>
+                    <div class="form-group chat-input">
+                        <input type="text" name="message" class="form-control" id="chatMessageInput" onkeyup="enableBtn()"/>
                     </div>
-                    <input class="btn btn-outline-success" id="submitMessageBtn" type="submit" name="name" value="Send" />
+                    <input class="btn btn-success" id="submitMessageBtn" type="submit" value="Send" />
                 </form>
             </div>
         </div>
@@ -46,28 +57,6 @@
 </div>
 
 @section Scripts{ 
-    <script>
-
-        function disableButton() {
-            let submitBtn = document.getElementById("submitMessageBtn");
-
-            if (submitBtn != null) {
-                submitBtn.disabled = true;
-            }
-        }
-
-        disableButton();
-
-        function enableBtn() {
-            let submitBtn = document.getElementById("submitMessageBtn");
-            let chatMessageInput = document.getElementById("chatMessageInput").value.trim();
-
-            if (chatMessageInput != "") {
-                submitBtn.disabled = false;
-            } else {
-                submitBtn.disabled = true;
-            }
-        }
-
-    </script>
+    <script src="~/lib/signalR/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
 }

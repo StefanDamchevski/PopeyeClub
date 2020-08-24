@@ -10,11 +10,9 @@
                         {
                             <tr class="user-row" style="display:none;">
                                 <td>
-                                    @item.UserName
-                                </td>
-                                <td>
                                     <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.ProfilePicture)" />
                                 </td>
+                                <td>@item.UserName</td>
                                 <td>
                                     <a asp-controller="User" asp-action="Profile" asp-route-userId="@item.Id" class="btn btn-primary btn-sm">View Profile</a>
                                 </td>

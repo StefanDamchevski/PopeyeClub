@@ -274,6 +274,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\axios\" />
+    <Folder Include="wwwroot\lib\signalR\" />
   </ItemGroup>
 
 </Project>

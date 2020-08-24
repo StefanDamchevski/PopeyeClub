@@ -25,7 +25,8 @@ function searchUsers() {
     }
 
     for (let i = 0; i < userRows.length; i++) {
-        let td = userRows[i].getElementsByTagName("td")[0];
+        let td = userRows[i].getElementsByTagName("td")[1];
+
         let textValue = td.innerText.toLowerCase().trim();
 
         if (textValue.indexOf(input) == -1 || input == "") {

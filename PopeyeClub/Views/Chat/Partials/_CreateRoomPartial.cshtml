@@ -1,0 +1,36 @@
+﻿@inject UserManager<ApplicationUser> userManager;
+
+<div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="createRoomModalLabel" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="padding:10%;">
+            <h2>Search For Users</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searhUserInput" onkeyup="showUsers()" placeholder="Enter Username..."/>
+                </div>
+            </form>
+            <div class="user-table">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    List<ApplicationUser> users = userManager.Users.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList();
+
+                    <table class="table">
+                        @foreach (ApplicationUser user in users)
+                        {
+                            <tr class="table-rows" style="display:none;">
+                                <td>
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(user.ProfilePicture)" class="chat-user-image" />
+                                </td>
+                                <td>@user.UserName</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" asp-controller="Chat" asp-action="CreateRoom" asp-route-userId="@user.Id">Message</a>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

@@ -6,13 +6,23 @@
     border: 1px solid #dbdbdb;
     max-height: 85vh;
     border-radius: 5px;
-    overflow: auto
+    overflow: auto;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 5%;
 }
 
 h2 {
-    padding-top: 5%;
+    margin: 0 auto;
     font-family: 'Finger Paint';
-    text-align: center;
+}
+
+
+hr {
+    color: #dbdbdb;
 }
 
 .list-of-users {
@@ -43,5 +53,79 @@ h2 {
     border: 1px solid #dbdbdb;
     max-height: 85vh;
     border-radius: 5px;
-    overflow: auto
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-user {
+    padding: 2%;
+    text-align: center;
+}
+
+.chat-user-image {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+}
+
+.chat-messages {
+    overflow: auto;
+}
+
+.message {
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    padding: 3%;
+    margin-top: 1%;
+    margin-bottom:1%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-text {
+    margin-left: 2%;
+    word-break: break-word;
+}
+
+.hide{
+    display:none;
+}
+
+#createRoomModal{
+    top:20%;
+}
+
+.table{
+    text-align:center;
+}
+
+#searhUserInput{
+    margin-top: 5%;
+    text-align: center;
+}
+
+.user-table{
+    overflow:auto;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    height: 20vh;
+    margin-bottom: 1rem;
+}
+
+.send-message-form {
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 2%;
+    width: 100%;
+    align-self: flex-end;
+    margin-bottom: 2%;
+}
+
+.chat-input{
+    width:86%;
+}
+
+#chatMessageInput {
+    width: 100%;
 }

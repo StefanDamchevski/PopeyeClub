@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PopeyeClub.Data;
+using PopeyeClub.Hubs;
 using PopeyeClub.Repositories;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services;
@@ -38,6 +39,8 @@ namespace PopeyeClub
                 options.Password.RequireNonAlphanumeric = true;
             });
 
+            services.AddSignalR();
+
             services.AddTransient<IAuthService, AuthService>();
 
             services.AddTransient<IUserService, UserService>();
@@ -62,6 +65,7 @@ namespace PopeyeClub
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -81,6 +85,11 @@ namespace PopeyeClub
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            }); 
 
             app.UseEndpoints(endpoints =>
             {
