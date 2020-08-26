@@ -20,12 +20,14 @@ namespace PopeyeClub.Controllers
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
         private readonly IPostService postService;
+        private readonly IFollowService followService;
 
-        public UserController(IUserService userService, IConfiguration configuration, IPostService postService)
+        public UserController(IUserService userService, IConfiguration configuration, IPostService postService, IFollowService followService)
         {
             this.userService = userService;
             this.configuration = configuration;
             this.postService = postService;
+            this.followService = followService;
         }
 
         public IActionResult SignUp()
@@ -56,11 +58,13 @@ namespace PopeyeClub.Controllers
         [Authorize]
         public IActionResult Profile(string userId)
         {
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             ApplicationUser user = userService.GetById(userId);
 
             ProfileViewModel model = user.ToProfileViewModel();
 
-            if(User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(userId))
+            if (currentUserId.Equals(userId))
             {
                 List<int> postIds = new List<int>();
 
@@ -73,6 +77,19 @@ namespace PopeyeClub.Controllers
                 }
 
                 model.SavedPosts = postService.GetByIds(postIds).Select(x => x.ToUserPostViewModel()).ToList();
+            }
+            else
+            {
+                if (model.IsPrivate)
+                {
+                    model.IsSent = followService.GetIsSent(currentUserId, userId);
+                    model.IsFollowed = followService.GetIsFollowed(currentUserId, userId);
+                }
+                else
+                {
+                    model.IsSent = followService.GetIsSent(currentUserId, userId);
+                    model.IsFollowed = followService.GetIsFollowed(currentUserId, userId);
+                }
             }
             
             return View(model);

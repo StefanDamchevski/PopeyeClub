@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PopeyeClub.Data;
 
 namespace PopeyeClub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200826002652_NotificationsAndFollows")]
+    partial class NotificationsAndFollows
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,17 +276,15 @@ namespace PopeyeClub.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FromUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFollowed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSent")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ToUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -307,11 +307,9 @@ namespace PopeyeClub.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FromUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ToUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Type")
@@ -503,30 +501,22 @@ namespace PopeyeClub.Data.Migrations
                 {
                     b.HasOne("PopeyeClub.Data.ApplicationUser", "FromUser")
                         .WithMany()
-                        .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FromUserId");
 
                     b.HasOne("PopeyeClub.Data.ApplicationUser", "ToUser")
                         .WithMany()
-                        .HasForeignKey("ToUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ToUserId");
                 });
 
             modelBuilder.Entity("PopeyeClub.Data.Notification", b =>
                 {
                     b.HasOne("PopeyeClub.Data.ApplicationUser", "FromUser")
                         .WithMany()
-                        .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FromUserId");
 
                     b.HasOne("PopeyeClub.Data.ApplicationUser", "ToUser")
                         .WithMany()
-                        .HasForeignKey("ToUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ToUserId");
                 });
 
             modelBuilder.Entity("PopeyeClub.Data.Post", b =>

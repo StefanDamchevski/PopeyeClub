@@ -5,7 +5,7 @@ namespace PopeyeClub.Services.Interfaces
 {
     public interface IPostService
     {
-        List<Post> GetAll();
+        List<Post> GetAll(string userId);
         void Create(string userId, byte[] postImage);
         Post GetById(int postId);
         List<Post> GetOtherPosts(int postId, string userId);

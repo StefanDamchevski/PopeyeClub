@@ -1,4 +1,4 @@
-﻿@model List<PopeyeClub.ViewModels.Chat.UserViewModel>
+﻿
 
 @section Styles{ 
     <link href="~/css/chat.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
             </div>
             <hr />
             <div class="list-of-users">
-                @for (int i = 0; i < Model.Count; i++)
+                @*@for (int i = 0; i < Model.Count; i++)
                 {
                     <div class="user">
                         <button class="btn" id="joinRoomBtn-@i" onclick="joinRoom(@Model[i].UserId)">
@@ -24,7 +24,7 @@
                             <span class="user-name">@Model[i].UserName</span>
                         </button>
                     </div>
-                }
+                }*@
             </div>
         </div>
         <div class="col-md-9">
@@ -58,5 +58,6 @@
 
 @section Scripts{ 
     <script src="~/lib/signalR/signalr.js"></script>
+    <script src="~/lib/axios/axios.min.js"></script>
     <script src="~/js/chat.js"></script>
 }

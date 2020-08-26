@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopeyeClub", "PopeyeClub\PopeyeClub.csproj", "{05D7114E-35DD-4EC9-BC93-EFBFB2770E8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopeyeClub", "PopeyeClub\PopeyeClub.csproj", "{05D7114E-35DD-4EC9-BC93-EFBFB2770E8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopeyeClub.Services", "PopeyeClub.Services\PopeyeClub.Services.csproj", "{F842D8DE-001F-436E-94D8-F2AB46754A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopeyeClub.Services", "PopeyeClub.Services\PopeyeClub.Services.csproj", "{F842D8DE-001F-436E-94D8-F2AB46754A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopeyeClub.Repositories", "PopeyeClub.Repositories\PopeyeClub.Repositories.csproj", "{D3290A0B-2262-4D1B-8E40-A7D46F1FD879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopeyeClub.Repositories", "PopeyeClub.Repositories\PopeyeClub.Repositories.csproj", "{D3290A0B-2262-4D1B-8E40-A7D46F1FD879}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopeyeClub.Data", "PopeyeClub.Data\PopeyeClub.Data.csproj", "{C09DEB98-1403-4C8A-AE39-BF79C41ECA24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopeyeClub.Data", "PopeyeClub.Data\PopeyeClub.Data.csproj", "{C09DEB98-1403-4C8A-AE39-BF79C41ECA24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13CE6128-AA70-4A6F-96C2-D0909BB7E3A9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,9 +14,9 @@ namespace PopeyeClub.ViewModels.Post
         public int DaysAgo { get; set; }
         public List<PostLikeViewModel> PostLikes { get; set; }
         public List<CommentViewModel> Comments { get; set; }
-        public Enums.PostLikeStatus PostLikeStatus { get; set; }
+        public ViewModelEnums.PostLikeStatus PostLikeStatus { get; set; }
         public List<UserPostsViewModel> UserPosts { get; set; }
         public List<UserPostSaveViewModel> UserPostSaves { get; set; }
-        public Enums.PostSaveStatus PostSaveStatus { get; set; }
+        public ViewModelEnums.PostSaveStatus PostSaveStatus { get; set; }
     }
 }

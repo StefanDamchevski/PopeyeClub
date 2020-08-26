@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <img class="post-img" src="data:image/jpeg;base64,@Model[i].PostImage" />
                         <div class="card-actions">
-                            @if (Model[i].LikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
+                            @if (Model[i].LikeStatus == PopeyeClub.ViewModels.ViewModelEnums.PostLikeStatus.None)
                             {
                                 <button class="btn hvr-pulse-grow" id="addPostLikeBtn-@i" onclick="addLike(@Model[i].PostId,@i)">
                                     <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
@@ -57,7 +57,7 @@
                             <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model[i].PostId" class="btn hvr-pulse-grow">
                                 <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                             </a>
-                            @if (Model[i].PostSaveStatus == PopeyeClub.ViewModels.Like.Enums.PostSaveStatus.None)
+                            @if (Model[i].PostSaveStatus == PopeyeClub.ViewModels.ViewModelEnums.PostSaveStatus.None)
                             {
                                 <button class="btn hvr-pulse-grow" id="savePostButton-@i" onclick="addToSaved(@Model[i].PostId,@i)" style="cursor:pointer">
                                     <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="comment-text">@Model[i].PostComments[y].Text</div>
                                     <div class="comment-like">
-                                        @if (Model[i].PostComments[y].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
+                                        @if (Model[i].PostComments[y].CommentLikeStatus == PopeyeClub.ViewModels.ViewModelEnums.CommentLikeStatus.None)
                                         {
                                             <button class="btn hvr-grow" id="addCommentLikeBtn-@i-@y" onclick="addCommentLike(@Model[i].PostComments[y].Id, @i, @y)">
                                                 <i class="far fa-thumbs-up fa-2x hvr-icon-grow" style="font-size:1em"></i>

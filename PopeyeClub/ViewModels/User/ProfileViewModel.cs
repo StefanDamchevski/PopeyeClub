@@ -11,6 +11,8 @@ namespace PopeyeClub.ViewModels.User
         public string Email { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsFollowed { get; set; }
+        public bool IsSent { get; set; }
         public List<UserPostsViewModel> Posts { get; set; }
         public List<UserPostsViewModel> SavedPosts { get; set; }
     }

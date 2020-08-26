@@ -21,15 +21,18 @@ namespace PopeyeClub.Repositories
             context.SaveChanges();
         }
 
-        public List<Post> GetAll()
+        public List<Post> GetAll(List<string> followIds, string userId)
         {
             return context.Posts
                 .Include(x => x.User)
                 .Include(x => x.PostLikes)
                 .Include(x => x.PostComments)
                     .ThenInclude(x => x.CommentLikes)
+                .Include(x => x.PostComments)
+                    .ThenInclude(x => x.User)
                 .Include(x => x.UserPostSaves)
                 .OrderByDescending(x => x.DateCreated)
+                .Where(x => followIds.Contains(x.UserId) || x.UserId.Equals(userId))
                 .ToList();
         }
 

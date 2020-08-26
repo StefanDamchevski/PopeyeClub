@@ -9,6 +9,7 @@ using PopeyeClub.Services.Interfaces;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
+using PopeyeClub.ViewModels;
 
 namespace PopeyeClub.Controllers
 {
@@ -24,9 +25,9 @@ namespace PopeyeClub.Controllers
 
         public IActionResult Overview()
         {
-            List<OverviewViewModel> models = postService.GetAll().Select(x => x.ToOverviewViewModel()).ToList();
-
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            List<OverviewViewModel> models = postService.GetAll(userId).Select(x => x.ToOverviewViewModel()).ToList();
 
             foreach (OverviewViewModel post in models)
             {
@@ -34,30 +35,30 @@ namespace PopeyeClub.Controllers
 
                 if(postLike is null)
                 {
-                    post.LikeStatus = Enums.PostLikeStatus.None;
+                    post.LikeStatus = ViewModelEnums.PostLikeStatus.None;
                 }
                 else if(!postLike.Status)
                 {
-                    post.LikeStatus = Enums.PostLikeStatus.None;
+                    post.LikeStatus = ViewModelEnums.PostLikeStatus.None;
                 }
                 else
                 {
-                    post.LikeStatus = Enums.PostLikeStatus.Liked;
+                    post.LikeStatus = ViewModelEnums.PostLikeStatus.Liked;
                 }
 
                 UserPostSaveViewModel postSave = post.UserPostSaves?.FirstOrDefault(x => x.UserId.Equals(userId));
 
                 if(postSave is null)
                 {
-                    post.PostSaveStatus = Enums.PostSaveStatus.None;
+                    post.PostSaveStatus = ViewModelEnums.PostSaveStatus.None;
                 }
                 else if (!postSave.Status)
                 {
-                    post.PostSaveStatus = Enums.PostSaveStatus.None;
+                    post.PostSaveStatus = ViewModelEnums.PostSaveStatus.None;
                 }
                 else
                 {
-                    post.PostSaveStatus = Enums.PostSaveStatus.Saved;
+                    post.PostSaveStatus = ViewModelEnums.PostSaveStatus.Saved;
                 }
 
                 foreach (CommentViewModel comment in post.PostComments)
@@ -66,15 +67,15 @@ namespace PopeyeClub.Controllers
 
                     if (commentLike is null)
                     {
-                        comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                        comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.None;
                     }
                     else if (!commentLike.Status)
                     {
-                        comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                        comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.None;
                     }
                     else
                     {
-                        comment.CommentLikeStatus = Enums.CommentLikeStatus.Liked;
+                        comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.Liked;
                     }
                 }
             }
@@ -99,15 +100,15 @@ namespace PopeyeClub.Controllers
 
             if (postLike is null)
             {
-                model.PostLikeStatus = Enums.PostLikeStatus.None;
+                model.PostLikeStatus = ViewModelEnums.PostLikeStatus.None;
             }
             else if (!postLike.Status)
             {
-                model.PostLikeStatus = Enums.PostLikeStatus.None;
+                model.PostLikeStatus = ViewModelEnums.PostLikeStatus.None;
             }
             else
             {
-                model.PostLikeStatus = Enums.PostLikeStatus.Liked;
+                model.PostLikeStatus = ViewModelEnums.PostLikeStatus.Liked;
             }
 
             foreach (CommentViewModel comment in model.Comments)
@@ -116,15 +117,15 @@ namespace PopeyeClub.Controllers
 
                 if (commentLike is null)
                 {
-                    comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                    comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.None;
                 }
                 else if (!commentLike.Status)
                 {
-                    comment.CommentLikeStatus = Enums.CommentLikeStatus.None;
+                    comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.None;
                 }
                 else
                 {
-                    comment.CommentLikeStatus = Enums.CommentLikeStatus.Liked;
+                    comment.CommentLikeStatus = ViewModelEnums.CommentLikeStatus.Liked;
                 }
             }
 
@@ -137,15 +138,15 @@ namespace PopeyeClub.Controllers
 
             if(postSave is null)
             {
-                model.PostSaveStatus = Enums.PostSaveStatus.None;
+                model.PostSaveStatus = ViewModelEnums.PostSaveStatus.None;
             }
             else if (!postSave.Status)
             {
-                model.PostSaveStatus = Enums.PostSaveStatus.None;
+                model.PostSaveStatus = ViewModelEnums.PostSaveStatus.None;
             }
             else
             {
-                model.PostSaveStatus = Enums.PostSaveStatus.Saved;
+                model.PostSaveStatus = ViewModelEnums.PostSaveStatus.Saved;
             }
 
             return View(model);

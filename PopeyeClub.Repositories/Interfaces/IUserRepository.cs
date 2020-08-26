@@ -14,8 +14,8 @@ namespace PopeyeClub.Repositories.Interfaces
         Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword);
         Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
         Task CreateAsync(ApplicationUser user, string password);
+        List<ApplicationUser> GetAll(string userId);
         ApplicationUser GetById(string userId);
         bool CheckForUsername(string username, string userId);
-        List<ApplicationUser> GetAll(string userId);
     }
 }

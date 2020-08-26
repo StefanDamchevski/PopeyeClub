@@ -1,0 +1,46 @@
+﻿@model List<PopeyeClub.ViewModels.Notification.NotificationViewModel>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+@if(Model.Count == 0)
+{
+    <div class="not-available">
+        <p>No Notifications to show</p>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>DateSent</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PopeyeClub.ViewModels.Notification.NotificationViewModel notification in Model)
+        {
+            <tr>
+                <td>@notification.UserFromName</td>
+                <td>@notification.DateSent.ToString("dd/MM/yyyy hh:mm")</td>
+                <td>
+                    @if(notification.Status == PopeyeClub.ViewModels.ViewModelEnums.FollowStatus.None)
+                    {
+                        <a class="btn btn-success btn-sm" asp-controller="Follow" asp-action="Accept" asp-route-userId="@notification.UserFromId">Accept</a> <span> | </span>
+                        <a class="btn btn-danger btn-sm" asp-controller="Follow" asp-action="Unfollow" asp-route-userId="@notification.UserFromId">Decline</a>
+                    }
+                    else if(notification.Status == PopeyeClub.ViewModels.ViewModelEnums.FollowStatus.Accepted)
+                    {
+                        <a class="btn btn-primary btn-sm" asp-controller="Follow" asp-action="SendFollowRequset" asp-route-userId="@notification.UserFromId">Follow Back</a>
+                    }
+                    else
+                    {
+                        <i class="fas fa-check text-success" style="font-size: 1em"></i>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

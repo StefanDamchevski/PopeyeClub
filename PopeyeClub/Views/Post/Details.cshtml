@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="comment-like">
-                                @if (@Model.Comments[i].CommentLikeStatus == PopeyeClub.ViewModels.Like.Enums.CommentLikeStatus.None)
+                                @if (@Model.Comments[i].CommentLikeStatus == PopeyeClub.ViewModels.ViewModelEnums.CommentLikeStatus.None)
                                 {
                                     <button class="btn hvr-grow" id="addCommentLikeBtn-@i" onclick="addCommentLike(@Model.Comments[i].Id,@i)">
                                         <i class="far fa-thumbs-up fa-2x hvr-icon-grow" style="font-size: 1em;"></i>
@@ -78,7 +78,7 @@
                     }
                 </div>
                 <div class="card-actions">
-                    @if (Model.PostLikeStatus == PopeyeClub.ViewModels.Like.Enums.PostLikeStatus.None)
+                    @if (Model.PostLikeStatus == PopeyeClub.ViewModels.ViewModelEnums.PostLikeStatus.None)
                     {
                         <button class="btn hvr-pulse-grow" id="addPostLikeBtn" onclick="addLike(@Model.PostId)">
                             <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
@@ -99,7 +99,7 @@
                     <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model.PostId" class="btn hvr-pulse-grow">
                         <i class="far fa-comment-alt fa-2x hvr-icon-pulse-grow"></i>
                     </a>
-                    @if (Model.PostSaveStatus == PopeyeClub.ViewModels.Like.Enums.PostSaveStatus.None)
+                    @if (Model.PostSaveStatus == PopeyeClub.ViewModels.ViewModelEnums.PostSaveStatus.None)
                     {
                         <button class="btn hvr-pulse-grow" id="savePostButton" onclick="addToSaved(@Model.PostId)">
                             <i class="far fa-bookmark fa-2x hvr-icon-pulse-grow"></i>

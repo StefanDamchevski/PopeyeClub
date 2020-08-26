@@ -34,7 +34,7 @@ function addLike(postId,i) {
             .then(function (response) {
                 document.getElementById("addPostLikeBtn-" + i).classList.add('hide');
                 document.getElementById("removePostLikeBtn-" + i).classList.remove('hide')
-                let count = document.getElementById('likesCount' + i);
+                let count = document.getElementById('likesCount-' + i);
                 count.innerHTML = parseInt(count.innerHTML) + 1;
             })
             .catch(function (error) {
@@ -52,7 +52,7 @@ function removeLike(postId, i) {
             .then(function (response) {
                 document.getElementById("addPostLikeBtn-" + i).classList.remove('hide');
                 document.getElementById("removePostLikeBtn-" + i).classList.add('hide')
-                let count = document.getElementById('likesCount' + i);
+                let count = document.getElementById('likesCount-' + i);
                 count.innerHTML = parseInt(count.innerHTML) - 1;
             })
             .catch(function (error) {

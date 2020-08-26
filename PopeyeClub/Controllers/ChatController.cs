@@ -1,29 +1,31 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PopeyeClub.Helpers;
 using PopeyeClub.Services.Interfaces;
-using PopeyeClub.ViewModels.Chat;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace PopeyeClub.Controllers
 {
     [Authorize]
     public class ChatController : Controller
     {
-        private readonly IUserService userService;
+        private readonly IChatService chatService;
 
-        public ChatController(IUserService userService)
+        public ChatController(IChatService chatService)
         {
-            this.userService = userService;
+            this.chatService = chatService;
         }
 
         public IActionResult Overview()
         {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<UserViewModel> models = userService.GetAll(userId).Select(x => x.ToUserViewModel()).ToList();
-            return View(models);
+            return View();
+        }
+
+        public IActionResult Create(string userId)
+        {
+            if(userId != default)
+            {
+                chatService.Create(userId);
+            }
+            return RedirectToAction(nameof(Overview));
         }
     }
 }

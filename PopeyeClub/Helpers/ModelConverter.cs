@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using PopeyeClub.Data;
+using PopeyeClub.ViewModels;
 using PopeyeClub.ViewModels.Chat;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
+using PopeyeClub.ViewModels.Notification;
 using PopeyeClub.ViewModels.Post;
 using PopeyeClub.ViewModels.User;
 
@@ -130,14 +132,39 @@ namespace PopeyeClub.Helpers
             };
         }
 
-        internal static UserViewModel ToUserViewModel(this ApplicationUser user)
+        internal static ChatRoomViewModel ToUserViewModel(this ApplicationUser user)
         {
-            return new UserViewModel
+            return new ChatRoomViewModel
             {
                 UserId = user.Id,
                 UserImage = Convert.ToBase64String(user.ProfilePicture),
                 UserName = user.UserName,
             };
+        }
+
+        internal static NotificationViewModel ToNotificationViewModel(this Notification notification)
+        {
+            return new NotificationViewModel
+            {
+                NotificationId = notification.Id,
+                UserFromId = notification.FromUserId,
+                UserFromName = notification.FromUser.UserName,
+                Type = notification.Type.ToTypeViewModel(),
+                DateSent = notification.DateSent,
+            };
+        }
+
+        internal static ViewModelEnums.NotificationViewModelType ToTypeViewModel(this Enums.NotificationType type)
+        {
+            switch (type)
+            {
+                case Enums.NotificationType.Follow:
+                    return ViewModelEnums.NotificationViewModelType.Follow;
+                    break;
+                default:
+                    return ViewModelEnums.NotificationViewModelType.Other;
+                    break;
+            }
         }
     }
 }

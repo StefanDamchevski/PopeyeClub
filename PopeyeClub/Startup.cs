@@ -61,6 +61,15 @@ namespace PopeyeClub
             services.AddTransient<IPostSaveService, PostSaveService>();
             services.AddTransient<IPostSaveRepository, PostSaveRepository>();
 
+            services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IChatRepository, ChatRepository>();
+
+            services.AddTransient<IFollowService, FollowService>();
+            services.AddTransient<IFollowRepository, FollowRepository>();
+
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
             services.AddControllersWithViews();
         }
 

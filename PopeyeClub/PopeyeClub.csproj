@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\lib\Hover-master\.editorconfig" />
     <None Include="wwwroot\lib\Hover-master\.gitignore" />
     <None Include="wwwroot\lib\Hover-master\CONTRIBUTING.md" />

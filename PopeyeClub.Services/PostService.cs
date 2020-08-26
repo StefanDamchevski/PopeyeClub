@@ -9,10 +9,12 @@ namespace PopeyeClub.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository postRepository;
+        private readonly IFollowService followService;
 
-        public PostService(IPostRepository postRepository)
+        public PostService(IPostRepository postRepository, IFollowService followService)
         {
             this.postRepository = postRepository;
+            this.followService = followService;
         }
 
         public void Create(string userId, byte[] postImage)
@@ -27,9 +29,10 @@ namespace PopeyeClub.Services
             postRepository.Create(post);
         }
 
-        public List<Post> GetAll()
+        public List<Post> GetAll(string userId)
         {
-            return postRepository.GetAll();
+            List<string> followIds = followService.GetIds(userId);
+            return postRepository.GetAll(followIds, userId);
         }
 
         public Post GetById(int postId)

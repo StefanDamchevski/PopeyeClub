@@ -14,6 +14,6 @@ namespace PopeyeClub.ViewModels.Comment
         public int PostId { get; set; }
         public int CommentLikesCount { get; set; }
         public List<CommentLikeViewModel> CommentLikes { get; set; }
-        public Enums.CommentLikeStatus CommentLikeStatus { get; set; }
+        public ViewModelEnums.CommentLikeStatus CommentLikeStatus { get; set; }
     }
 }

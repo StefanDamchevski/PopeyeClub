@@ -13,9 +13,9 @@ namespace PopeyeClub.Services.Interfaces
         Task<Response> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
         Task<Response> SoftDeleteAsync(string userId, string password);
         List<ApplicationUser> GetAll(string userId);
+        Task<ApplicationUser> GetByIdAsync(string userId);
         Task UpdateProfilePictureAsync(byte[] picture, string userId);
         Task RemoveIsDeletedAsync(ApplicationUser user);
         ApplicationUser GetById(string userId);
-        Task<ApplicationUser> GetByIdAsync(string userId);
     }
 }

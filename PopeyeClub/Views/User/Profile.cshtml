@@ -46,13 +46,34 @@ else
     }
     else
     {
-        <a asp-controller="Follow" asp-action="SendFollowRequest" class="btn btn-outline-secondary hvr-pulse-grow">
-            <i class="fas fa-user-friends fa-2x"></i>
-        </a>
+        if (!Model.IsFollowed && !Model.IsSent)
+        {
+            <a asp-controller="Follow" asp-action="SendFollowRequset" asp-route-userId="@Model.UserId" class="btn btn-outline-secondary hvr-pulse-grow">
+                <i class="fas fa-user-friends fa-2x"></i>
+            </a>
+        }
+        else if (Model.IsSent && !Model.IsFollowed)
+        {
+            <button class="btn btn-outline-secondary">Pending</button>
+        }
+        else
+        {
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#unfollowModal">
+                <i class="fas fa-user-check"></i>
+            </button>
+            <div class="modal fade"  id="unfollowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <a class="btn btn-outline-danger btn-sm" asp-controller="Follow" asp-action="Unfollow" asp-route-userId="@Model.UserId">Unfollow</a>
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="closeUnfollowModal" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        }
     }
 </div>
 <div class="user-posts">
-    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate)
+    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value != Model.UserId && Model.IsPrivate && !Model.IsFollowed)
     {
         <div class="not-available">
             <p>This profile is private. If you want to see what this user posts follow them!!!</p>
