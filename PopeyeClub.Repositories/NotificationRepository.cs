@@ -29,7 +29,7 @@ namespace PopeyeClub.Repositories
 
         public Notification Get(string currentUserId, string userId, Enums.NotificationType result)
         {
-            return context.Notifications.FirstOrDefault(x => x.FromUserId.Equals(userId) && x.ToUserId.Equals(currentUserId) && x.Type.Equals(result));
+            return context.Notifications.FirstOrDefault(x => x.FromUserId.Equals(currentUserId) && x.ToUserId.Equals(userId) && x.Type.Equals(result));
         }
 
         public List<Notification> GetAll(string currentUserId)

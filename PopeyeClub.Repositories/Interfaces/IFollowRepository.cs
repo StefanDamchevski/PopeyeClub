@@ -9,5 +9,7 @@ namespace PopeyeClub.Repositories.Interfaces
         void Create(Follow follow);
         void Update(Follow follow);
         List<Follow> GetByIds(string userId);
+        int GetAllFollowing(string userId);
+        int GetAllFollowers(string userId);
     }
 }

@@ -12,5 +12,7 @@ namespace PopeyeClub.Services.Interfaces
         bool GetIsSent(string currentUserId, string userId);
         List<string> GetIds(string userId);
         List<Follow> GetByIds(string userId);
+        int GetFollowersCount(string userId);
+        int GetFollowingCount(string userId);
     }
 }

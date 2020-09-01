@@ -29,9 +29,10 @@
                 <div class="comment-section" id="commentSection">
                     @if (Model.Comments.Count == 0)
                     {
-                        <div class="not-available">
+                        <div class="not-available" id="noComments">
                             <p>No comments on this post</p>
                         </div>
+                        <button class="hide" id="storageBtn-0" onclick="addToLocalStorage(@Model.Comments.Count, 'CommentIds')"></button>
                     }
 
                     @for (int i = 0; i < Model.Comments.Count; i++)

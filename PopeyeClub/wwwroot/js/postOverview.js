@@ -200,6 +200,7 @@ function addComment(event, i, count, storageKey) {
             let hr = document.createElement("hr");
             commentSection.appendChild(hr);
 
+            document.getElementById("noComments-" + i).style.display = "none";
             document.getElementById("commentInput-" + i).value = "";
             disableButtons();
         })

@@ -12,6 +12,12 @@
 
 .user-info {
     padding: 2%;
+    width:35%;
+}
+
+.count-info {
+    margin-left: 2%;
+    word-break: break-word;
 }
 
 .btn {
@@ -49,14 +55,13 @@
     text-align:center;
 }
 
-.not-available{
-    text-align:center;
-    width:50%;
-    margin:2% auto;
-    border-radius:5px;
-    border:1px solid;
-    padding:2%;
-    background-color:#dbdbdb;
+.not-available {
+    text-align: center;
+    width: 50%;
+    margin: 2% auto;
+    border-radius: 5px;
+    border: 1px solid #dbdbdb;
+    padding: 2%;
 }
 
 h2 {

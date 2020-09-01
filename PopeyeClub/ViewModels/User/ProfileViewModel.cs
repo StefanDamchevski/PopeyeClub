@@ -15,5 +15,7 @@ namespace PopeyeClub.ViewModels.User
         public bool IsSent { get; set; }
         public List<UserPostsViewModel> Posts { get; set; }
         public List<UserPostsViewModel> SavedPosts { get; set; }
+        public int FollowersCount { get; set; }
+        public int FollowingCount { get; set; }
     }
 }

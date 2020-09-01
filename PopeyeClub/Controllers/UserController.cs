@@ -91,6 +91,10 @@ namespace PopeyeClub.Controllers
                     model.IsFollowed = followService.GetIsFollowed(currentUserId, userId);
                 }
             }
+
+            model.FollowersCount = followService.GetFollowersCount(userId);
+
+            model.FollowingCount = followService.GetFollowingCount(userId);
             
             return View(model);
         }

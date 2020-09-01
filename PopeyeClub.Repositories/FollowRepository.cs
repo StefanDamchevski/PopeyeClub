@@ -20,6 +20,16 @@ namespace PopeyeClub.Repositories
             context.SaveChanges();
         }
 
+        public int GetAllFollowers(string userId)
+        {
+            return context.Follows.Where(x => x.FromUserId.Equals(userId) && x.IsFollowed.Equals(true)).Count();
+        }
+
+        public int GetAllFollowing(string userId)
+        {
+            return context.Follows.Where(x => x.ToUserId.Equals(userId) && x.IsFollowed.Equals(true)).Count();
+        }
+
         public List<Follow> GetByIds(string userId)
         {
             return context.Follows.Where(x => x.FromUserId.Equals(userId) && x.IsFollowed.Equals(true)).ToList();

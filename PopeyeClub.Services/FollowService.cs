@@ -60,13 +60,24 @@ namespace PopeyeClub.Services
                     dbFollow.IsSent = true;
                 }
 
+                notificationService.Create(currentUserId, userId, "Follow");
                 followRepository.Update(dbFollow);
             }
+        }
+
+        public int GetFollowingCount(string userId)
+        {
+            return followRepository.GetAllFollowing(userId);
         }
 
         public List<Follow> GetByIds(string userId)
         {
             return followRepository.GetByIds(userId);
+        }
+
+        public int GetFollowersCount(string userId)
+        {
+            return followRepository.GetAllFollowers(userId);
         }
 
         public List<string> GetIds(string userId)

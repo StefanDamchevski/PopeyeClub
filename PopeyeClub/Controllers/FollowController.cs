@@ -48,5 +48,16 @@ namespace PopeyeClub.Controllers
 
             return RedirectToAction("Overview", "Notification");
         }
+
+        public IActionResult Decline(string userId)
+        {
+            if(userId != null)
+            {
+                string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                followService.Update(userId, currentUserId, false, false);
+            }
+
+            return RedirectToAction("Profile", "User", new { UserId = userId });
+        }
     }
 }

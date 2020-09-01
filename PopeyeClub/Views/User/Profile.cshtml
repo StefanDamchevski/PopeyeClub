@@ -22,6 +22,11 @@ else
     </div>
     <div class="user-info">
         <p>@Model.UserName</p>
+        <div class="count-info-wrap">
+            <p class="count-info"><b>@Model.Posts.Count()</b> posts</p>
+            <p class="count-info"><b>@Model.FollowersCount</b> following</p>
+            <p class="count-info"><b>@Model.FollowingCount</b> followers</p>
+        </div>
         <p><b>@Model.Email</b></p>
     </div>
     @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)

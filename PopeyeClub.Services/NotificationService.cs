@@ -34,7 +34,11 @@ namespace PopeyeClub.Services
         {
             Enums.NotificationType.TryParse(type, out Enums.NotificationType result);
             Notification notification = notificationRepository.Get(currentUserId, userId, result);
-            notificationRepository.Delete(notification);
+
+            if(notification != null)
+            {
+                notificationRepository.Delete(notification);
+            }
         }
 
         public List<Notification> GetAll(string currentUserId)
