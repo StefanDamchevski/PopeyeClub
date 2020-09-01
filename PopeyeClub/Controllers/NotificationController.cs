@@ -38,7 +38,7 @@ namespace PopeyeClub.Controllers
                     bool status = followService.GetIsFollowed(model.UserFromId, currentUserId);
                     bool followBack = followService.GetIsFollowed(currentUserId, model.UserFromId);
 
-                    if (status && followBack)
+                    if ((status && followBack) || followBack)
                     {
                         model.Status = ViewModelEnums.FollowStatus.FollowedBack;
                     }

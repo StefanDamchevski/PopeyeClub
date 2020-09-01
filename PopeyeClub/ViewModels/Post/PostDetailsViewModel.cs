@@ -12,6 +12,8 @@ namespace PopeyeClub.ViewModels.Post
         public string CreatedBy { get; set; }
         public string UserImage { get; set; }
         public int DaysAgo { get; set; }
+        public bool IsFollowed { get; set; }
+        public bool IsPrivate { get; set; }
         public List<PostLikeViewModel> PostLikes { get; set; }
         public List<CommentViewModel> Comments { get; set; }
         public ViewModelEnums.PostLikeStatus PostLikeStatus { get; set; }

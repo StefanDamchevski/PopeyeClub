@@ -85,7 +85,7 @@ body {
 }
 
 #inputHolder {
-    margin-right: 210px;
+    margin-right: 14em;
 }
 
 #searchInput {
@@ -120,6 +120,7 @@ td img{
 }
 
 @media (min-width: 768px) {
+
     html {
         font-size: 16px;
     }
@@ -127,20 +128,40 @@ td img{
     #listOfUsers {
         display:none;
         width: 15%;
-        margin: 2% 45%;
+        margin: 2% 43%;
         text-align: center;
     }
+
     .dropdown {
         margin-top: 22%;
     }
 }
 
 @media (max-width: 768px) {
+
     html {
         font-size: 16px;
     }
 
     #searchInputl {
         width: 50%;
+    }
+
+    #inputHolder {
+        margin-right: 4em;
+    }
+}
+
+@media (max-width: 1080px){
+
+    #inputHolder {
+        margin-right: 10em;
+    }
+}
+
+@media (max-width: 892px) {
+
+    #inputHolder {
+        margin-right: 4em;
     }
 }

@@ -1,8 +1,22 @@
 ﻿
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <a class="btn btn-outline-danger">Unfollow</a>
-            <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model" class="btn btn-outline-primary">Go to post</a>
+            @if (User.FindFirst(ClaimTypes.NameIdentifier).Value == (Model.UserId))
+            {
+                <a asp-controller="Post" asp-action="Delete" asp-route-postId="@Model.PostId" class="btn btn-outline-danger">Delete</a>
+            }
+            else
+            {
+                if (Model.IsFollowed)
+                {
+                    <a asp-controller="Follow" asp-action="Unfollow" asp-route-userId="@Model.UserId" class="btn btn-outline-danger">Unfollow</a>
+                }
+                else
+                {
+                    <a asp-controller="Follow" asp-action="SendFollowRequset" asp-route-userId="@Model.UserId" class="btn btn-outline-success">Follow</a>
+                }
+            }
+            <a asp-controller="Post" asp-action="Details" asp-route-postId="@Model.PostId" class="btn btn-outline-primary">Go to post</a>
             <button class="btn btn-outline-primary" data-dismiss="modal">Close</button>
         </div>
     </div>

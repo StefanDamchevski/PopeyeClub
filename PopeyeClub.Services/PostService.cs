@@ -29,6 +29,11 @@ namespace PopeyeClub.Services
             postRepository.Create(post);
         }
 
+        public void Delete(int postId)
+        {
+            postRepository.Delete(postId);
+        }
+
         public List<Post> GetAll(string userId)
         {
             List<string> followIds = followService.GetIds(userId);
@@ -37,7 +42,7 @@ namespace PopeyeClub.Services
 
         public Post GetById(int postId)
         {
-            return postRepository.GetById(postId); ;
+            return postRepository.GetById(postId);
         }
 
         public List<Post> GetByIds(List<int> postIds)

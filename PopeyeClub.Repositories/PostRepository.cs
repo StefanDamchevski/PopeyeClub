@@ -21,6 +21,17 @@ namespace PopeyeClub.Repositories
             context.SaveChanges();
         }
 
+        public void Delete(int postId)
+        {
+            Post post = new Post
+            {
+                Id = postId,
+            };
+
+            context.Posts.Remove(post);
+            context.SaveChanges();
+        }
+
         public List<Post> GetAll(List<string> followIds, string userId)
         {
             return context.Posts

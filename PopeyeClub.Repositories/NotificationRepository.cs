@@ -21,6 +21,17 @@ namespace PopeyeClub.Repositories
             context.SaveChanges();
         }
 
+        public void Delete(Notification notification)
+        {
+            context.Notifications.Remove(notification);
+            context.SaveChanges();
+        }
+
+        public Notification Get(string currentUserId, string userId, Enums.NotificationType result)
+        {
+            return context.Notifications.FirstOrDefault(x => x.FromUserId.Equals(userId) && x.ToUserId.Equals(currentUserId) && x.Type.Equals(result));
+        }
+
         public List<Notification> GetAll(string currentUserId)
         {
             return context.Notifications

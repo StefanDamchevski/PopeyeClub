@@ -7,5 +7,7 @@ namespace PopeyeClub.Repositories.Interfaces
     {
         void Create(Notification notification);
         List<Notification> GetAll(string currentUserId);
+        Notification Get(string currentUserId, string userId, Enums.NotificationType result);
+        void Delete(Notification notification);
     }
 }

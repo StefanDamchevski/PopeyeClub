@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PopeyeClub.Helpers;
 using PopeyeClub.Services.Interfaces;
+using PopeyeClub.ViewModels;
 using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Post;
-using PopeyeClub.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace PopeyeClub.Controllers
 {
@@ -17,10 +17,12 @@ namespace PopeyeClub.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly IFollowService followService;
 
-        public PostController(IPostService postService)
+        public PostController(IPostService postService, IFollowService followService)
         {
             this.postService = postService;
+            this.followService = followService;
         }
 
         public IActionResult Overview()
@@ -86,7 +88,7 @@ namespace PopeyeClub.Controllers
         public IActionResult Create(IFormFile postImage)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            postService.Create(userId, postImage.ToByteArray());    
+            postService.Create(userId, postImage.ToByteArray());
             return RedirectToAction(nameof(Overview));
         }
 
@@ -95,6 +97,13 @@ namespace PopeyeClub.Controllers
             PostDetailsViewModel model = postService.GetById(postId).ToPostDetailsViewModel();
 
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            model.IsFollowed = followService.GetIsFollowed(userId, model.UserId);
+
+            if(model.IsPrivate && !model.IsFollowed)
+            {
+                return RedirectToAction("Profile", "User", new { model.UserId});
+            }
 
             PostLikeViewModel postLike = model.PostLikes?.FirstOrDefault(x => x.UserId.Equals(userId));
 
@@ -150,6 +159,12 @@ namespace PopeyeClub.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult Delete(int postId)
+        {
+            postService.Delete(postId);
+            return RedirectToAction(nameof(Overview));
         }
     }
 }

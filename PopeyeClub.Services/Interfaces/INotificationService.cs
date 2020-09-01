@@ -5,7 +5,8 @@ namespace PopeyeClub.Services.Interfaces
 {
     public interface INotificationService
     {
-        void Create(string currentUserId, string userId, string type);
         List<Notification> GetAll(string currentUserId);
+        void Create(string currentUserId, string userId, string type);
+        void Delete(string currentUserId, string userId, string type);
     }
 }

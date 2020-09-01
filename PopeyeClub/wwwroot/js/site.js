@@ -34,6 +34,7 @@ function searchUsers() {
         }
         else {
             document.getElementById("listOfUsers").style.display = "block";
+            document.getElementById("listOfUsers").style.paddingRight = 0;
             userRows[i].style.display = "";
         }
     }

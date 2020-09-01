@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using PopeyeClub.ViewModels.Comment;
+﻿using PopeyeClub.ViewModels.Comment;
 using PopeyeClub.ViewModels.Like;
+using System.Collections.Generic;
 
 namespace PopeyeClub.ViewModels.Post
 {
@@ -12,6 +12,7 @@ namespace PopeyeClub.ViewModels.Post
         public string ProfilePicture { get; set; }
         public string PostImage { get; set; }
         public int DaysAgo { get; set; }
+        public bool IsFollowed { get; set; } = true;
         public List<PostLikeViewModel> PostLikes { get; set; }
         public List<CommentViewModel> PostComments { get; set; }
         public List<UserPostSaveViewModel> UserPostSaves { get; set; }

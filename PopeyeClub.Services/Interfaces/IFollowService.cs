@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PopeyeClub.Data;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PopeyeClub.Services.Interfaces
@@ -10,5 +11,6 @@ namespace PopeyeClub.Services.Interfaces
         void Update(string currentUserId, string userId, bool isFollowed, bool isSent);
         bool GetIsSent(string currentUserId, string userId);
         List<string> GetIds(string userId);
+        List<Follow> GetByIds(string userId);
     }
 }

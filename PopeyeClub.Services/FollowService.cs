@@ -47,6 +47,26 @@ namespace PopeyeClub.Services
                 notificationService.Create(currentUserId, userId, "Follow");
                 followRepository.Create(follow);
             }
+            else
+            {
+                if (user.IsPrivate)
+                {
+                    dbFollow.IsFollowed = false;
+                    dbFollow.IsSent = true;
+                }
+                else
+                {
+                    dbFollow.IsFollowed = true;
+                    dbFollow.IsSent = true;
+                }
+
+                followRepository.Update(dbFollow);
+            }
+        }
+
+        public List<Follow> GetByIds(string userId)
+        {
+            return followRepository.GetByIds(userId);
         }
 
         public List<string> GetIds(string userId)
@@ -96,6 +116,11 @@ namespace PopeyeClub.Services
                 follow.IsFollowed = isFollowed;
 
                 followRepository.Update(follow);
+            }
+
+            if (!isFollowed && !isSent)
+            {
+                notificationService.Delete(currentUserId, userId, "Follow");
             }
         }
     }

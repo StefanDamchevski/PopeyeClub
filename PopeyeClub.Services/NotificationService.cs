@@ -30,6 +30,13 @@ namespace PopeyeClub.Services
             notificationRepository.Create(notification);
         }
 
+        public void Delete(string currentUserId, string userId, string type)
+        {
+            Enums.NotificationType.TryParse(type, out Enums.NotificationType result);
+            Notification notification = notificationRepository.Get(currentUserId, userId, result);
+            notificationRepository.Delete(notification);
+        }
+
         public List<Notification> GetAll(string currentUserId)
         {
             return notificationRepository.GetAll(currentUserId);

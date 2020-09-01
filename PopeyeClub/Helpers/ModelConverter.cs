@@ -4,6 +4,7 @@ using PopeyeClub.Data;
 using PopeyeClub.ViewModels;
 using PopeyeClub.ViewModels.Chat;
 using PopeyeClub.ViewModels.Comment;
+using PopeyeClub.ViewModels.Follow;
 using PopeyeClub.ViewModels.Like;
 using PopeyeClub.ViewModels.Notification;
 using PopeyeClub.ViewModels.Post;
@@ -114,6 +115,7 @@ namespace PopeyeClub.Helpers
                 UserImage = Convert.ToBase64String(post.User?.ProfilePicture),
                 PostImage = Convert.ToBase64String(post.PostImage),
                 CreatedBy = post.User?.UserName,
+                IsPrivate = post.User.IsPrivate,
                 DaysAgo = DateTime.Now.Subtract(post.DateCreated).Days,
                 Comments = post.PostComments?.OrderBy(x => x.DateCreated).Select(x => x.ToCommentViewModel()).ToList(),
                 PostLikes = post.PostLikes?.Select(x => x.ToPostLikeViewModel()).ToList(),
@@ -156,15 +158,22 @@ namespace PopeyeClub.Helpers
 
         internal static ViewModelEnums.NotificationViewModelType ToTypeViewModel(this Enums.NotificationType type)
         {
-            switch (type)
+            return type switch
             {
-                case Enums.NotificationType.Follow:
-                    return ViewModelEnums.NotificationViewModelType.Follow;
-                    break;
-                default:
-                    return ViewModelEnums.NotificationViewModelType.Other;
-                    break;
-            }
+                Enums.NotificationType.Follow => ViewModelEnums.NotificationViewModelType.Follow,
+                _ => ViewModelEnums.NotificationViewModelType.Other,
+            };
+        }
+
+        internal static FollowViewModel ToFollowViewModel(this Follow follow)
+        {
+            return new FollowViewModel
+            {
+                FollowId = follow.Id,
+                FromUserId = follow.FromUserId,
+                ToUserId = follow.ToUserId,
+                Status = follow.IsFollowed,
+            };
         }
     }
 }
