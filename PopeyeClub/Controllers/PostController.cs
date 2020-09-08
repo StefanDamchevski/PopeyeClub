@@ -100,9 +100,12 @@ namespace PopeyeClub.Controllers
 
             model.IsFollowed = followService.GetIsFollowed(userId, model.UserId);
 
-            if(model.IsPrivate && !model.IsFollowed)
+            if((model.IsPrivate && !model.IsFollowed))
             {
-                return RedirectToAction("Profile", "User", new { model.UserId});
+                if(userId != model.UserId)
+                {
+                    return RedirectToAction("Profile", "User", new { model.UserId});
+                }
             }
 
             PostLikeViewModel postLike = model.PostLikes?.FirstOrDefault(x => x.UserId.Equals(userId));

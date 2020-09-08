@@ -200,7 +200,11 @@ function addComment(event, count, storagekey) {
             let hr = document.createElement("hr");
             commentSection.appendChild(hr);
 
-            document.getElementById("noComments").style.display = "none";
+            let noComment = document.getElementById("noComments");
+            if (noComment != null) {
+                noComment.style.display = "none";
+            }
+
             document.getElementById("commentInput").value = "";
             updateScroll();
             disableButtons();

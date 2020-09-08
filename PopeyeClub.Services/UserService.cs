@@ -92,6 +92,11 @@ namespace PopeyeClub.Services
             return await userRepository.GetByIdAsync(userId);
         }
 
+        public async Task<ApplicationUser> GetByNameAsync(string roomName)
+        {
+            return await userRepository.GetByUserNameAsync(roomName);
+        }
+
         public async Task RemoveIsDeletedAsync(ApplicationUser user)
         {
             user.IsDeleted = false;

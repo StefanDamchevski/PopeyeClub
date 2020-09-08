@@ -1,6 +1,6 @@
-﻿
+﻿@model List<PopeyeClub.ViewModels.Chat.ChatRoomViewModel>
 
-@section Styles{ 
+@section Styles{
     <link href="~/css/chat.css" rel="stylesheet" />
 }
 
@@ -12,52 +12,27 @@
                 <button class="btn hvr-pulse-grow" type="button" data-toggle="modal" data-target="#createRoomModal">
                     <i class="far fa-edit" style="font-size:1.4em;"></i>
                 </button>
-                <partial name="./Partials/_CreateRoomPartial"/>
+                <partial name="./Partials/_CreateRoomPartial" />
             </div>
             <hr />
             <div class="list-of-users">
-                @*@for (int i = 0; i < Model.Count; i++)
+                @for (int i = 0; i < Model.Count; i++)
                 {
                     <div class="user">
-                        <button class="btn" id="joinRoomBtn-@i" onclick="joinRoom(@Model[i].UserId)">
+                        <input type="hidden" id="chatroomName-@i" name="chatRoomName" value="@Model[i].ChatroomName" />
+                        <button class="btn" id="joinRoomBtn-@i" onclick="joinRoom(@i)">
                             <img src="data:image/jpeg;base64,@Model[i].UserImage" class="user-image" />
-                            <span class="user-name">@Model[i].UserName</span>
+                            <span class="user-name">@Model[i].ChatRoomDisplayName</span>
                         </button>
                     </div>
-                }*@
+                }
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="chat-user">
-                <img src="~/Images/popeye-the-sailor-man.jpg" class="chat-user-image" />
-                <span class="user-name">@User.Identity.Name</span>
-                <hr />
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="message">
-                    <div class="user-info">
-                        <img src="~/Images/popeye-the-sailor-man.jpg" class="chat-user-image" />
-                        <span>@User.Identity.Name</span>
-                    </div>
-                    <span class="message-text">Agi</span>
-                    <span>@DateTime.Now.ToString("dd/MM/yyyy hh:mm")</span>
-                </div>
-            </div>
-            <div class="send-message-form">
-                <form method="post" class="form-inline">
-                    <input type="hidden" name="userId" value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" />
-                    <div class="form-group chat-input">
-                        <input type="text" name="message" class="form-control" id="chatMessageInput" onkeyup="enableBtn()"/>
-                    </div>
-                    <input class="btn btn-success" id="submitMessageBtn" type="submit" value="Send" />
-                </form>
-            </div>
-        </div>
+        <div class="col-md-9" id="chatRoom"></div>
     </div>
 </div>
 
-@section Scripts{ 
-    <script src="~/lib/signalR/signalr.js"></script>
+@section Scripts{
     <script src="~/lib/axios/axios.min.js"></script>
     <script src="~/js/chat.js"></script>
 }

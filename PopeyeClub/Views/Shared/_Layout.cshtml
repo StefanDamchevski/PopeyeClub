@@ -15,9 +15,9 @@
 </head>
 <body>
     <header>
-        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand text-light" id="logo" href="#">Popeye Club</a>
+                <a class="navbar-brand text-dark" id="logo" href="#">Popeye Club</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,37 +28,37 @@
                             ApplicationUser user = await userManager.FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                             <li class="nav-item" id="inputHolder">
-                                <input type="text" class="form-control" id="searchInput" name="userName" onkeyup="searchUsers()" placeholder="Enter Username"/>
+                                <input type="text" class="form-control" id="searchInput" name="userName" onkeyup="searchUsers()" placeholder="Search users..." />
                                 <button type="button" data-toggle="modal" data-target="#listOfUsers" id="toggleBtn" style="display:none"></button>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light hvr-pulse-grow" asp-controller="Post" asp-action="Overview">
+                                <a class="nav-link text-dark hvr-pulse-grow" asp-controller="Post" asp-action="Overview">
                                     <i class="fas fa-home fa-2x hvr-icon-pulse-grow"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light hvr-pulse-grow" asp-controller="Chat" asp-action="Overview">
-                                    <i class="fas fa-comment fa-2x hvr-icon-pulse-grow"></i>
+                                <a class="nav-link text-dark hvr-pulse-grow" asp-controller="Chat" asp-action="Overview">
+                                    <i class="far fa-comment fa-2x hvr-icon-pulse-grow"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light hvr-pulse-grow" asp-controller="Notification" asp-action="Overview">
-                                    <i class="fas fa-bell fa-2x hvr-icon-pulse-grow"></i>
+                                <a class="nav-link text-dark hvr-pulse-grow" asp-controller="Notification" asp-action="Overview">
+                                    <i class="far fa-bell fa-2x hvr-icon-pulse-grow"></i>
                                 </a>
                             </li>
                             <li class="nav-item" id="imgDropdown">
                                 <div class="dropdown">
                                     <img src="data:image/jpeg;base64,@Convert.ToBase64String(user.ProfilePicture)" class="dropdown-toggle hvr-pulse-grow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button" />
-                                    <div class="dropdown-menu bg-dark" id="dropdownMenu" aria-labelledby="dropdownMenuLink">                                        
+                                    <div class="dropdown-menu bg-light" id="dropdownMenu" aria-labelledby="dropdownMenuLink">
                                         <button class="btn btn-outline-secondary btn-sm hvr-pulse-grow" id="postBtn">
                                             <i class="fas fa-plus fa-2x"></i>
                                         </button>
-                                        <a class="nav-link text-light" asp-controller="User" asp-action="Profile" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
+                                        <a class="nav-link text-dark" asp-controller="User" asp-action="Profile" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
                                         <form asp-controller="Post" asp-action="Create" method="post" enctype="multipart/form-data">
                                             <input type="file" id="fileBtn" name="postImage" hidden />
-                                            <input type="submit" value="Create" id="submitPost" hidden/>
+                                            <input type="submit" value="Create" id="submitPost" hidden />
                                         </form>
-                                        <a class="nav-link text-light" asp-controller="Auth" asp-action="Logout">Log Out</a>
+                                        <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout">Log Out</a>
                                     </div>
                                 </div>
                             </li>
@@ -81,6 +81,8 @@
     <script src="https://kit.fontawesome.com/15dcd5d68f.js" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/signalR/signalr.min.js"></script>
+    <script src="~/js/chatConnection.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

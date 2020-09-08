@@ -1,7 +1,9 @@
-﻿using PopeyeClub.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PopeyeClub.Repositories
 {
@@ -28,6 +30,15 @@ namespace PopeyeClub.Repositories
         public int GetAllFollowing(string userId)
         {
             return context.Follows.Where(x => x.ToUserId.Equals(userId) && x.IsFollowed.Equals(true)).Count();
+        }
+
+        public List<Follow> GetAllUserRelations(string userId)
+        {
+            return context.Follows
+                .Include(x => x.FromUser)
+                .Include(x => x.ToUser)
+                .Where(x => (x.FromUserId.Equals(userId) || x.ToUserId.Equals(userId)) && x.IsFollowed.Equals(true))
+                .ToList();
         }
 
         public List<Follow> GetByIds(string userId)

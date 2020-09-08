@@ -14,5 +14,6 @@ namespace PopeyeClub.Data
         public DbSet<ChatRoom> ChatRooms { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

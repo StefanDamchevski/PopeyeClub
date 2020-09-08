@@ -70,6 +70,9 @@ namespace PopeyeClub
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
 
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
+
             services.AddControllersWithViews();
         }
 

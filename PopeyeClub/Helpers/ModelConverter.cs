@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using PopeyeClub.Data;
+using PopeyeClub.Services.Dto.Chat;
 using PopeyeClub.ViewModels;
 using PopeyeClub.ViewModels.Chat;
 using PopeyeClub.ViewModels.Comment;
@@ -134,16 +135,6 @@ namespace PopeyeClub.Helpers
             };
         }
 
-        internal static ChatRoomViewModel ToUserViewModel(this ApplicationUser user)
-        {
-            return new ChatRoomViewModel
-            {
-                UserId = user.Id,
-                UserImage = Convert.ToBase64String(user.ProfilePicture),
-                UserName = user.UserName,
-            };
-        }
-
         internal static NotificationViewModel ToNotificationViewModel(this Notification notification)
         {
             return new NotificationViewModel
@@ -173,6 +164,18 @@ namespace PopeyeClub.Helpers
                 FromUserId = follow.FromUserId,
                 ToUserId = follow.ToUserId,
                 Status = follow.IsFollowed,
+            };
+        }
+
+        internal static ChatRoomViewModel ToChatRoomViewModel(this ChatRoomDto roomDto)
+        {
+            return new ChatRoomViewModel
+            {
+                RoomId = roomDto.ChatRoomId,
+                UserId = roomDto.UserId,
+                UserImage = roomDto.UserImage,
+                ChatroomName = roomDto.RoomName,
+                ChatRoomDisplayName = roomDto.DisplayRoomName,
             };
         }
     }

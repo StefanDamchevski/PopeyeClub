@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PopeyeClub.Data
 {
@@ -7,5 +8,6 @@ namespace PopeyeClub.Data
         public int Id { get; set; }
         [Required]
         public string RoomName { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

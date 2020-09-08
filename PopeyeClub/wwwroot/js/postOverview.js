@@ -200,8 +200,17 @@ function addComment(event, i, count, storageKey) {
             let hr = document.createElement("hr");
             commentSection.appendChild(hr);
 
-            document.getElementById("noComments-" + i).style.display = "none";
+            let noComment = document.getElementById("noComments-" + i);
+
+            if (noComment != null) {
+                noComment.style.display = "none";
+            }
+
+            let commentCount = document.getElementById("commentCounter-" + i);
+            commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
+
             document.getElementById("commentInput-" + i).value = "";
+
             disableButtons();
         })
         .catch(function (error) {

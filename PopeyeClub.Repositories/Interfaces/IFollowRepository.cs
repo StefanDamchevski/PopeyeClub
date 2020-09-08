@@ -11,5 +11,6 @@ namespace PopeyeClub.Repositories.Interfaces
         List<Follow> GetByIds(string userId);
         int GetAllFollowing(string userId);
         int GetAllFollowers(string userId);
+        List<Follow> GetAllUserRelations(string userId);
     }
 }

@@ -22,7 +22,7 @@ else
     </div>
     <div class="user-info">
         <p>@Model.UserName</p>
-        <div class="count-info-wrap">
+        <div>
             <p class="count-info"><b>@Model.Posts.Count()</b> posts</p>
             <p class="count-info"><b>@Model.FollowersCount</b> following</p>
             <p class="count-info"><b>@Model.FollowingCount</b> followers</p>
@@ -165,13 +165,8 @@ else
 </div>
 }
 @section Scripts{
-
-    @if(User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.UserId)
+    @if (User.FindFirst(ClaimTypes.NameIdentifier).Value.Equals(Model.UserId))
     {
         <script src="~/js/yourProfile.js"></script>
-    }
-    else
-    {
-        <script src="~/js/otherProfile.js"></script>
     }
  }

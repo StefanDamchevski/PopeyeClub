@@ -70,11 +70,6 @@ namespace PopeyeClub.Services
             return followRepository.GetAllFollowing(userId);
         }
 
-        public List<Follow> GetByIds(string userId)
-        {
-            return followRepository.GetByIds(userId);
-        }
-
         public int GetFollowersCount(string userId)
         {
             return followRepository.GetAllFollowers(userId);
@@ -133,6 +128,11 @@ namespace PopeyeClub.Services
             {
                 notificationService.Delete(currentUserId, userId, "Follow");
             }
+        }
+
+        public List<Follow> GetAllUserRelations(string userId)
+        {
+            return followRepository.GetAllUserRelations(userId);
         }
     }
 }
