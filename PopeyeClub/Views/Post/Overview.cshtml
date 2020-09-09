@@ -38,19 +38,19 @@
                         <div class="card-actions">
                             @if (Model[i].LikeStatus == PopeyeClub.ViewModels.ViewModelEnums.PostLikeStatus.None)
                             {
-                                <button class="btn hvr-pulse-grow" id="addPostLikeBtn-@i" onclick="addLike(@Model[i].PostId,@i)">
+                                <button class="btn hvr-pulse-grow" id="addPostLikeBtn-@i" onclick="addLike(@Model[i].PostId, @i)">
                                     <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
-                                <button class="btn hvr-pulse-grow hide" id="removePostLikeBtn-@i" onclick="removeLike(@Model[i].PostId,@i)">
+                                <button class="btn hvr-pulse-grow hide" id="removePostLikeBtn-@i" onclick="removeLike(@Model[i].PostId, @i)">
                                     <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
                             }
                             else
                             {
-                                <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn-@i" onclick="addLike(@Model[i].PostId,@i)">
+                                <button class="btn hvr-pulse-grow hide" id="addPostLikeBtn-@i" onclick="addLike(@Model[i].PostId, @i)">
                                     <i class="far fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
-                                <button class="btn hvr-pulse-grow" id="removePostLikeBtn-@i" onclick="removeLike(@Model[i].PostId,@i)">
+                                <button class="btn hvr-pulse-grow" id="removePostLikeBtn-@i" onclick="removeLike(@Model[i].PostId, @i)">
                                     <i class="fas fa-heart fa-2x hvr-icon-pulse-grow"></i>
                                 </button>
                             }
@@ -145,6 +145,5 @@
 </div>
 
 @section Scripts{
-    <script src="~/lib/axios/axios.min.js"></script> 
     <script src="~/js/postOverview.js"></script>
 }

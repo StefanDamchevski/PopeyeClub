@@ -7,15 +7,21 @@ namespace PopeyeClub.Services
     public class CommentLikeService : ICommentLikeService
     {
         private readonly ICommentLikeRepository commentLikeRepository;
+        private readonly IPostCommentService postCommentService;
+        private readonly INotificationService notificationService;
 
-        public CommentLikeService(ICommentLikeRepository commentLikeRepository)
+        public CommentLikeService(ICommentLikeRepository commentLikeRepository, IPostCommentService postCommentService, INotificationService notificationService)
         {
             this.commentLikeRepository = commentLikeRepository;
+            this.postCommentService = postCommentService;
+            this.notificationService = notificationService;
         }
 
-        public void Create(int commentId, string userId)
+        public string Create(int commentId, string userId, string currentUserName)
         {
             CommentLike dbCommentLike = commentLikeRepository.Get(commentId, userId);
+
+            PostComment postComment = postCommentService.GetById(commentId);
 
             if(dbCommentLike is null)
             {
@@ -27,12 +33,19 @@ namespace PopeyeClub.Services
                 };
 
                 commentLikeRepository.Create(commentLike);
+
+                if(postComment.UserId != userId)
+                {
+                    notificationService.Create(userId, postComment.UserId, "CommentLike", currentUserName);
+                }
             }
             else
             {
                 dbCommentLike.Status = true;
                 commentLikeRepository.Update(dbCommentLike);
             }
+
+            return postComment.UserId;
         }
 
         public void Update(int commentId, string userId)

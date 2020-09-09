@@ -11,5 +11,6 @@ namespace PopeyeClub.Services.Interfaces
         List<Post> GetOtherPosts(int postId, string userId);
         List<Post> GetByIds(List<int> postIds);
         void Delete(int postId);
+        Post GetPost(int postId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 using PopeyeClub.Services.Interfaces;
@@ -9,13 +10,15 @@ namespace PopeyeClub.Services
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository notificationRepository;
+        private readonly IConfiguration configuration;
 
-        public NotificationService(INotificationRepository notificationRepository)
+        public NotificationService(INotificationRepository notificationRepository, IConfiguration configuration)
         {
             this.notificationRepository = notificationRepository;
+            this.configuration = configuration;
         }
 
-        public void Create(string currentUserId, string userId, string type)
+        public void Create(string currentUserId, string userId, string type, string currentUsername)
         {
             Enums.NotificationType.TryParse(type, out Enums.NotificationType result);
 
@@ -26,6 +29,22 @@ namespace PopeyeClub.Services
                 Type = result,
                 DateSent = DateAndTime.Now,
             };
+
+            switch (result)
+            {
+                case Enums.NotificationType.PostLike:
+                    notification.Message = currentUsername + configuration["PostLike"];
+                    break;
+                case Enums.NotificationType.PostComment:
+                    notification.Message = currentUsername + configuration["PostComment"];
+                    break;
+                case Enums.NotificationType.CommentLike:
+                    notification.Message = currentUsername + configuration["CommentLike"];
+                    break;
+                case Enums.NotificationType.Follow:
+                    notification.Message = currentUsername + configuration["Follow"];
+                    break;
+            }
 
             notificationRepository.Create(notification);
         }

@@ -6,7 +6,7 @@ namespace PopeyeClub.Services.Interfaces
 {
     public interface IFollowService
     {
-        Task Create(string currentUserId, string userId);
+        Task Create(string currentUserId, string userId, string currentUserName);
         List<string> GetIds(string userId);
         bool GetIsFollowed(string currentUserId, string userId);
         bool GetIsSent(string currentUserId, string userId);

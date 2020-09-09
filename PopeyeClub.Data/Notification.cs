@@ -15,5 +15,7 @@ namespace PopeyeClub.Data
         public Enums.NotificationType Type { get; set; }
         [Required]
         public DateTime DateSent { get; set; }
+        [Required]
+        public string Message { get; set; }
     }
 }

@@ -77,5 +77,10 @@ namespace PopeyeClub.Repositories
                 .Where(x => x.UserId.Equals(userId) && x.Id != postId)
                 .ToList();
         }
+
+        public Post GetPost(int postId)
+        {
+            return context.Posts.FirstOrDefault(x => x.Id.Equals(postId));
+        }
     }
 }

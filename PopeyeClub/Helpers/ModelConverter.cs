@@ -144,6 +144,7 @@ namespace PopeyeClub.Helpers
                 UserFromName = notification.FromUser.UserName,
                 Type = notification.Type.ToTypeViewModel(),
                 DateSent = notification.DateSent,
+                NotificationMessage = notification.Message,
             };
         }
 

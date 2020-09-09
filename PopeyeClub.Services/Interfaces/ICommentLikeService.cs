@@ -2,7 +2,7 @@
 {
     public interface ICommentLikeService
     {
-        void Create(int commentId, string userId);
+        string Create(int commentId, string userId, string currentUserName);
         void Update(int commentId, string userId);
     }
 }

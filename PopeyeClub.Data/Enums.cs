@@ -4,7 +4,9 @@
     {
         public enum NotificationType
         {
-            Other,
+            PostLike,
+            PostComment,
+            CommentLike,
             Follow,
         }
     }

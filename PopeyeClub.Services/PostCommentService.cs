@@ -36,5 +36,10 @@ namespace PopeyeClub.Services
         {
             return postCommentRepostiory.Get(postId, userId, comment);
         }
+
+        public PostComment GetById(int commentId)
+        {
+            return postCommentRepostiory.GetById(commentId);
+        }
     }
 }

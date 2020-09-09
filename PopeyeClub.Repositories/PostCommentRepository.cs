@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PopeyeClub.Data;
 using PopeyeClub.Repositories.Interfaces;
 
@@ -32,7 +33,12 @@ namespace PopeyeClub.Repositories
 
         public PostComment Get(int postId, string userId, string comment)
         {
-            return context.PostComments.FirstOrDefault(x => x.PostId.Equals(postId) && x.UserId.Equals(userId) && x.Text.Equals(comment));
+            return context.PostComments.Include(x => x.Post).FirstOrDefault(x => x.PostId.Equals(postId) && x.UserId.Equals(userId) && x.Text.Equals(comment));
+        }
+
+        public PostComment GetById(int commentId)
+        {
+            return context.PostComments.FirstOrDefault(x => x.Id.Equals(commentId));
         }
     }
 }

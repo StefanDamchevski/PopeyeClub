@@ -23,9 +23,7 @@ function addToLocalStorage(postsCount, postCommentsCount) {
     localStorage.setItem("CommentIds", JSON.stringify(storageData));
 }
 
-
-
-function addLike(postId,i) {
+function addLike(postId, i) {
     if (postId != 0) {
 
         axios.post('/PostLike/AddPostLike/', {

@@ -19,7 +19,7 @@ namespace PopeyeClub.Services
             this.notificationService = notificationService;
         }
 
-        public async Task Create(string currentUserId, string userId)
+        public async Task Create(string currentUserId, string userId, string currentUserName)
         {
             ApplicationUser user = await userService.GetByIdAsync(userId);
 
@@ -43,8 +43,7 @@ namespace PopeyeClub.Services
                     follow.IsFollowed = true;
                     follow.IsSent = true;
                 }
-
-                notificationService.Create(currentUserId, userId, "Follow");
+                notificationService.Create(currentUserId, userId, "Follow", currentUserName);
                 followRepository.Create(follow);
             }
             else
@@ -60,7 +59,7 @@ namespace PopeyeClub.Services
                     dbFollow.IsSent = true;
                 }
 
-                notificationService.Create(currentUserId, userId, "Follow");
+                notificationService.Create(currentUserId, userId, "Follow", currentUserName);
                 followRepository.Update(dbFollow);
             }
         }

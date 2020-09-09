@@ -7,32 +7,43 @@ namespace PopeyeClub.Services
     public class PostLikeService : IPostLikeService
     {
         private readonly IPostLikeRepository postLikeRepository;
+        private readonly IPostService postService;
+        private readonly INotificationService notificationService;
 
-        public PostLikeService(IPostLikeRepository postLikeRepository)
+        public PostLikeService(IPostLikeRepository postLikeRepository, IPostService postService, INotificationService notificationService)
         {
             this.postLikeRepository = postLikeRepository;
+            this.postService = postService;
+            this.notificationService = notificationService;
         }
 
-        public void Create(int postId, string userId)
+        public string Create(int postId, string currentUserId, string currentUserName)
         {
-            PostLike dbLike = postLikeRepository.Get(postId, userId);
+            PostLike dbLike = postLikeRepository.Get(postId, currentUserId);
+            Post post = postService.GetPost(postId);
 
             if(dbLike is null)
             {
                 PostLike newLike = new PostLike
                 {
                     PostId = postId,
-                    UserId = userId,
+                    UserId = currentUserId,
                     Status = true,
                 };
 
                 postLikeRepository.Create(newLike);
+                if(currentUserId != post.UserId)
+                {
+                    notificationService.Create(currentUserId, post.UserId, "PostLike", currentUserName);
+                }
             }
             else
             {
                 dbLike.Status = true;
                 postLikeRepository.Update(dbLike);
             }
+
+            return post.UserId;
         }
 
         public void Update(int postId, string userId)

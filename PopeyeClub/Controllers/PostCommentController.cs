@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using PopeyeClub.Data;
+using PopeyeClub.Hubs;
 using PopeyeClub.Services.Interfaces;
 
 namespace PopeyeClub.Controllers
@@ -14,15 +17,22 @@ namespace PopeyeClub.Controllers
     {
         private readonly IPostCommentService postCommentService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHubContext<ChatHub> hub;
+        private readonly INotificationService notificationService;
 
-        public PostCommentController(IPostCommentService postCommentService, UserManager<ApplicationUser> userManager)
+        public PostCommentController(IPostCommentService postCommentService,
+            UserManager<ApplicationUser> userManager,
+            IHubContext<ChatHub> hub,
+            INotificationService notificationService)
         {
             this.postCommentService = postCommentService;
             this.userManager = userManager;
+            this.hub = hub;
+            this.notificationService = notificationService;
         }
 
         [HttpPost]
-        public IActionResult Create(int postId, string comment)
+        public async Task<IActionResult> Create(int postId, string comment)
         {
             if (string.IsNullOrEmpty(comment) || postId == default)
             {
@@ -30,13 +40,20 @@ namespace PopeyeClub.Controllers
             }
             else
             {
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                postCommentService.Create(postId, comment, userId);
+                postCommentService.Create(postId, comment, currentUserId);
 
-                ApplicationUser user = userManager.Users.FirstOrDefault(x => x.Id.Equals(userId));
+                ApplicationUser user = userManager.Users.FirstOrDefault(x => x.Id.Equals(currentUserId));
 
-                PostComment postComment = postCommentService.Get(postId, userId, comment);
+                PostComment postComment = postCommentService.Get(postId, currentUserId, comment);
+
+                if(currentUserId != postComment.Post.UserId)
+                {
+                    notificationService.Create(currentUserId, postComment.Post.UserId, "PostComment", user.UserName);
+                    await hub.Clients.User(postComment.Post.UserId).SendAsync("RecieveNotification");
+                }
+
 
                 return Ok(new
                 {

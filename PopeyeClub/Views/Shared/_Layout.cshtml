@@ -42,7 +42,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark hvr-pulse-grow" asp-controller="Notification" asp-action="Overview">
+                                <a class="nav-link text-dark hvr-pulse-grow" id="notificationButton" asp-controller="Notification" asp-action="Overview">
                                     <i class="far fa-bell fa-2x hvr-icon-pulse-grow"></i>
                                 </a>
                             </li>
@@ -82,7 +82,11 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/signalR/signalr.min.js"></script>
-    <script src="~/js/chatConnection.js"></script>
+    <script src="~/lib/axios/axios.min.js"></script>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script src="~/js/chatConnection.js"></script>
+    }
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
