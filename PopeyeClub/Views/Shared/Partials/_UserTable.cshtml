@@ -1,7 +1,7 @@
 ﻿<div id="listOfUsers" class="modal" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true"></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true" onclick="document.getElementById('searchInput').value =''"><span>&times;</span></button>
             <table class="table table-hover" id="modalLabel">
                 <tbody>
                     @foreach (var item in Model)

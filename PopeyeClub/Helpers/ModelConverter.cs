@@ -142,8 +142,9 @@ namespace PopeyeClub.Helpers
                 NotificationId = notification.Id,
                 UserFromId = notification.FromUserId,
                 UserFromName = notification.FromUser.UserName,
+                UserFromImage = Convert.ToBase64String(notification.FromUser.ProfilePicture),
                 Type = notification.Type.ToTypeViewModel(),
-                DateSent = notification.DateSent,
+                DateSent = notification.DateSent.ToString("dd/MM/yyyy hh:mm"),
                 NotificationMessage = notification.Message,
             };
         }

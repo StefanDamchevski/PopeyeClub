@@ -12,7 +12,7 @@
             <div class="user-table">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    List<ApplicationUser> users = userManager.Users.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList();
+                    List<ApplicationUser> users = userManager.Users?.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList();
 
                     <table class="table">
                         @foreach (ApplicationUser user in users)

@@ -63,7 +63,7 @@ namespace PopeyeClub.Controllers
                 followService.Update(userId, currentUserId, true, true);
             }
 
-            return RedirectToAction("Overview", "Notification");
+            return RedirectToAction("Profile", "User", new { UserId = userId });
         }
 
         public IActionResult Decline(string userId)

@@ -36,9 +36,9 @@ namespace PopeyeClub.Controllers
                 .Select(x => x.ToNotificationViewModel())
                 .ToList();
 
-            foreach (NotificationViewModel model  in models)
+            foreach (NotificationViewModel model in models)
             {
-                if (model.Type == ViewModelEnums.NotificationViewModelType.Follow)
+                if (model.Type.Equals(ViewModelEnums.NotificationViewModelType.Follow))
                 {
                     bool status = followService.GetIsFollowed(model.UserFromId, currentUserId);
                     bool followBack = followService.GetIsFollowed(currentUserId, model.UserFromId);
@@ -58,7 +58,7 @@ namespace PopeyeClub.Controllers
                 }
             }
 
-            return View(models);
+            return Ok(models);
         }
 
         [HttpPost]

@@ -96,8 +96,8 @@ body {
 }
 
 td img{
-    width: 23px;
-    height: 23px;
+    width: 18px;
+    height: 18px;
     border-radius: 100%;
     cursor:pointer;
 }
@@ -126,9 +126,9 @@ td img{
     }
 
     #listOfUsers {
-        display:none;
-        width: 15%;
-        margin: 2% 43%;
+        display: none;
+        width: 50%;
+        margin: 2% 25%;
         text-align: center;
     }
 
@@ -164,4 +164,14 @@ td img{
     #inputHolder {
         margin-right: 4em;
     }
+}
+
+#notificationButton{
+    outline:none;
+    border:none;
+    background:none;
+}
+
+#notificationOverview{
+    margin: 2.4rem auto;
 }
