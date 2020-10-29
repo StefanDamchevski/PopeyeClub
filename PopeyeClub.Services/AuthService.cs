@@ -19,16 +19,16 @@ namespace PopeyeClub.Services
         public async Task<Response> SignInAsync(string email, string password)
         {
             ApplicationUser user = await userService.GetByEmailAsync(email);
-
-            if (user.IsDeleted)
-            {
-                await userService.RemoveIsDeletedAsync(user);
-            }
-
+            
             Response response = new Response();
 
             if (user != null)
             {
+                if (user.IsDeleted)
+                {
+                    await userService.RemoveIsDeletedAsync(user);
+                }
+
                 SignInResult result = await signInManager.PasswordSignInAsync(user, password, false, false);
 
                 if (result.Succeeded)
